@@ -51,11 +51,7 @@
     position:relative;
   }
 
-  #cartContent h3 {
-    color:#ff6600;
-    margin-top:0;
-    text-align:center;
-  }
+  #cartContent h3 { color:#ff6600; margin-top:0; text-align:center; }
 
   #cartContent table {
     width:100%;
@@ -63,73 +59,19 @@
     margin-bottom:15px;
   }
 
-  #cartContent table th, #cartContent table td {
-    padding:10px;
-    text-align:center;
-    border-bottom:1px solid #444;
-  }
-
+  #cartContent table th, #cartContent table td { padding:10px; text-align:center; border-bottom:1px solid #444; }
   #cartContent table th { color:#ff6600; }
 
-  #cartContent button {
-    background:#ff6600;
-    color:#fff;
-    border:none;
-    padding:5px 10px;
-    border-radius:8px;
-    cursor:pointer;
-    margin:0 3px;
-    font-weight:bold;
-    transition:0.3s;
-  }
-
+  #cartContent button { background:#ff6600; color:#fff; border:none; padding:5px 10px; border-radius:8px; cursor:pointer; margin:0 3px; font-weight:bold; transition:0.3s; }
   #cartContent button:hover { background:#e55c00; }
 
-  #closeCart {
-    position:absolute;
-    top:15px;
-    right:20px;
-    cursor:pointer;
-    color:#ff6600;
-    font-weight:bold;
-    font-size:22px;
-    transition:0.3s;
-  }
-
+  #closeCart { position:absolute; top:15px; right:20px; cursor:pointer; color:#ff6600; font-weight:bold; font-size:22px; transition:0.3s; }
   #closeCart:hover { color:#e55c00; }
 
-  #totalPrice {
-    font-size:1.2rem;
-    text-align:right;
-    margin-top:10px;
-    color:#ffcc80;
-  }
+  #totalPrice { font-size:1.2rem; text-align:right; margin-top:10px; color:#ffcc80; }
 
-  #cartContent button.checkout-btn {
-    width:100%;
-    margin-top:10px;
-    padding:12px;
-    font-size:1rem;
-    border-radius:10px;
-  }
+  #cartContent button.checkout-btn { width:100%; margin-top:10px; padding:12px; font-size:1rem; border-radius:10px; }
 
-  /* Cart pop animation */
-  @keyframes pop {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.3); }
-    100% { transform: scale(1); }
-  }
-
-  .cart-pop { animation: pop 0.3s ease; }
-
-  /* Order button press animation */
-  @keyframes press {
-    0% { transform: scale(1); }
-    50% { transform: scale(0.9); }
-    100% { transform: scale(1); }
-  }
-
-  .order-press { animation: press 0.2s ease; }
 </style>
 </head>
 <body>
@@ -148,7 +90,6 @@
 
 <section class="menu">
   <h2>Delicious Meals</h2>
-
   <div class="search-filter">
     <input type="text" id="searchInput" placeholder="Search food..." onkeyup="filterItems()">
     <select id="vegFilter" onchange="filterItems()">
@@ -159,7 +100,6 @@
   </div>
 
   <div class="menu-items" id="menuItems">
-
     <div class="item" data-name="Donne Biryani" data-price="100" data-type="nonveg">
       <img src="https://raw.githubusercontent.com/dhanushkumarvc-bot/cloud_kitchen.github.io/main/Donne-Biriyani.jpg" alt="Donne Biryani">
       <h3><span class="dot nonveg"></span>Donne Biryani</h3>
@@ -174,15 +114,15 @@
       <p>Spicy and juicy grilled chicken.</p>
       <p>₹120</p>
       <a class="order-btn" onclick="addToCart(this)">Order</a>
-    </div>/
+    </div>
 
-  <div class="item" data-name="Chilli Chicken" data-price="120" data-type="nonveg">
-    <img src="https://raw.githubusercontent.com/dhanushkumarvc-bot/cloud_kitchen.github.io/main/chilli-chicken.jpg" alt="Chilli Chicken">
-    <h3><span class="dot nonveg"></span>Chilli Chicken</h3>
-    <p>Spicy Indo-Chinese chicken with chili sauce.</p>
-    <p>₹120</p>
-    <a class="order-btn" onclick="addToCart(this)">Order</a>
-   </div>
+    <div class="item" data-name="Chilli Chicken" data-price="120" data-type="nonveg">
+      <img src="https://raw.githubusercontent.com/dhanushkumarvc-bot/cloud_kitchen.github.io/main/chilli-chicken.jpg" alt="Chilli Chicken">
+      <h3><span class="dot nonveg"></span>Chilli Chicken</h3>
+      <p>Spicy Indo-Chinese chicken with chili sauce.</p>
+      <p>₹120</p>
+      <a class="order-btn" onclick="addToCart(this)">Order</a>
+    </div>
 
     <div class="item" data-name="Pepper Chicken" data-price="120" data-type="nonveg">
       <img src="https://raw.githubusercontent.com/dhanushkumarvc-bot/cloud_kitchen.github.io/main/pepper-chicken.jpg" alt="Pepper Chicken">
@@ -200,7 +140,6 @@
   <p>&copy; 2025 The Hidden Ladle. All rights reserved.</p>
 </footer>
 
-<!-- Cart Modal -->
 <div id="cartModal">
   <div id="cartContent">
     <span id="closeCart" onclick="closeCart()">✖</span>
@@ -214,94 +153,49 @@
 </div>
 
 <script>
-let cart = [];
-const deliveryCharges = 20;
+let cart=[];
+const deliveryCharges=20;
 
-function addToCart(btn) {
-  const itemDiv = btn.parentElement;
-  const name = itemDiv.dataset.name;
-  const price = parseInt(itemDiv.dataset.price);
-  const existing = cart.find(i=>i.name===name);
+function addToCart(btn){
+  const itemDiv=btn.parentElement;
+  const name=itemDiv.dataset.name;
+  const price=parseInt(itemDiv.dataset.price);
+  const existing=cart.find(i=>i.name===name);
   if(existing) existing.quantity+=1;
   else cart.push({name,price,quantity:1});
-
-  // Animate order button
-  btn.classList.remove('order-press');
-  void btn.offsetWidth;
-  btn.classList.add('order-press');
-
+  btn.classList.remove('order-press'); void btn.offsetWidth; btn.classList.add('order-press');
   updateCartIndicator();
   alert(name+" added to cart!");
 }
 
-function updateCartIndicator() {
-  const cartLink = document.querySelector('nav a[href="#"]');
-  const totalQty = cart.reduce((sum,i)=>sum+i.quantity,0);
-  cartLink.innerHTML = `Cart 🛒 ${totalQty ? '('+totalQty+')' : ''}`;
-
-  // Animate cart icon
-  cartLink.classList.remove('cart-pop');
-  void cartLink.offsetWidth;
-  cartLink.classList.add('cart-pop');
+function updateCartIndicator(){
+  const cartLink=document.querySelector('nav a[href="#"]');
+  const totalQty=cart.reduce((sum,i)=>sum+i.quantity,0);
+  cartLink.innerHTML=`Cart 🛒 ${totalQty? '('+totalQty+')':''}`;
 }
 
-function openCart() {
-  const table = document.getElementById('cartTable');
+function openCart(){
+  const table=document.getElementById('cartTable');
   table.innerHTML="<tr><th>Item</th><th>Price</th><th>Qty</th><th>Total</th></tr>";
-  let subtotal = 0;
+  let subtotal=0;
   cart.forEach((item,index)=>{
-    const row = table.insertRow();
-    row.insertCell(0).innerText = item.name;
-    row.insertCell(1).innerText = "₹"+item.price;
+    const row=table.insertRow();
+    row.insertCell(0).innerText=item.name;
+    row.insertCell(1).innerText="₹"+item.price;
 
-    const qtyCell = row.insertCell(2);
-    const minusBtn=document.createElement('button');
-    minusBtn.innerText='-';
+    const qtyCell=row.insertCell(2);
+    const minusBtn=document.createElement('button'); minusBtn.innerText='-';
     minusBtn.onclick=()=>updateQuantity(index,-1);
-    const qtySpan=document.createElement('span');
-    qtySpan.innerText=' '+item.quantity+' ';
-    const plusBtn=document.createElement('button');
-    plusBtn.innerText='+';
-    plusBtn.onclick=()=>updateQuantity(index,1);
-    qtyCell.appendChild(minusBtn);
-    qtyCell.appendChild(qtySpan);
-    qtyCell.appendChild(plusBtn);
+    const qtySpan=document.createElement('span'); qtySpan.innerText=' '+item.quantity+' ';
+    const plusBtn=document.createElement('button'); plusBtn.innerText='+'; plusBtn.onclick=()=>updateQuantity(index,1);
+    qtyCell.appendChild(minusBtn); qtyCell.appendChild(qtySpan); qtyCell.appendChild(plusBtn);
 
     row.insertCell(3).innerText="₹"+(item.price*item.quantity);
     subtotal+=item.price*item.quantity;
   });
-function openCart() {
-  const table = document.getElementById('cartTable');
-  table.innerHTML = "<tr><th>Item</th><th>Price</th><th>Qty</th><th>Total</th></tr>";
-  let subtotal = 0;
-
-  cart.forEach((item, index) => {
-    const row = table.insertRow();
-    row.insertCell(0).innerText = item.name;
-    row.insertCell(1).innerText = "₹" + item.price;
-
-    const qtyCell = row.insertCell(2);
-    const minusBtn = document.createElement('button');
-    minusBtn.innerText = '-';
-    minusBtn.onclick = () => updateQuantity(index, -1);
-    const qtySpan = document.createElement('span');
-    qtySpan.innerText = ' ' + item.quantity + ' ';
-    const plusBtn = document.createElement('button');
-    plusBtn.innerText = '+';
-    plusBtn.onclick = () => updateQuantity(index, 1);
-    qtyCell.appendChild(minusBtn);
-    qtyCell.appendChild(qtySpan);
-    qtyCell.appendChild(plusBtn);
-
-    const totalPerItem = item.price * item.quantity;
-    row.insertCell(3).innerText = "₹" + totalPerItem;
-    subtotal += totalPerItem;
-  });
-
-  // ADD FLAT DELIVERY CHARGE HERE
-  const totalWithDelivery = subtotal + deliveryCharges;
-  document.getElementById('totalPrice').innerText = `Subtotal (incl. delivery ₹${deliveryCharges}): ₹${totalWithDelivery}`;
-  document.getElementById('cartModal').style.display = 'flex';
+  const totalWithDelivery=subtotal+deliveryCharges;
+  document.getElementById('totalPrice').innerText=`Subtotal (incl. delivery ₹${deliveryCharges}): ₹${totalWithDelivery}`;
+  document.getElementById('cartModal').style.display='flex';
 }
 
 function updateQuantity(index,change){
@@ -330,7 +224,6 @@ function checkout(){
   closeCart();
 }
 
-// Search & filter
 function filterItems(){
   const searchValue=document.getElementById('searchInput').value.toLowerCase();
   const vegFilter=document.getElementById('vegFilter').value;
@@ -348,8 +241,5 @@ function filterItems(){
   noItemsMessage.style.display=anyVisible?'none':'block';
 }
 </script>
-
 </body>
 </html>
-
-
