@@ -41,25 +41,22 @@ footer { background:#333; color:#fff; text-align:center; padding:15px; margin-to
 #closeCart:hover { color:#e55c00; }
 #totalPrice { font-size:1.2rem; text-align:right; margin-top:10px; color:#ffcc80; }
 #cartContent button.checkout-btn { width:100%; margin-top:10px; padding:12px; font-size:1rem; border-radius:10px; }
-/* Add Items / View Items button */
-.add-items-btn {
-  width: auto;              /* shrink to fit text */
-  margin-top: 10px;
-  padding: 0;
-  font-size: 0.9rem;        /* small text */
-  background: none;          /* no background */
-  color: #fff;               /* white text */
-  border: none;
-  cursor: pointer;
-  text-decoration: underline; /* underlined text */
-  text-align: center;
-}
 
-.add-items-btn:hover {
-  color: #fff;               /* stays white on hover */
-  text-decoration: underline;
-}
-
+/* Add Items button with no background */
+.add-items-btn { 
+  width:100%; 
+  margin-top:15px; 
+  padding:12px; 
+  font-size:1rem; 
+  border-radius:10px; 
+  background:none; 
+  color:#fff; 
+  border:none; 
+  cursor:pointer; 
+  transition:0.3s; 
+  text-decoration:underline; 
+} 
+.add-items-btn:hover { color:#ff6600; text-decoration:underline; }
 
 /* Cart pop animation */
 @keyframes pop { 0% { transform: scale(1); } 50% { transform: scale(1.3); } 100% { transform: scale(1); } }
@@ -229,7 +226,9 @@ function checkout() {
   cart=[]; updateCartIndicator(); closeCart();
 }
 
-function redirectToMenu(){ window.location.href='menu.html'; }
+function redirectToMenu(){ 
+  document.getElementById('cartModal').style.display = 'none'; 
+}
 
 function filterItems(){
   const searchValue=document.getElementById('searchInput').value.toLowerCase();
@@ -251,6 +250,3 @@ function filterItems(){
 
 </body>
 </html>
-
-
-
