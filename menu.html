@@ -5,73 +5,52 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Menu - The Hidden Ladle</title>
 <style>
-  body { font-family: Arial, sans-serif; margin:0; padding:0; background:#111; color:#fff; }
-  header { text-align:center; padding:40px 20px; }
-  header h1 { color:#ff6600; font-size:3rem; margin:0; }
-  nav { display:flex; justify-content:center; gap:30px; background:#222; padding:10px 0; }
-  nav a { color:#fff; text-decoration:none; font-weight:500; transition:0.3s; }
-  nav a:hover { color:#ff6600; }
-  .menu { padding:40px 20px; text-align:center; }
-  .menu h2 { color:#ff6600; font-size:2rem; margin-bottom:20px; }
-  .search-filter input, .search-filter select { padding:10px 15px; margin:5px; border-radius:8px; border:none; font-size:1rem; }
-  .menu-items { display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:25px; margin-top:20px; position:relative; }
-  .item { background:#222; padding:15px; border-radius:12px; box-shadow:0 5px 15px rgba(0,0,0,0.7); transition:all 0.5s ease; opacity:1; transform:scale(1); }
-  .item.hide { opacity:0; transform:scale(0.95); pointer-events:none; }
-  .item img { width:100%; height:200px; object-fit:cover; border-radius:8px; }
-  .item h3 { display:flex; align-items:center; justify-content:center; gap:8px; margin:10px 0 5px; color:#ff6600; }
-  .dot { width:12px; height:12px; border-radius:50%; display:inline-block; }
-  .veg { background:green; } .nonveg { background:red; }
-  .item p { margin:5px 0; color:#fff; }
-  .order-btn { display:inline-block; margin-top:10px; padding:10px 15px; border-radius:6px; text-decoration:none; font-weight:bold; background:#ff6600; color:#fff; transition:0.3s; }
-  .order-btn:hover { opacity:0.8; cursor:pointer; }
-  #noItemsMessage { display:none; text-align:center; font-size:1.5rem; color:#ff6600; margin-top:20px; animation:bounce 0.5s ease; }
-  @keyframes bounce { 0%{transform:scale(0.8);opacity:0;}50%{transform:scale(1.05);opacity:1;}100%{transform:scale(1);opacity:1;} }
-  footer { background:#333; color:#fff; text-align:center; padding:15px; margin-top:40px; }
+body { font-family: Arial, sans-serif; margin:0; padding:0; background:#111; color:#fff; }
+header { text-align:center; padding:40px 20px; }
+header h1 { color:#ff6600; font-size:3rem; margin:0; }
+nav { display:flex; justify-content:center; gap:30px; background:#222; padding:10px 0; }
+nav a { color:#fff; text-decoration:none; font-weight:500; transition:0.3s; }
+nav a:hover { color:#ff6600; }
+.menu { padding:40px 20px; text-align:center; }
+.menu h2 { color:#ff6600; font-size:2rem; margin-bottom:20px; }
+.search-filter input, .search-filter select { padding:10px 15px; margin:5px; border-radius:8px; border:none; font-size:1rem; }
+.menu-items { display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:25px; margin-top:20px; position:relative; }
+.item { background:#222; padding:15px; border-radius:12px; box-shadow:0 5px 15px rgba(0,0,0,0.7); transition:all 0.5s ease; opacity:1; transform:scale(1); }
+.item.hide { opacity:0; transform:scale(0.95); pointer-events:none; }
+.item img { width:100%; height:200px; object-fit:cover; border-radius:8px; }
+.item h3 { display:flex; align-items:center; justify-content:center; gap:8px; margin:10px 0 5px; color:#ff6600; }
+.dot { width:12px; height:12px; border-radius:50%; display:inline-block; }
+.veg { background:green; } .nonveg { background:red; }
+.item p { margin:5px 0; color:#fff; }
+.order-btn { display:inline-block; margin-top:10px; padding:10px 15px; border-radius:6px; text-decoration:none; font-weight:bold; background:#ff6600; color:#fff; transition:0.3s; cursor:pointer; }
+.order-btn:hover { opacity:0.8; }
+#noItemsMessage { display:none; text-align:center; font-size:1.5rem; color:#ff6600; margin-top:20px; animation:bounce 0.5s ease; }
+@keyframes bounce { 0%{transform:scale(0.8);opacity:0;}50%{transform:scale(1.05);opacity:1;}100%{transform:scale(1);opacity:1;} }
+footer { background:#333; color:#fff; text-align:center; padding:15px; margin-top:40px; }
 
-  /* Cart Modal */
-  #cartModal {
-    display:none;
-    position:fixed;
-    top:0; left:0;
-    width:100%; height:100%;
-    background:rgba(0, 0, 0, 0.85);
-    justify-content:center; align-items:center;
-    z-index:1000;
-  }
+/* Cart Modal */
+#cartModal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0, 0, 0, 0.85); justify-content:center; align-items:center; z-index:1000; }
+#cartContent { background:#1e1e1e; padding:30px; border-radius:15px; width:90%; max-width:500px; color:#fff; text-align:left; box-shadow:0 10px 25px rgba(0,0,0,0.6); position:relative; }
+#cartContent h3 { color:#ff6600; margin-top:0; text-align:center; }
+#cartContent table { width:100%; border-collapse:collapse; margin-bottom:15px; }
+#cartContent table th, #cartContent table td { padding:10px; text-align:center; border-bottom:1px solid #444; }
+#cartContent table th { color:#ff6600; }
+#cartContent button { background:#ff6600; color:#fff; border:none; padding:5px 10px; border-radius:8px; cursor:pointer; margin:0 3px; font-weight:bold; transition:0.3s; }
+#cartContent button:hover { background:#e55c00; }
+#closeCart { position:absolute; top:15px; right:20px; cursor:pointer; color:#ff6600; font-weight:bold; font-size:22px; transition:0.3s; }
+#closeCart:hover { color:#e55c00; }
+#totalPrice { font-size:1.2rem; text-align:right; margin-top:10px; color:#ffcc80; }
+#cartContent button.checkout-btn { width:100%; margin-top:10px; padding:12px; font-size:1rem; border-radius:10px; }
+/* Add Items / View Items button */
+.add-items-btn { width:100%; margin-top:10px; padding:12px; font-size:1rem; border-radius:10px; background:#555; color:#fff; border:none; cursor:pointer; transition:0.3s; }
+.add-items-btn:hover { background:#777; }
 
-  #cartContent {
-    background:#1e1e1e;
-    padding:30px;
-    border-radius:15px;
-    width:90%;
-    max-width:500px;
-    color:#fff;
-    text-align:left;
-    box-shadow:0 10px 25px rgba(0,0,0,0.6);
-    position:relative;
-  }
-
-  #cartContent h3 { color:#ff6600; margin-top:0; text-align:center; }
-
-  #cartContent table {
-    width:100%;
-    border-collapse:collapse;
-    margin-bottom:15px;
-  }
-
-  #cartContent table th, #cartContent table td { padding:10px; text-align:center; border-bottom:1px solid #444; }
-  #cartContent table th { color:#ff6600; }
-
-  #cartContent button { background:#ff6600; color:#fff; border:none; padding:5px 10px; border-radius:8px; cursor:pointer; margin:0 3px; font-weight:bold; transition:0.3s; }
-  #cartContent button:hover { background:#e55c00; }
-
-  #closeCart { position:absolute; top:15px; right:20px; cursor:pointer; color:#ff6600; font-weight:bold; font-size:22px; transition:0.3s; }
-  #closeCart:hover { color:#e55c00; }
-
-  #totalPrice { font-size:1.2rem; text-align:right; margin-top:10px; color:#ffcc80; }
-
-  #cartContent button.checkout-btn { width:100%; margin-top:10px; padding:12px; font-size:1rem; border-radius:10px; }
-
+/* Cart pop animation */
+@keyframes pop { 0% { transform: scale(1); } 50% { transform: scale(1.3); } 100% { transform: scale(1); } }
+.cart-pop { animation: pop 0.3s ease; }
+/* Order button press animation */
+@keyframes press { 0% { transform: scale(1); } 50% { transform: scale(0.9); } 100% { transform: scale(1); } }
+.order-press { animation: press 0.2s ease; }
 </style>
 </head>
 <body>
@@ -140,6 +119,7 @@
   <p>&copy; 2025 The Hidden Ladle. All rights reserved.</p>
 </footer>
 
+<!-- Cart Modal -->
 <div id="cartModal">
   <div id="cartContent">
     <span id="closeCart" onclick="closeCart()">✖</span>
@@ -147,88 +127,93 @@
     <table id="cartTable">
       <tr><th>Item</th><th>Price</th><th>Qty</th><th>Total</th></tr>
     </table>
-    <p id="totalPrice">Subtotal (incl. delivery ₹20): ₹0</p>
-
-    <!-- Checkout button -->
+    <p id="totalPrice">Subtotal: ₹0</p>
     <button class="checkout-btn" onclick="checkout()">Checkout</button>
-
-    <!-- Add Items button -->
     <button class="add-items-btn" onclick="redirectToMenu()">Add Items</button>
   </div>
 </div>
 
-
 <script>
-let cart=[];
-const deliveryCharges=20;
+let cart = [];
+const deliveryCharges = 20;
 
-function addToCart(btn){
-  const itemDiv=btn.parentElement;
-  const name=itemDiv.dataset.name;
-  const price=parseInt(itemDiv.dataset.price);
-  const existing=cart.find(i=>i.name===name);
-  if(existing) existing.quantity+=1;
-  else cart.push({name,price,quantity:1});
+function addToCart(btn) {
+  const itemDiv = btn.parentElement;
+  const name = itemDiv.dataset.name;
+  const price = parseInt(itemDiv.dataset.price);
+  const existing = cart.find(i=>i.name===name);
+  if(existing) existing.quantity += 1;
+  else cart.push({name, price, quantity:1});
+
   btn.classList.remove('order-press'); void btn.offsetWidth; btn.classList.add('order-press');
   updateCartIndicator();
-  alert(name+" added to cart!");
+  alert(name + " added to cart!");
 }
 
-function updateCartIndicator(){
-  const cartLink=document.querySelector('nav a[href="#"]');
-  const totalQty=cart.reduce((sum,i)=>sum+i.quantity,0);
-  cartLink.innerHTML=`Cart 🛒 ${totalQty? '('+totalQty+')':''}`;
+function updateCartIndicator() {
+  const cartLink = document.querySelector('nav a[href="#"]');
+  const totalQty = cart.reduce((sum,i)=>sum+i.quantity,0);
+  cartLink.innerHTML = `Cart 🛒 ${totalQty ? '('+totalQty+')' : ''}`;
+  cartLink.classList.remove('cart-pop'); void cartLink.offsetWidth; cartLink.classList.add('cart-pop');
 }
 
-function openCart(){
-  const table=document.getElementById('cartTable');
-  table.innerHTML="<tr><th>Item</th><th>Price</th><th>Qty</th><th>Total</th></tr>";
-  let subtotal=0;
+function openCart() {
+  const table = document.getElementById('cartTable');
+  table.innerHTML = "<tr><th>Item</th><th>Price</th><th>Qty</th><th>Total</th></tr>";
+  let subtotal = 0;
+  const cartModal = document.getElementById('cartModal');
+  cartModal.style.display = 'flex';
+  if(cart.length === 0) {
+    document.getElementById('totalPrice').innerText = "Cart is empty";
+    document.querySelector('.checkout-btn').style.display='none';
+    document.querySelector('.add-items-btn').style.display='block';
+    return;
+  }
+  document.querySelector('.checkout-btn').style.display='block';
+  document.querySelector('.add-items-btn').style.display='block';
   cart.forEach((item,index)=>{
-    const row=table.insertRow();
-    row.insertCell(0).innerText=item.name;
-    row.insertCell(1).innerText="₹"+item.price;
+    const row = table.insertRow();
+    row.insertCell(0).innerText = item.name;
+    row.insertCell(1).innerText = "₹"+item.price;
 
-    const qtyCell=row.insertCell(2);
-    const minusBtn=document.createElement('button'); minusBtn.innerText='-';
-    minusBtn.onclick=()=>updateQuantity(index,-1);
-    const qtySpan=document.createElement('span'); qtySpan.innerText=' '+item.quantity+' ';
-    const plusBtn=document.createElement('button'); plusBtn.innerText='+'; plusBtn.onclick=()=>updateQuantity(index,1);
+    const qtyCell = row.insertCell(2);
+    const minusBtn = document.createElement('button'); minusBtn.innerText='-';
+    minusBtn.onclick = ()=>updateQuantity(index,-1);
+    const qtySpan = document.createElement('span'); qtySpan.innerText=' '+item.quantity+' ';
+    const plusBtn = document.createElement('button'); plusBtn.innerText='+'; plusBtn.onclick = ()=>updateQuantity(index,1);
     qtyCell.appendChild(minusBtn); qtyCell.appendChild(qtySpan); qtyCell.appendChild(plusBtn);
 
-    row.insertCell(3).innerText="₹"+(item.price*item.quantity);
-    subtotal+=item.price*item.quantity;
+    const totalPerItem = item.price * item.quantity;
+    row.insertCell(3).innerText = "₹"+totalPerItem;
+    subtotal += totalPerItem;
   });
-  const totalWithDelivery=subtotal+deliveryCharges;
-  document.getElementById('totalPrice').innerText=`Subtotal (incl. delivery ₹${deliveryCharges}): ₹${totalWithDelivery}`;
-  document.getElementById('cartModal').style.display='flex';
+
+  const totalWithDelivery = subtotal + (subtotal>0 ? deliveryCharges : 0);
+  document.getElementById('totalPrice').innerText = `Subtotal (incl. delivery ₹${subtotal>0?deliveryCharges:0}): ₹${totalWithDelivery}`;
 }
 
-function updateQuantity(index,change){
-  cart[index].quantity+=change;
-  if(cart[index].quantity<=0) cart.splice(index,1);
+function updateQuantity(index, change) {
+  cart[index].quantity += change;
+  if(cart[index].quantity <= 0) cart.splice(index,1);
   updateCartIndicator();
   openCart();
 }
 
-function closeCart(){document.getElementById('cartModal').style.display='none';}
+function closeCart() { document.getElementById('cartModal').style.display='none'; }
 
-function checkout(){
-  if(cart.length===0){alert("Your cart is empty!"); return;}
-  let message="Hello, I want to place an order:%0A";
-  let subtotal=0;
-  cart.forEach(item=>{
-    message+=`${item.name} x${item.quantity} = ₹${item.price*item.quantity}%0A`;
-    subtotal+=item.price*item.quantity;
-  });
-  const total=subtotal+deliveryCharges;
-  message+=`Delivery: ₹${deliveryCharges}%0ATotal: ₹${total}%0A`;
-  const whatsappURL=`https://wa.me/918884537773?text=${message}`;
+function checkout() {
+  if(cart.length===0){ alert("Cart is empty!"); return; }
+  let message = "Hello, I want to place an order:%0A";
+  let subtotal = 0;
+  cart.forEach(item => { message+=`${item.name} x${item.quantity} = ₹${item.price*item.quantity}%0A`; subtotal+=item.price*item.quantity; });
+  const total = subtotal + deliveryCharges;
+  message += `Delivery: ₹${deliveryCharges}%0ATotal: ₹${total}%0A`;
+  const whatsappURL = `https://wa.me/918884537773?text=${message}`;
   window.open(whatsappURL,'_blank');
-  cart=[];
-  updateCartIndicator();
-  closeCart();
+  cart=[]; updateCartIndicator(); closeCart();
 }
+
+function redirectToMenu(){ window.location.href='menu.html'; }
 
 function filterItems(){
   const searchValue=document.getElementById('searchInput').value.toLowerCase();
@@ -241,15 +226,12 @@ function filterItems(){
     const type=item.dataset.type;
     const matchesSearch=name.includes(searchValue);
     const matchesFilter=vegFilter==='all'||vegFilter===type;
-    if(matchesSearch&&matchesFilter){item.classList.remove('hide'); anyVisible=true;}
+    if(matchesSearch && matchesFilter){item.classList.remove('hide'); anyVisible=true;}
     else item.classList.add('hide');
   });
-  noItemsMessage.style.display=anyVisible?'none':'block';
-}
-function redirectToMenu() {
-  window.location.href = "menu.html"; // redirects to menu page
+  noItemsMessage.style.display = anyVisible?'none':'block';
 }
 </script>
+
 </body>
 </html>
-
