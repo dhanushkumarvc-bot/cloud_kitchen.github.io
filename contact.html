@@ -5,14 +5,79 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Contact - The Hidden Ladle</title>
   <style>
-    body { font-family: Arial, sans-serif; margin: 0; padding: 0; background: #fffdf7; }
-    header { background: #ff6600; color: white; padding: 20px; text-align: center; }
-    nav { background: #333; padding: 10px; text-align: center; }
-    nav a { color: white; margin: 0 15px; text-decoration: none; }
-    nav a:hover { text-decoration: underline; }
-    .contact { padding: 40px; text-align: center; }
-    .contact h2 { color: #ff6600; }
-    footer { background: #333; color: white; text-align: center; padding: 15px; margin-top: 30px; }
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #111; /* dark background like menu page */
+      color: #fff;
+    }
+
+    header {
+      text-align: center;
+      padding: 40px 20px 20px;
+      color: #ff6600; /* orange header text */
+    }
+
+    nav {
+      background: #222; /* dark nav */
+      padding: 10px;
+      text-align: center;
+    }
+
+    nav a {
+      color: white;
+      margin: 0 15px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    nav a:hover {
+      color: #ff6600; /* highlight on hover */
+    }
+
+    .contact {
+      background: #1a1a1a; /* dark card-like section */
+      max-width: 600px;
+      margin: 40px auto;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.7);
+      text-align: center;
+    }
+
+    .contact h2 {
+      color: #ff6600;
+      margin-bottom: 20px;
+    }
+
+    .contact p {
+      font-size: 18px;
+      margin: 10px 0;
+    }
+
+    .order-btn {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 12px 25px;
+      background: #ff6600;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      font-weight: bold;
+    }
+
+    .order-btn:hover {
+      background: #e65c00;
+    }
+
+    footer {
+      background: #222;
+      color: white;
+      text-align: center;
+      padding: 15px;
+      margin-top: 30px;
+    }
   </style>
 </head>
 <body>
@@ -30,7 +95,7 @@
   <section class="contact">
     <h2>We’d Love to Hear From You!</h2>
     <p>📞 +91 8884537773</p>
-    <p✉️ cloudkitchen@gmail.com</p>
+    <p>✉️ cloudkitchen@gmail.com</p>
     <p>📍 Bangalore, India</p>
     <p><a class="order-btn" href="https://wa.me/918884537773?text=Hi%2C%20I%20want%20to%20order">Order on WhatsApp</a></p>
   </section>
