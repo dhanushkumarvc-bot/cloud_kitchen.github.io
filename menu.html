@@ -9,7 +9,7 @@
       font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
-      background: #121212 url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1600&q=80') no-repeat center center fixed;
+      background: url('46cbe2ba-1b1f-4e6a-9c1e-81b7575b78db.png') no-repeat center center fixed;
       background-size: cover;
       color: #fff;
     }
@@ -50,7 +50,6 @@
       margin-bottom: 20px;
     }
 
-    /* Search & Filter */
     .search-filter {
       margin-bottom: 30px;
     }
@@ -70,12 +69,19 @@
     }
 
     .item {
-      background: #1c1c1c;
+      background: rgba(28,28,28,0.9);
       padding: 15px;
       border-radius: 12px;
-      transition: 0.3s;
       position: relative;
       box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+      transition: all 0.3s ease; /* Smooth animation */
+      opacity: 1;
+      transform: scale(1);
+    }
+    .item.hide {
+      opacity: 0;
+      transform: scale(0.95);
+      pointer-events: none;
     }
     .item img {
       width: 100%;
@@ -121,8 +127,6 @@
     }
     .details-btn:hover { opacity: 0.8; }
 
-    .dim { opacity: 0.4; }
-
     .details-box {
       display: none;
       position: absolute;
@@ -134,7 +138,9 @@
       font-size: 12px;
       border-radius: 4px;
     }
-    .item:hover .details-box { display: block; }
+    .details-btn:hover + .details-box {
+      display: block;
+    }
 
     footer {
       background: #333;
@@ -171,7 +177,7 @@
     </div>
 
     <div class="menu-items" id="menuItems">
-      <!-- Donne Biryani -->
+      <!-- Example Items -->
       <div class="item" data-name="Donne Biryani" data-type="nonveg">
         <img src="https://raw.githubusercontent.com/dhanushkumarvc-bot/cloud_kitchen.github.io/main/Donne-Biriyani.jpg" alt="Donne Biryani">
         <h3><span class="dot nonveg"></span>Donne Biryani</h3>
@@ -182,38 +188,17 @@
         <div class="details-box">⏱ 30-40 mins / Serve 1</div>
       </div>
 
-      <!-- Kebab -->
-      <div class="item" data-name="Kebab" data-type="nonveg">
-        <img src="https://raw.githubusercontent.com/dhanushkumarvc-bot/cloud_kitchen.github.io/main/chicken-kebab.jpg" alt="Kebab">
-        <h3><span class="dot nonveg"></span>Kebab</h3>
-        <p>Juicy marinated grilled kebabs.</p>
-        <p>₹120</p>
-        <a class="order-btn" href="https://wa.me/918884537773?text=I%20want%20Kebab">Order</a>
+      <div class="item" data-name="Chicken Kebab" data-type="nonveg">
+        <img src="https://raw.githubusercontent.com/dhanushkumarvc-bot/cloud_kitchen.github.io/main/chicken-kebab.jpg" alt="Chicken Kebab">
+        <h3><span class="dot nonveg"></span>Chicken Kebab</h3>
+        <p>Spicy and juicy grilled chicken.</p>
+        <p>₹150</p>
+        <a class="order-btn" href="https://wa.me/918884537773?text=I%20want%20Chicken%20Kebab">Order</a>
         <a class="details-btn" href="#">Details</a>
-        <div class="details-box">⏱ 15-20 mins / Serve 1</div>
+        <div class="details-box">⏱ 20-25 mins / Serve 1</div>
       </div>
 
-      <!-- Chilli Chicken -->
-      <div class="item" data-name="Chilli Chicken" data-type="nonveg">
-        <img src="https://raw.githubusercontent.com/dhanushkumarvc-bot/cloud_kitchen.github.io/main/chilli-chicken.jpg" alt="Chilli Chicken">
-        <h3><span class="dot nonveg"></span>Chilli Chicken</h3>
-        <p>Spicy Indo-Chinese chicken.</p>
-        <p>₹120</p>
-        <a class="order-btn" href="https://wa.me/918884537773?text=I%20want%20Chilli%20Chicken">Order</a>
-        <a class="details-btn" href="#">Details</a>
-        <div class="details-box">⏱ 25-30 mins / Serve 1</div>
-      </div>
-
-      <!-- Pepper Chicken -->
-      <div class="item" data-name="Pepper Chicken" data-type="nonveg">
-        <img src="https://raw.githubusercontent.com/dhanushkumarvc-bot/cloud_kitchen.github.io/main/pepper-chicken.jpg" alt="Pepper Chicken">
-        <h3><span class="dot nonveg"></span>Pepper Chicken</h3>
-        <p>Fiery pepper-spiced chicken.</p>
-        <p>₹120</p>
-        <a class="order-btn" href="https://wa.me/918884537773?text=I%20want%20Pepper%20Chicken">Order</a>
-        <a class="details-btn" href="#">Details</a>
-        <div class="details-box">⏱ 25-30 mins / Serve 1</div>
-      </div>
+      <!-- Add more items as needed -->
     </div>
   </section>
 
@@ -234,11 +219,10 @@
         const matchesSearch = name.includes(searchValue);
         const matchesFilter = vegFilter === 'all' || vegFilter === type;
 
-        if(matchesSearch) {
-          item.style.display = 'block';
-          item.classList.toggle('dim', !matchesFilter);
+        if(matchesSearch && matchesFilter) {
+          item.classList.remove('hide');
         } else {
-          item.style.display = 'none';
+          item.classList.add('hide');
         }
       });
     }
