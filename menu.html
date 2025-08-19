@@ -148,9 +148,15 @@
       <tr><th>Item</th><th>Price</th><th>Qty</th><th>Total</th></tr>
     </table>
     <p id="totalPrice">Subtotal (incl. delivery ₹20): ₹0</p>
+
+    <!-- Checkout button -->
     <button class="checkout-btn" onclick="checkout()">Checkout</button>
+
+    <!-- Add Items button -->
+    <button class="add-items-btn" onclick="redirectToMenu()">Add Items</button>
   </div>
 </div>
+
 
 <script>
 let cart=[];
@@ -240,6 +246,10 @@ function filterItems(){
   });
   noItemsMessage.style.display=anyVisible?'none':'block';
 }
+function redirectToMenu() {
+  window.location.href = "menu.html"; // redirects to menu page
+}
 </script>
 </body>
 </html>
+
