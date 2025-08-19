@@ -1,267 +1,324 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Menu - The Hidden Ladle</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background: #111;
-      color: #fff;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Menu - The Hidden Ladle</title>
+<style>
+  body { font-family: Arial, sans-serif; margin:0; padding:0; background:#111; color:#fff; }
+  header { text-align:center; padding:40px 20px; }
+  header h1 { color:#ff6600; font-size:3rem; margin:0; }
+  nav { display:flex; justify-content:center; gap:30px; background:#222; padding:10px 0; }
+  nav a { color:#fff; text-decoration:none; font-weight:500; transition:0.3s; }
+  nav a:hover { color:#ff6600; }
+  .menu { padding:40px 20px; text-align:center; }
+  .menu h2 { color:#ff6600; font-size:2rem; margin-bottom:20px; }
+  .search-filter input, .search-filter select { padding:10px 15px; margin:5px; border-radius:8px; border:none; font-size:1rem; }
+  .menu-items { display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:25px; margin-top:20px; position:relative; }
+  .item { background:#222; padding:15px; border-radius:12px; box-shadow:0 5px 15px rgba(0,0,0,0.7); transition:all 0.5s ease; opacity:1; transform:scale(1); }
+  .item.hide { opacity:0; transform:scale(0.95); pointer-events:none; }
+  .item img { width:100%; height:200px; object-fit:cover; border-radius:8px; }
+  .item h3 { display:flex; align-items:center; justify-content:center; gap:8px; margin:10px 0 5px; color:#ff6600; }
+  .dot { width:12px; height:12px; border-radius:50%; display:inline-block; }
+  .veg { background:green; } .nonveg { background:red; }
+  .item p { margin:5px 0; color:#fff; }
+  .order-btn { display:inline-block; margin-top:10px; padding:10px 15px; border-radius:6px; text-decoration:none; font-weight:bold; background:#ff6600; color:#fff; transition:0.3s; }
+  .order-btn:hover { opacity:0.8; cursor:pointer; }
+  #noItemsMessage { display:none; text-align:center; font-size:1.5rem; color:#ff6600; margin-top:20px; animation:bounce 0.5s ease; }
+  @keyframes bounce { 0%{transform:scale(0.8);opacity:0;}50%{transform:scale(1.05);opacity:1;}100%{transform:scale(1);opacity:1;} }
+  footer { background:#333; color:#fff; text-align:center; padding:15px; margin-top:40px; }
 
-    header {
-      text-align: center;
-      padding: 40px 20px;
-    }
-    header h1 { color: #ff6600; font-size: 3rem; margin:0; }
+  /* Cart Modal */
+  #cartModal {
+    display:none;
+    position:fixed;
+    top:0; left:0;
+    width:100%; height:100%;
+    background:rgba(0, 0, 0, 0.85);
+    justify-content:center; align-items:center;
+    z-index:1000;
+  }
 
-    nav {
-      display: flex;
-      justify-content: center;
-      gap: 30px;
-      background: #222;
-      padding: 10px 0;
-    }
-    nav a {
-      color: #fff;
-      text-decoration: none;
-      font-weight: 500;
-      transition: 0.3s;
-    }
-    nav a:hover { color: #ff6600; }
+  #cartContent {
+    background:#1e1e1e;
+    padding:30px;
+    border-radius:15px;
+    width:90%;
+    max-width:500px;
+    color:#fff;
+    text-align:left;
+    box-shadow:0 10px 25px rgba(0,0,0,0.6);
+    position:relative;
+  }
 
-    .menu {
-      padding: 40px 20px;
-      text-align: center;
-    }
-    .menu h2 { color: #ff6600; font-size: 2rem; margin-bottom: 20px; }
+  #cartContent h3 {
+    color:#ff6600;
+    margin-top:0;
+    text-align:center;
+  }
 
-    .search-filter input, .search-filter select {
-      padding: 10px 15px;
-      margin: 5px;
-      border-radius: 8px;
-      border: none;
-      font-size: 1rem;
-    }
+  #cartContent table {
+    width:100%;
+    border-collapse:collapse;
+    margin-bottom:15px;
+  }
 
-    .menu-items {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 25px;
-      margin-top: 20px;
-      position: relative;
-    }
+  #cartContent table th, #cartContent table td {
+    padding:10px;
+    text-align:center;
+    border-bottom:1px solid #444;
+  }
 
-    .item {
-      background: #222;
-      padding: 15px;
-      border-radius: 12px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.7);
-      transition: all 0.5s ease;
-      opacity: 1;
-      transform: scale(1);
-    }
-    .item.hide { opacity: 0; transform: scale(0.95); pointer-events: none; }
+  #cartContent table th { color:#ff6600; }
 
-    .item img { width:100%; height:200px; object-fit:cover; border-radius:8px; }
-    .item h3 { display:flex; align-items:center; justify-content:center; gap:8px; margin:10px 0 5px; color:#ff6600; }
-    .dot { width:12px; height:12px; border-radius:50%; display:inline-block; }
-    .veg { background:green; } .nonveg { background:red; }
-    .item p { margin:5px 0; color:#fff; }
+  #cartContent button {
+    background:#ff6600;
+    color:#fff;
+    border:none;
+    padding:5px 10px;
+    border-radius:8px;
+    cursor:pointer;
+    margin:0 3px;
+    font-weight:bold;
+    transition:0.3s;
+  }
 
-    .order-btn, .details-btn {
-      display:inline-block; margin-top:10px; padding:10px 15px; border-radius:6px; text-decoration:none; font-weight:bold; transition:0.3s;
-    }
-    .order-btn { background:#ff6600; color:#fff; }
-    .order-btn:hover { opacity:0.8; }
-    .details-btn { background:#555; color:#fff; }
-    .details-btn:hover { opacity:0.8; }
+  #cartContent button:hover { background:#e55c00; }
 
-    .details-box { display:none; position:absolute; bottom:10px; left:10px; padding:5px 10px; background:#000; color:#fff; font-size:12px; border-radius:4px; }
-    .details-btn:hover + .details-box { display:block; }
+  #closeCart {
+    position:absolute;
+    top:15px;
+    right:20px;
+    cursor:pointer;
+    color:#ff6600;
+    font-weight:bold;
+    font-size:22px;
+    transition:0.3s;
+  }
 
-    #noItemsMessage { display:none; text-align:center; font-size:1.5rem; color:#ff6600; margin-top:20px; animation:bounce 0.5s ease; }
-    @keyframes bounce { 0%{transform:scale(0.8);opacity:0;}50%{transform:scale(1.05);opacity:1;}100%{transform:scale(1);opacity:1;} }
+  #closeCart:hover { color:#e55c00; }
 
-    footer { background:#333; color:#fff; text-align:center; padding:15px; margin-top:40px; }
+  #totalPrice {
+    font-size:1.2rem;
+    text-align:right;
+    margin-top:10px;
+    color:#ffcc80;
+  }
 
-    /* Cart Modal */
-    #cartModal {
-      display:none;
-      position:fixed;
-      top:0; left:0; width:100%; height:100%;
-      background:rgba(0,0,0,0.8);
-      justify-content:center; align-items:center;
-      z-index:1000;
-    }
-    #cartContent {
-      background:#222;
-      padding:30px;
-      border-radius:12px;
-      width:90%;
-      max-width:500px;
-      color:#fff;
-      text-align:left;
-    }
-    #cartContent h3 { color:#ff6600; margin-top:0; }
-    #cartContent table { width:100%; border-collapse:collapse; margin-bottom:15px; }
-    #cartContent table th, #cartContent table td { padding:8px; text-align:left; border-bottom:1px solid #444; }
-    #cartContent button { background:#ff6600; color:#fff; border:none; padding:10px 15px; border-radius:6px; cursor:pointer; }
-    #cartContent button:hover { opacity:0.8; }
-    #closeCart { float:right; cursor:pointer; color:#ff6600; font-weight:bold; font-size:18px; }
-  </style>
+  #cartContent button.checkout-btn {
+    width:100%;
+    margin-top:10px;
+    padding:12px;
+    font-size:1rem;
+    border-radius:10px;
+  }
+
+  /* Cart pop animation */
+  @keyframes pop {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.3); }
+    100% { transform: scale(1); }
+  }
+
+  .cart-pop { animation: pop 0.3s ease; }
+
+  /* Order button press animation */
+  @keyframes press {
+    0% { transform: scale(1); }
+    50% { transform: scale(0.9); }
+    100% { transform: scale(1); }
+  }
+
+  .order-press { animation: press 0.2s ease; }
+</style>
 </head>
 <body>
 
-  <header>
-    <h1>Our Menu</h1>
-  </header>
+<header>
+  <h1>Our Menu</h1>
+</header>
 
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="menu.html">Menu</a>
-    <a href="about.html">About Us</a>
-    <a href="contact.html">Contact</a>
-    <a href="#" onclick="openCart()">Cart 🛒</a>
-  </nav>
+<nav>
+  <a href="index.html">Home</a>
+  <a href="menu.html">Menu</a>
+  <a href="about.html">About Us</a>
+  <a href="contact.html">Contact</a>
+  <a href="#" onclick="openCart()">Cart 🛒</a>
+</nav>
 
-  <section class="menu">
-    <h2>Delicious Meals</h2>
+<section class="menu">
+  <h2>Delicious Meals</h2>
 
-    <div class="search-filter">
-      <input type="text" id="searchInput" placeholder="Search food..." onkeyup="filterItems()">
-      <select id="vegFilter" onchange="filterItems()">
-        <option value="all">All</option>
-        <option value="veg">Veg</option>
-        <option value="nonveg">Non-Veg</option>
-      </select>
+  <div class="search-filter">
+    <input type="text" id="searchInput" placeholder="Search food..." onkeyup="filterItems()">
+    <select id="vegFilter" onchange="filterItems()">
+      <option value="all">All</option>
+      <option value="veg">Veg</option>
+      <option value="nonveg">Non-Veg</option>
+    </select>
+  </div>
+
+  <div class="menu-items" id="menuItems">
+
+    <div class="item" data-name="Donne Biryani" data-price="100" data-type="nonveg">
+      <img src="https://raw.githubusercontent.com/dhanushkumarvc-bot/cloud_kitchen.github.io/main/Donne-Biriyani.jpg" alt="Donne Biryani">
+      <h3><span class="dot nonveg"></span>Donne Biryani</h3>
+      <p>Authentic Bangalore-style biryani.</p>
+      <p>₹100</p>
+      <a class="order-btn" onclick="addToCart(this)">Order</a>
     </div>
 
-    <div class="menu-items" id="menuItems">
-      <!-- Example item -->
-      <div class="item" data-name="Donne Biryani" data-price="100" data-type="nonveg">
-        <img src="https://raw.githubusercontent.com/dhanushkumarvc-bot/cloud_kitchen.github.io/main/Donne-Biriyani.jpg" alt="Donne Biryani">
-        <h3><span class="dot nonveg"></span>Donne Biryani</h3>
-        <p>Authentic Bangalore-style biryani.</p>
-        <p>₹100</p>
-        <a class="order-btn" href="#" onclick="addToCart(this)">Order</a>
-      </div>
+    <div class="item" data-name="Chicken Kebab" data-price="120" data-type="nonveg">
+      <img src="https://raw.githubusercontent.com/dhanushkumarvc-bot/cloud_kitchen.github.io/main/chicken-kebab.jpg" alt="Chicken Kebab">
+      <h3><span class="dot nonveg"></span>Chicken Kebab</h3>
+      <p>Spicy and juicy grilled chicken.</p>
+      <p>₹120</p>
+      <a class="order-btn" onclick="addToCart(this)">Order</a>
+    </div>/
 
-      <div class="item" data-name="Chicken Kebab" data-price="150" data-type="nonveg">
-        <img src="https://raw.githubusercontent.com/dhanushkumarvc-bot/cloud_kitchen.github.io/main/chicken-kebab.jpg" alt="Chicken Kebab">
-        <h3><span class="dot nonveg"></span>Chicken Kebab</h3>
-        <p>Spicy and juicy grilled chicken.</p>
-        <p>₹120</p>
-        <a class="order-btn" href="#" onclick="addToCart(this)">Order</a>
-      </div>
-<!-- Pepper Chicken -->
-<div class="item" data-name="Pepper Chicken" data-price="120" data-type="nonveg">
-  <img src="https://raw.githubusercontent.com/dhanushkumarvc-bot/cloud_kitchen.github.io/main/pepper-chicken.jpg" alt="Pepper Chicken">
-  <h3><span class="dot nonveg"></span>Pepper Chicken</h3>
-  <p>Spicy black pepper flavored chicken, served hot.</p>
-  <p>₹120</p>
-  <a class="order-btn" href="#" onclick="addToCart(this)">Order</a>
-</div>
+  <div class="item" data-name="Chilli Chicken" data-price="120" data-type="nonveg">
+    <img src="https://raw.githubusercontent.com/dhanushkumarvc-bot/cloud_kitchen.github.io/main/chilli-chicken.jpg" alt="Chilli Chicken">
+    <h3><span class="dot nonveg"></span>Chilli Chicken</h3>
+    <p>Spicy Indo-Chinese chicken with chili sauce.</p>
+    <p>₹120</p>
+    <a class="order-btn" onclick="addToCart(this)">Order</a>
+   </div>
 
-<!-- Chilli Chicken -->
-<div class="item" data-name="Chilli Chicken" data-price="120" data-type="nonveg">
-  <img src="https://raw.githubusercontent.com/dhanushkumarvc-bot/cloud_kitchen.github.io/main/chilli-chicken.jpg" alt="Chilli Chicken">
-  <h3><span class="dot nonveg"></span>Chilli Chicken</h3>
-  <p>Spicy Indo-Chinese chicken with chili sauce.</p>
-  <p>₹120</p>
-  <a class="order-btn" href="#" onclick="addToCart(this)">Order</a>
-</div>   
-    </div>
-
-    <div id="noItemsMessage">😔 No items found!</div>
-  </section>
-
-  <footer>
-    <p>&copy; 2025 The Hidden Ladle. All rights reserved.</p>
-  </footer>
-
-  <!-- Cart Modal -->
-  <div id="cartModal">
-    <div id="cartContent">
-      <span id="closeCart" onclick="closeCart()">✖</span>
-      <h3>Your Cart</h3>
-      <table id="cartTable">
-        <tr><th>Item</th><th>Price</th></tr>
-      </table>
-      <p>Delivery Charges: ₹20</p>
-      <p id="totalPrice">Total: ₹0</p>
-      <button onclick="checkout()">Checkout</button>
+    <div class="item" data-name="Pepper Chicken" data-price="120" data-type="nonveg">
+      <img src="https://raw.githubusercontent.com/dhanushkumarvc-bot/cloud_kitchen.github.io/main/pepper-chicken.jpg" alt="Pepper Chicken">
+      <h3><span class="dot nonveg"></span>Pepper Chicken</h3>
+      <p>Spicy black pepper flavored chicken, served hot.</p>
+      <p>₹120</p>
+      <a class="order-btn" onclick="addToCart(this)">Order</a>
     </div>
   </div>
 
-  <script>
-    let cart = [];
-    const deliveryCharges = 20;
+  <div id="noItemsMessage">😔 No items found!</div>
+</section>
 
-    function addToCart(btn) {
-      const itemDiv = btn.parentElement;
-      const name = itemDiv.dataset.name;
-      const price = parseInt(itemDiv.dataset.price);
-      cart.push({name, price});
-      alert(name + " added to cart!");
-    }
+<footer>
+  <p>&copy; 2025 The Hidden Ladle. All rights reserved.</p>
+</footer>
 
-    function openCart() {
-      const table = document.getElementById('cartTable');
-      table.innerHTML = "<tr><th>Item</th><th>Price</th></tr>";
-      let total = 0;
-      cart.forEach(item => {
-        const row = table.insertRow();
-        row.insertCell(0).innerText = item.name;
-        row.insertCell(1).innerText = "₹" + item.price;
-        total += item.price;
-      });
-      total += deliveryCharges;
-      document.getElementById('totalPrice').innerText = "Total: ₹" + total;
-      document.getElementById('cartModal').style.display = "flex";
-    }
+<!-- Cart Modal -->
+<div id="cartModal">
+  <div id="cartContent">
+    <span id="closeCart" onclick="closeCart()">✖</span>
+    <h3>Your Cart</h3>
+    <table id="cartTable">
+      <tr><th>Item</th><th>Price</th><th>Qty</th><th>Total</th></tr>
+    </table>
+    <p id="totalPrice">Subtotal (incl. delivery ₹20): ₹0</p>
+    <button class="checkout-btn" onclick="checkout()">Checkout</button>
+  </div>
+</div>
 
-    function closeCart() {
-      document.getElementById('cartModal').style.display = "none";
-    }
+<script>
+let cart = [];
+const deliveryCharges = 20;
 
-    function checkout() {
-      if(cart.length === 0) {
-        alert("Your cart is empty!");
-        return;
-      }
-      alert("Order placed!\nTotal: ₹" + (cart.reduce((sum,i)=>sum+i.price,0)+deliveryCharges));
-      cart = [];
-      closeCart();
-    }
+function addToCart(btn) {
+  const itemDiv = btn.parentElement;
+  const name = itemDiv.dataset.name;
+  const price = parseInt(itemDiv.dataset.price);
+  const existing = cart.find(i=>i.name===name);
+  if(existing) existing.quantity+=1;
+  else cart.push({name,price,quantity:1});
 
-    // Search & filter
-    function filterItems() {
-      const searchValue = document.getElementById('searchInput').value.toLowerCase();
-      const vegFilter = document.getElementById('vegFilter').value;
-      const items = document.querySelectorAll('#menuItems .item');
-      const noItemsMessage = document.getElementById('noItemsMessage');
-      let anyVisible = false;
+  // Animate order button
+  btn.classList.remove('order-press');
+  void btn.offsetWidth;
+  btn.classList.add('order-press');
 
-      items.forEach(item => {
-        const name = item.dataset.name.toLowerCase();
-        const type = item.dataset.type;
-        const matchesSearch = name.includes(searchValue);
-        const matchesFilter = vegFilter === 'all' || vegFilter === type;
-        if(matchesSearch && matchesFilter) {
-          item.classList.remove('hide');
-          anyVisible = true;
-        } else {
-          item.classList.add('hide');
-        }
-      });
+  updateCartIndicator();
+  alert(name+" added to cart!");
+}
 
-      noItemsMessage.style.display = anyVisible ? 'none' : 'block';
-    }
-  </script>
+function updateCartIndicator() {
+  const cartLink = document.querySelector('nav a[href="#"]');
+  const totalQty = cart.reduce((sum,i)=>sum+i.quantity,0);
+  cartLink.innerHTML = `Cart 🛒 ${totalQty ? '('+totalQty+')' : ''}`;
+
+  // Animate cart icon
+  cartLink.classList.remove('cart-pop');
+  void cartLink.offsetWidth;
+  cartLink.classList.add('cart-pop');
+}
+
+function openCart() {
+  const table = document.getElementById('cartTable');
+  table.innerHTML="<tr><th>Item</th><th>Price</th><th>Qty</th><th>Total</th></tr>";
+  let subtotal = 0;
+  cart.forEach((item,index)=>{
+    const row = table.insertRow();
+    row.insertCell(0).innerText = item.name;
+    row.insertCell(1).innerText = "₹"+item.price;
+
+    const qtyCell = row.insertCell(2);
+    const minusBtn=document.createElement('button');
+    minusBtn.innerText='-';
+    minusBtn.onclick=()=>updateQuantity(index,-1);
+    const qtySpan=document.createElement('span');
+    qtySpan.innerText=' '+item.quantity+' ';
+    const plusBtn=document.createElement('button');
+    plusBtn.innerText='+';
+    plusBtn.onclick=()=>updateQuantity(index,1);
+    qtyCell.appendChild(minusBtn);
+    qtyCell.appendChild(qtySpan);
+    qtyCell.appendChild(plusBtn);
+
+    row.insertCell(3).innerText="₹"+(item.price*item.quantity);
+    subtotal+=item.price*item.quantity;
+  });
+  const totalWithDelivery=subtotal+deliveryCharges;
+  document.getElementById('totalPrice').innerText=`Subtotal (incl. delivery ₹${deliveryCharges}): ₹${totalWithDelivery}`;
+  document.getElementById('cartModal').style.display='flex';
+}
+
+function updateQuantity(index,change){
+  cart[index].quantity+=change;
+  if(cart[index].quantity<=0) cart.splice(index,1);
+  updateCartIndicator();
+  openCart();
+}
+
+function closeCart(){document.getElementById('cartModal').style.display='none';}
+
+function checkout(){
+  if(cart.length===0){alert("Your cart is empty!"); return;}
+  let message="Hello, I want to place an order:%0A";
+  let subtotal=0;
+  cart.forEach(item=>{
+    message+=`${item.name} x${item.quantity} = ₹${item.price*item.quantity}%0A`;
+    subtotal+=item.price*item.quantity;
+  });
+  const total=subtotal+deliveryCharges;
+  message+=`Delivery: ₹${deliveryCharges}%0ATotal: ₹${total}%0A`;
+  const whatsappURL=`https://wa.me/91888453773?text=${message}`;
+  window.open(whatsappURL,'_blank');
+  cart=[];
+  updateCartIndicator();
+  closeCart();
+}
+
+// Search & filter
+function filterItems(){
+  const searchValue=document.getElementById('searchInput').value.toLowerCase();
+  const vegFilter=document.getElementById('vegFilter').value;
+  const items=document.querySelectorAll('#menuItems .item');
+  const noItemsMessage=document.getElementById('noItemsMessage');
+  let anyVisible=false;
+  items.forEach(item=>{
+    const name=item.dataset.name.toLowerCase();
+    const type=item.dataset.type;
+    const matchesSearch=name.includes(searchValue);
+    const matchesFilter=vegFilter==='all'||vegFilter===type;
+    if(matchesSearch&&matchesFilter){item.classList.remove('hide'); anyVisible=true;}
+    else item.classList.add('hide');
+  });
+  noItemsMessage.style.display=anyVisible?'none':'block';
+}
+</script>
+
 </body>
 </html>
