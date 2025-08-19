@@ -9,77 +9,60 @@
       font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
-      background: url('47fc7dd8-44d2-49e0-b0b6-81053f5abf3b.png') no-repeat center center fixed;
-      background-size: cover;
-      color: white;
+      background: #111; /* dark background like menu/contact page */
+      color: #fff;
     }
 
     header {
       text-align: center;
-      padding: 40px 20px 20px 20px;
-      font-size: 2.5em;
-      font-weight: bold;
-      color: #ff6600;
-      text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
+      padding: 40px 20px 20px;
+      color: #ff6600; /* orange header text */
     }
 
     nav {
-      display: flex;
-      justify-content: center;
-      background: rgba(0, 0, 0, 0.7);
-      padding: 15px 0;
-      margin-bottom: 40px;
+      background: #222; /* dark nav */
+      padding: 10px;
+      text-align: center;
     }
 
     nav a {
       color: white;
-      margin: 0 25px;
+      margin: 0 15px;
       text-decoration: none;
       font-weight: bold;
-      font-size: 1.1em;
     }
 
     nav a:hover {
-      text-decoration: underline;
+      color: #ff6600; /* highlight on hover */
     }
 
     .about-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      max-width: 900px;
-      margin: 0 auto 60px auto;
-      gap: 30px;
-      padding: 0 20px;
-    }
-
-    .about-card {
-      background: rgba(0, 0, 0, 0.7);
-      border-radius: 15px;
-      padding: 30px 25px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.8);
+      background: #1a1a1a; /* dark card-like section */
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.7);
       text-align: center;
-      width: 100%;
     }
 
-    .about-card h2 {
+    .about-container h2 {
       color: #ff6600;
-      font-size: 2em;
       margin-bottom: 20px;
     }
 
-    .about-card p {
-      font-size: 1.1em;
+    .about-container p {
+      font-size: 18px;
+      margin: 10px 0;
       line-height: 1.6;
-      color: #f5f5f5;
     }
 
     footer {
-      background: rgba(0,0,0,0.7);
+      background: #222;
+      color: white;
       text-align: center;
-      padding: 20px;
-      font-size: 1em;
-      margin-top: 50px;
+      padding: 15px;
+      margin-top: 30px;
     }
   </style>
 </head>
@@ -95,13 +78,11 @@
   </nav>
 
   <div class="about-container">
-    <div class="about-card">
-      <h2>Our Story</h2>
-      <p>The Hidden Ladle is a Bangalore-based cloud kitchen founded with love for authentic homemade food. 
-         We aim to bring traditional recipes, fresh ingredients, and flavors directly to your doorstep. 
-         Every meal is cooked with care, keeping hygiene and taste at the highest standards.</p>
-      <p>Whether it’s biryani, kebabs, or Indo-Chinese, we make sure every bite feels like home.</p>
-    </div>
+    <h2>Our Story</h2>
+    <p>The Hidden Ladle is a Bangalore-based cloud kitchen founded with love for authentic homemade food. 
+       We aim to bring traditional recipes, fresh ingredients, and flavors directly to your doorstep. 
+       Every meal is cooked with care, keeping hygiene and taste at the highest standards.</p>
+    <p>Whether it’s biryani, kebabs, or Indo-Chinese, we make sure every bite feels like home.</p>
   </div>
 
   <footer>
