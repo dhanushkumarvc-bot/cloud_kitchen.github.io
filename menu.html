@@ -270,9 +270,38 @@ function openCart() {
     row.insertCell(3).innerText="₹"+(item.price*item.quantity);
     subtotal+=item.price*item.quantity;
   });
-  const totalWithDelivery=subtotal+deliveryCharges;
-  document.getElementById('totalPrice').innerText=`Subtotal (incl. delivery ₹${deliveryCharges}): ₹${totalWithDelivery}`;
-  document.getElementById('cartModal').style.display='flex';
+function openCart() {
+  const table = document.getElementById('cartTable');
+  table.innerHTML = "<tr><th>Item</th><th>Price</th><th>Qty</th><th>Total</th></tr>";
+  let subtotal = 0;
+
+  cart.forEach((item, index) => {
+    const row = table.insertRow();
+    row.insertCell(0).innerText = item.name;
+    row.insertCell(1).innerText = "₹" + item.price;
+
+    const qtyCell = row.insertCell(2);
+    const minusBtn = document.createElement('button');
+    minusBtn.innerText = '-';
+    minusBtn.onclick = () => updateQuantity(index, -1);
+    const qtySpan = document.createElement('span');
+    qtySpan.innerText = ' ' + item.quantity + ' ';
+    const plusBtn = document.createElement('button');
+    plusBtn.innerText = '+';
+    plusBtn.onclick = () => updateQuantity(index, 1);
+    qtyCell.appendChild(minusBtn);
+    qtyCell.appendChild(qtySpan);
+    qtyCell.appendChild(plusBtn);
+
+    const totalPerItem = item.price * item.quantity;
+    row.insertCell(3).innerText = "₹" + totalPerItem;
+    subtotal += totalPerItem;
+  });
+
+  // ADD FLAT DELIVERY CHARGE HERE
+  const totalWithDelivery = subtotal + deliveryCharges;
+  document.getElementById('totalPrice').innerText = `Subtotal (incl. delivery ₹${deliveryCharges}): ₹${totalWithDelivery}`;
+  document.getElementById('cartModal').style.display = 'flex';
 }
 
 function updateQuantity(index,change){
@@ -322,4 +351,5 @@ function filterItems(){
 
 </body>
 </html>
+
 
