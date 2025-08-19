@@ -9,7 +9,7 @@
       font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
-      background: #111; /* smoky black */
+      background: #111;
       color: #fff;
     }
 
@@ -17,17 +17,13 @@
       text-align: center;
       padding: 40px 20px;
     }
-    header h1 {
-      font-size: 3rem;
-      color: #ff6600; /* orange heading */
-      margin: 0;
-    }
+    header h1 { color: #ff6600; font-size: 3rem; margin:0; }
 
     nav {
       display: flex;
       justify-content: center;
       gap: 30px;
-      background: #222; /* dark navbar */
+      background: #222;
       padding: 10px 0;
     }
     nav a {
@@ -36,23 +32,14 @@
       font-weight: 500;
       transition: 0.3s;
     }
-    nav a:hover {
-      color: #ff6600; /* orange hover */
-    }
+    nav a:hover { color: #ff6600; }
 
     .menu {
       padding: 40px 20px;
       text-align: center;
     }
-    .menu h2 {
-      color: #ff6600; /* orange subheading */
-      font-size: 2rem;
-      margin-bottom: 20px;
-    }
+    .menu h2 { color: #ff6600; font-size: 2rem; margin-bottom: 20px; }
 
-    .search-filter {
-      margin-bottom: 30px;
-    }
     .search-filter input, .search-filter select {
       padding: 10px 15px;
       margin: 5px;
@@ -70,103 +57,62 @@
     }
 
     .item {
-      background: #222; /* dark card */
+      background: #222;
       padding: 15px;
       border-radius: 12px;
-      position: relative;
       box-shadow: 0 5px 15px rgba(0,0,0,0.7);
-      transition: all 0.5s ease; /* smooth animation */
+      transition: all 0.5s ease;
       opacity: 1;
       transform: scale(1);
     }
-    .item.hide {
-      opacity: 0;
-      transform: scale(0.9);
-      pointer-events: none;
-    }
-    .item img {
-      width: 100%;
-      border-radius: 8px;
-    }
-    .item h3 {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      margin: 10px 0 5px;
-      color: #ff6600; /* orange item name */
-    }
-    .dot {
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      display: inline-block;
-    }
-    .veg { background: green; }
-    .nonveg { background: red; }
+    .item.hide { opacity: 0; transform: scale(0.95); pointer-events: none; }
 
-    .item p {
-      margin: 5px 0;
-      color: #fff;
-    }
+    .item img { width:100%; height:200px; object-fit:cover; border-radius:8px; }
+    .item h3 { display:flex; align-items:center; justify-content:center; gap:8px; margin:10px 0 5px; color:#ff6600; }
+    .dot { width:12px; height:12px; border-radius:50%; display:inline-block; }
+    .veg { background:green; } .nonveg { background:red; }
+    .item p { margin:5px 0; color:#fff; }
 
     .order-btn, .details-btn {
-      display: inline-block;
-      margin-top: 10px;
-      padding: 10px 15px;
-      border-radius: 6px;
-      text-decoration: none;
-      font-weight: bold;
-      transition: 0.3s;
+      display:inline-block; margin-top:10px; padding:10px 15px; border-radius:6px; text-decoration:none; font-weight:bold; transition:0.3s;
     }
-    .order-btn {
-      background: #ff6600;
-      color: #fff;
-    }
-    .order-btn:hover { opacity: 0.8; }
-    .details-btn {
-      background: #555;
-      color: #fff;
-    }
-    .details-btn:hover { opacity: 0.8; }
+    .order-btn { background:#ff6600; color:#fff; }
+    .order-btn:hover { opacity:0.8; }
+    .details-btn { background:#555; color:#fff; }
+    .details-btn:hover { opacity:0.8; }
 
-    .details-box {
-      display: none;
-      position: absolute;
-      bottom: 10px;
-      left: 10px;
-      padding: 5px 10px;
-      background: #000;
-      color: #fff;
-      font-size: 12px;
-      border-radius: 4px;
-    }
-    .details-btn:hover + .details-box {
-      display: block;
-    }
+    .details-box { display:none; position:absolute; bottom:10px; left:10px; padding:5px 10px; background:#000; color:#fff; font-size:12px; border-radius:4px; }
+    .details-btn:hover + .details-box { display:block; }
 
-    #noItemsMessage {
-      display: none;
-      text-align: center;
-      font-size: 1.5rem;
-      color: #ff6600;
-      margin-top: 20px;
-      animation: bounce 0.5s ease;
-    }
+    #noItemsMessage { display:none; text-align:center; font-size:1.5rem; color:#ff6600; margin-top:20px; animation:bounce 0.5s ease; }
+    @keyframes bounce { 0%{transform:scale(0.8);opacity:0;}50%{transform:scale(1.05);opacity:1;}100%{transform:scale(1);opacity:1;} }
 
-    @keyframes bounce {
-      0% { transform: scale(0.8); opacity: 0; }
-      50% { transform: scale(1.05); opacity: 1; }
-      100% { transform: scale(1); opacity: 1; }
-    }
+    footer { background:#333; color:#fff; text-align:center; padding:15px; margin-top:40px; }
 
-    footer {
-      background: #333;
-      color: #fff;
-      text-align: center;
-      padding: 15px;
-      margin-top: 40px;
+    /* Cart Modal */
+    #cartModal {
+      display:none;
+      position:fixed;
+      top:0; left:0; width:100%; height:100%;
+      background:rgba(0,0,0,0.8);
+      justify-content:center; align-items:center;
+      z-index:1000;
     }
+    #cartContent {
+      background:#222;
+      padding:30px;
+      border-radius:12px;
+      width:90%;
+      max-width:500px;
+      color:#fff;
+      text-align:left;
+    }
+    #cartContent h3 { color:#ff6600; margin-top:0; }
+    #cartContent table { width:100%; border-collapse:collapse; margin-bottom:15px; }
+    #cartContent table th, #cartContent table td { padding:8px; text-align:left; border-bottom:1px solid #444; }
+    #cartContent button { background:#ff6600; color:#fff; border:none; padding:10px 15px; border-radius:6px; cursor:pointer; }
+    #cartContent button:hover { opacity:0.8; }
+    #closeCart { float:right; cursor:pointer; color:#ff6600; font-weight:bold; font-size:18px; }
   </style>
 </head>
 <body>
@@ -180,6 +126,7 @@
     <a href="menu.html">Menu</a>
     <a href="about.html">About Us</a>
     <a href="contact.html">Contact</a>
+    <a href="#" onclick="openCart()">Cart 🛒</a>
   </nav>
 
   <section class="menu">
@@ -195,76 +142,116 @@
     </div>
 
     <div class="menu-items" id="menuItems">
-      <!-- Donne Biryani -->
-      <div class="item" data-name="Donne Biryani" data-type="nonveg">
+      <!-- Example item -->
+      <div class="item" data-name="Donne Biryani" data-price="100" data-type="nonveg">
         <img src="https://raw.githubusercontent.com/dhanushkumarvc-bot/cloud_kitchen.github.io/main/Donne-Biriyani.jpg" alt="Donne Biryani">
         <h3><span class="dot nonveg"></span>Donne Biryani</h3>
         <p>Authentic Bangalore-style biryani.</p>
         <p>₹100</p>
-        <a class="order-btn" href="https://wa.me/918884537773?text=I%20want%20Donne%20Biryani">Order</a>
-        <a class="details-btn" href="#">Details</a>
-        <div class="details-box">⏱ 30-40 mins / Serve 1</div>
+        <a class="order-btn" href="#" onclick="addToCart(this)">Order</a>
       </div>
 
-      <!-- Chicken Kebab -->
-      <div class="item" data-name="Chicken Kebab" data-type="nonveg">
+      <div class="item" data-name="Chicken Kebab" data-price="150" data-type="nonveg">
         <img src="https://raw.githubusercontent.com/dhanushkumarvc-bot/cloud_kitchen.github.io/main/chicken-kebab.jpg" alt="Chicken Kebab">
         <h3><span class="dot nonveg"></span>Chicken Kebab</h3>
         <p>Spicy and juicy grilled chicken.</p>
-        <p>₹150</p>
-        <a class="order-btn" href="https://wa.me/918884537773?text=I%20want%20Chicken%20Kebab">Order</a>
-        <a class="details-btn" href="#">Details</a>
-        <div class="details-box">⏱ 20-25 mins / Serve 1</div>
-      </div>
-
-      <!-- Pepper Chicken -->
-      <div class="item" data-name="Pepper Chicken" data-type="nonveg">
-        <img src="https://raw.githubusercontent.com/dhanushkumarvc-bot/cloud_kitchen.github.io/main/pepper-chicken.jpg" alt="Pepper Chicken">
-        <h3><span class="dot nonveg"></span>Pepper Chicken</h3>
-        <p>Spicy black pepper flavored chicken, served hot.</p>
         <p>₹120</p>
-        <a class="order-btn" href="https://wa.me/918884537773?text=I%20want%20Pepper%20Chicken">Order</a>
-        <a class="details-btn" href="#">Details</a>
-        <div class="details-box">⏱ 20-25 mins / Serve 1</div>
+        <a class="order-btn" href="#" onclick="addToCart(this)">Order</a>
       </div>
+<!-- Pepper Chicken -->
+<div class="item" data-name="Pepper Chicken" data-price="120" data-type="nonveg">
+  <img src="https://raw.githubusercontent.com/dhanushkumarvc-bot/cloud_kitchen.github.io/main/pepper-chicken.jpg" alt="Pepper Chicken">
+  <h3><span class="dot nonveg"></span>Pepper Chicken</h3>
+  <p>Spicy black pepper flavored chicken, served hot.</p>
+  <p>₹120</p>
+  <a class="order-btn" href="#" onclick="addToCart(this)">Order</a>
+</div>
 
-      <!-- Chilli Chicken -->
-      <div class="item" data-name="Chilli Chicken" data-type="nonveg">
-        <img src="https://raw.githubusercontent.com/dhanushkumarvc-bot/cloud_kitchen.github.io/main/chilli-chicken.jpg" alt="Chilli Chicken">
-        <h3><span class="dot nonveg"></span>Chilli Chicken</h3>
-        <p>Spicy Indo-Chinese chicken with chili sauce.</p>
-        <p>₹120</p>
-        <a class="order-btn" href="https://wa.me/918884537773?text=I%20want%20Chilli%20Chicken">Order</a>
-        <a class="details-btn" href="#">Details</a>
-        <div class="details-box">⏱ 20-25 mins / Serve 1</div>
-      </div>
+<!-- Chilli Chicken -->
+<div class="item" data-name="Chilli Chicken" data-price="120" data-type="nonveg">
+  <img src="https://raw.githubusercontent.com/dhanushkumarvc-bot/cloud_kitchen.github.io/main/chilli-chicken.jpg" alt="Chilli Chicken">
+  <h3><span class="dot nonveg"></span>Chilli Chicken</h3>
+  <p>Spicy Indo-Chinese chicken with chili sauce.</p>
+  <p>₹120</p>
+  <a class="order-btn" href="#" onclick="addToCart(this)">Order</a>
+</div>   
     </div>
 
-    <!-- No items message -->
     <div id="noItemsMessage">😔 No items found!</div>
-
   </section>
 
   <footer>
     <p>&copy; 2025 The Hidden Ladle. All rights reserved.</p>
   </footer>
 
+  <!-- Cart Modal -->
+  <div id="cartModal">
+    <div id="cartContent">
+      <span id="closeCart" onclick="closeCart()">✖</span>
+      <h3>Your Cart</h3>
+      <table id="cartTable">
+        <tr><th>Item</th><th>Price</th></tr>
+      </table>
+      <p>Delivery Charges: ₹20</p>
+      <p id="totalPrice">Total: ₹0</p>
+      <button onclick="checkout()">Checkout</button>
+    </div>
+  </div>
+
   <script>
+    let cart = [];
+    const deliveryCharges = 20;
+
+    function addToCart(btn) {
+      const itemDiv = btn.parentElement;
+      const name = itemDiv.dataset.name;
+      const price = parseInt(itemDiv.dataset.price);
+      cart.push({name, price});
+      alert(name + " added to cart!");
+    }
+
+    function openCart() {
+      const table = document.getElementById('cartTable');
+      table.innerHTML = "<tr><th>Item</th><th>Price</th></tr>";
+      let total = 0;
+      cart.forEach(item => {
+        const row = table.insertRow();
+        row.insertCell(0).innerText = item.name;
+        row.insertCell(1).innerText = "₹" + item.price;
+        total += item.price;
+      });
+      total += deliveryCharges;
+      document.getElementById('totalPrice').innerText = "Total: ₹" + total;
+      document.getElementById('cartModal').style.display = "flex";
+    }
+
+    function closeCart() {
+      document.getElementById('cartModal').style.display = "none";
+    }
+
+    function checkout() {
+      if(cart.length === 0) {
+        alert("Your cart is empty!");
+        return;
+      }
+      alert("Order placed!\nTotal: ₹" + (cart.reduce((sum,i)=>sum+i.price,0)+deliveryCharges));
+      cart = [];
+      closeCart();
+    }
+
+    // Search & filter
     function filterItems() {
       const searchValue = document.getElementById('searchInput').value.toLowerCase();
       const vegFilter = document.getElementById('vegFilter').value;
       const items = document.querySelectorAll('#menuItems .item');
       const noItemsMessage = document.getElementById('noItemsMessage');
-
       let anyVisible = false;
 
       items.forEach(item => {
         const name = item.dataset.name.toLowerCase();
         const type = item.dataset.type;
-
         const matchesSearch = name.includes(searchValue);
         const matchesFilter = vegFilter === 'all' || vegFilter === type;
-
         if(matchesSearch && matchesFilter) {
           item.classList.remove('hide');
           anyVisible = true;
@@ -273,14 +260,8 @@
         }
       });
 
-      if(anyVisible) {
-        noItemsMessage.style.display = 'none';
-      } else {
-        noItemsMessage.style.display = 'block';
-      }
+      noItemsMessage.style.display = anyVisible ? 'none' : 'block';
     }
   </script>
-
 </body>
 </html>
-
