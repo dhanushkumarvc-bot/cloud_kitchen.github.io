@@ -9,8 +9,7 @@
       font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
-      background: url('46cbe2ba-1b1f-4e6a-9c1e-81b7575b78db.png') no-repeat center center fixed;
-      background-size: cover;
+      background: #111; /* smoky black */
       color: #fff;
     }
 
@@ -20,7 +19,7 @@
     }
     header h1 {
       font-size: 3rem;
-      color: #ff6600;
+      color: #ff6600; /* orange heading */
       margin: 0;
     }
 
@@ -28,16 +27,17 @@
       display: flex;
       justify-content: center;
       gap: 30px;
-      background: rgba(0,0,0,0.6);
+      background: #222; /* dark navbar */
       padding: 10px 0;
     }
     nav a {
       color: #fff;
       text-decoration: none;
       font-weight: 500;
+      transition: 0.3s;
     }
     nav a:hover {
-      text-decoration: underline;
+      color: #ff6600; /* orange hover */
     }
 
     .menu {
@@ -45,7 +45,7 @@
       text-align: center;
     }
     .menu h2 {
-      color: #ff6600;
+      color: #ff6600; /* orange subheading */
       font-size: 2rem;
       margin-bottom: 20px;
     }
@@ -66,22 +66,24 @@
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
       gap: 25px;
       margin-top: 20px;
+      position: relative;
     }
 
     .item {
-      background: rgba(28,28,28,0.9);
+      background: #222; /* dark card */
       padding: 15px;
       border-radius: 12px;
       position: relative;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.5);
-      transition: all 0.3s ease; /* Smooth animation */
+      box-shadow: 0 5px 15px rgba(0,0,0,0.7);
+      transition: all 0.5s ease; /* smooth animation */
       opacity: 1;
       transform: scale(1);
     }
     .item.hide {
       opacity: 0;
-      transform: scale(0.95);
+      transform: scale(0.9);
       pointer-events: none;
+      position: absolute; /* prevents jump */
     }
     .item img {
       width: 100%;
@@ -93,6 +95,7 @@
       justify-content: center;
       gap: 8px;
       margin: 10px 0 5px;
+      color: #ff6600; /* orange item name */
     }
     .dot {
       width: 12px;
@@ -105,6 +108,7 @@
 
     .item p {
       margin: 5px 0;
+      color: #fff;
     }
 
     .order-btn, .details-btn {
@@ -133,13 +137,28 @@
       bottom: 10px;
       left: 10px;
       padding: 5px 10px;
-      background: black;
-      color: white;
+      background: #000;
+      color: #fff;
       font-size: 12px;
       border-radius: 4px;
     }
     .details-btn:hover + .details-box {
       display: block;
+    }
+
+    #noItemsMessage {
+      display: none;
+      text-align: center;
+      font-size: 1.5rem;
+      color: #ff6600;
+      margin-top: 20px;
+      animation: bounce 0.5s ease;
+    }
+
+    @keyframes bounce {
+      0% { transform: scale(0.8); opacity: 0; }
+      50% { transform: scale(1.05); opacity: 1; }
+      100% { transform: scale(1); opacity: 1; }
     }
 
     footer {
@@ -177,6 +196,7 @@
     </div>
 
     <div class="menu-items" id="menuItems">
+      <!-- Donne Biryani -->
       <div class="item" data-name="Donne Biryani" data-type="nonveg">
         <img src="https://raw.githubusercontent.com/dhanushkumarvc-bot/cloud_kitchen.github.io/main/Donne-Biriyani.jpg" alt="Donne Biryani">
         <h3><span class="dot nonveg"></span>Donne Biryani</h3>
@@ -187,6 +207,7 @@
         <div class="details-box">⏱ 30-40 mins / Serve 1</div>
       </div>
 
+      <!-- Chicken Kebab -->
       <div class="item" data-name="Chicken Kebab" data-type="nonveg">
         <img src="https://raw.githubusercontent.com/dhanushkumarvc-bot/cloud_kitchen.github.io/main/chicken-kebab.jpg" alt="Chicken Kebab">
         <h3><span class="dot nonveg"></span>Chicken Kebab</h3>
@@ -197,28 +218,32 @@
         <div class="details-box">⏱ 20-25 mins / Serve 1</div>
       </div>
 
-  <!-- Pepper Chicken -->
-  <div class="item" data-name="Pepper Chicken" data-type="nonveg">
-    <img src="https://raw.githubusercontent.com/dhanushkumarvc-bot/cloud_kitchen.github.io/main/pepper-chicken.jpg" alt="Pepper Chicken">
-    <h3><span class="dot nonveg"></span>Pepper Chicken</h3>
-    <p>Spicy black pepper flavored chicken, served hot.</p>
-    <p>₹120</p>
-    <a class="order-btn" href="https://wa.me/918884537773?text=I%20want%20Pepper%20Chicken">Order</a>
-    <a class="details-btn" href="#">Details</a>
-    <div class="details-box">⏱ 20-25 mins / Serve 1</div>
-  </div>
+      <!-- Pepper Chicken -->
+      <div class="item" data-name="Pepper Chicken" data-type="nonveg">
+        <img src="https://raw.githubusercontent.com/dhanushkumarvc-bot/cloud_kitchen.github.io/main/pepper-chicken.jpg" alt="Pepper Chicken">
+        <h3><span class="dot nonveg"></span>Pepper Chicken</h3>
+        <p>Spicy black pepper flavored chicken, served hot.</p>
+        <p>₹120</p>
+        <a class="order-btn" href="https://wa.me/918884537773?text=I%20want%20Pepper%20Chicken">Order</a>
+        <a class="details-btn" href="#">Details</a>
+        <div class="details-box">⏱ 20-25 mins / Serve 1</div>
+      </div>
 
-  <!-- Chilli Chicken -->
-  <div class="item" data-name="Chilli Chicken" data-type="nonveg">
-    <img src="https://raw.githubusercontent.com/dhanushkumarvc-bot/cloud_kitchen.github.io/main/chilli-chicken.jpg" alt="Chilli Chicken">
-    <h3><span class="dot nonveg"></span>Chilli Chicken</h3>
-    <p>Spicy Indo-Chinese chicken with chili sauce.</p>
-    <p>₹120</p>
-    <a class="order-btn" href="https://wa.me/918884537773?text=I%20want%20Chilli%20Chicken">Order</a>
-    <a class="details-btn" href="#">Details</a>
-    <div class="details-box">⏱ 20-25 mins / Serve 1</div>
-  </div>
-</div>
+      <!-- Chilli Chicken -->
+      <div class="item" data-name="Chilli Chicken" data-type="nonveg">
+        <img src="https://raw.githubusercontent.com/dhanushkumarvc-bot/cloud_kitchen.github.io/main/chilli-chicken.jpg" alt="Chilli Chicken">
+        <h3><span class="dot nonveg"></span>Chilli Chicken</h3>
+        <p>Spicy Indo-Chinese chicken with chili sauce.</p>
+        <p>₹120</p>
+        <a class="order-btn" href="https://wa.me/918884537773?text=I%20want%20Chilli%20Chicken">Order</a>
+        <a class="details-btn" href="#">Details</a>
+        <div class="details-box">⏱ 20-25 mins / Serve 1</div>
+      </div>
+    </div>
+
+    <!-- No items message -->
+    <div id="noItemsMessage">😔 No items found!</div>
+
   </section>
 
   <footer>
@@ -230,6 +255,9 @@
       const searchValue = document.getElementById('searchInput').value.toLowerCase();
       const vegFilter = document.getElementById('vegFilter').value;
       const items = document.querySelectorAll('#menuItems .item');
+      const noItemsMessage = document.getElementById('noItemsMessage');
+
+      let anyVisible = false;
 
       items.forEach(item => {
         const name = item.dataset.name.toLowerCase();
@@ -240,14 +268,19 @@
 
         if(matchesSearch && matchesFilter) {
           item.classList.remove('hide');
+          anyVisible = true;
         } else {
           item.classList.add('hide');
         }
       });
+
+      if(anyVisible) {
+        noItemsMessage.style.display = 'none';
+      } else {
+        noItemsMessage.style.display = 'block';
+      }
     }
   </script>
 
 </body>
 </html>
-
-
