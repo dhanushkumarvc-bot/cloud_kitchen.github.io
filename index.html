@@ -4,12 +4,42 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>The Hidden Ladle - Cloud Kitchen</title>
+
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="The Hidden Ladle: Authentic Indian homemade meals delivered fresh to your doorstep in Bangalore. Order your favorite dishes today!">
+  <meta name="keywords" content="The Hidden Ladle, Cloud Kitchen, Bangalore, Indian Food, Homemade Meals, Food Delivery">
+  <meta name="author" content="The Hidden Ladle">
+
+  <!-- Open Graph Tags for Social Sharing -->
+  <meta property="og:title" content="The Hidden Ladle - Cloud Kitchen">
+  <meta property="og:description" content="Authentic Indian homemade meals delivered fresh to your doorstep in Bangalore.">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1604908177524-9f2d6de12f44?auto=format&fit=crop&w=1600&q=80">
+  <meta property="og:url" content="https://dhanushkumarvc-bot.github.io/cloud_kitchen.github.io/">
+  <meta property="og:type" content="website">
+
+  <!-- Structured Data (Schema.org) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Restaurant",
+    "name": "The Hidden Ladle",
+    "image": "https://images.unsplash.com/photo-1604908177524-9f2d6de12f44?auto=format&fit=crop&w=1600&q=80",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Bangalore",
+      "addressCountry": "IN"
+    },
+    "telephone": "+918884537773",
+    "url": "https://dhanushkumarvc-bot.github.io/cloud_kitchen.github.io/"
+  }
+  </script>
+
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       margin: 0;
       padding: 0;
-      background: url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1600&q=80') no-repeat center center fixed;
+      background: url('https://images.unsplash.com/photo-1604908177524-9f2d6de12f44?auto=format&fit=crop&w=1600&q=80') no-repeat center center fixed;
       background-size: cover;
       color: #333;
     }
@@ -36,24 +66,31 @@
     .hero {
       text-align: center;
       padding: 80px 20px;
-      background: rgba(255,255,255,0.8);
+      background: rgba(255, 255, 255, 0.9); /* semi-transparent overlay for readability */
       margin: 40px auto;
       border-radius: 12px;
       width: 80%;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.3);
     }
     .hero h2 {
       color: #ff6600;
       font-size: 32px;
+      margin-bottom: 15px;
+    }
+    .hero p {
+      font-size: 18px;
+      margin: 15px 0;
     }
     .order-btn {
       display: inline-block;
-      margin-top: 15px;
-      padding: 12px 20px;
+      margin-top: 20px;
+      padding: 14px 24px;
       background: #ff6600;
       color: white;
       text-decoration: none;
       border-radius: 6px;
       font-weight: bold;
+      font-size: 16px;
     }
     .order-btn:hover {
       background: #e65c00;
@@ -64,6 +101,7 @@
       text-align: center;
       padding: 20px;
       margin-top: 50px;
+      font-size: 14px;
     }
   </style>
 </head>
@@ -81,8 +119,8 @@
   </nav>
 
   <section class="hero">
-    <h2>Welcome to The Hidden Ladle</h2>
-    <p>Delicious homemade meals, delivered fresh to your doorstep in Bangalore.</p>
+    <h2>Authentic Indian Homemade Meals Delivered in Bangalore</h2>
+    <p>Experience the taste of India with freshly cooked dishes from <strong>The Hidden Ladle</strong>. Enjoy traditional flavors delivered straight to your home.</p>
     <a class="order-btn" href="https://wa.me/918884537773?text=Hi%2C%20I%20want%20to%20order">Order Now on WhatsApp</a>
   </section>
 
