@@ -5,52 +5,88 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Menu - The Hidden Ladle</title>
   <style>
-    body { font-family: Arial, sans-serif; margin: 0; padding: 0; background: #fffdf7; }
-    header { background: #ff6600; color: white; padding: 20px; text-align: center; }
-    nav { background: #333; padding: 10px; text-align: center; }
-    nav a { color: white; margin: 0 15px; text-decoration: none; }
-    nav a:hover { text-decoration: underline; }
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #121212 url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1600&q=80') no-repeat center center fixed;
+      background-size: cover;
+      color: #fff;
+    }
 
-    .menu { padding: 40px 20px; text-align: center; }
-    .menu h2 { color: #ff6600; }
+    header {
+      text-align: center;
+      padding: 40px 20px;
+    }
+    header h1 {
+      font-size: 3rem;
+      color: #ff6600;
+      margin: 0;
+    }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      background: rgba(0,0,0,0.6);
+      padding: 10px 0;
+    }
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    .menu {
+      padding: 40px 20px;
+      text-align: center;
+    }
+    .menu h2 {
+      color: #ff6600;
+      font-size: 2rem;
+      margin-bottom: 20px;
+    }
 
     /* Search & Filter */
     .search-filter {
-      margin-bottom: 20px;
+      margin-bottom: 30px;
     }
     .search-filter input, .search-filter select {
-      padding: 8px 10px;
+      padding: 10px 15px;
       margin: 5px;
-      border-radius: 5px;
-      border: 1px solid #ccc;
+      border-radius: 8px;
+      border: none;
+      font-size: 1rem;
     }
 
     .menu-items {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 20px;
+      gap: 25px;
       margin-top: 20px;
     }
 
-    .item { border: 1px solid #ddd; padding: 15px; border-radius: 10px; background: white; position: relative; transition: 0.3s; }
-    .item img { max-width: 100%; border-radius: 8px; }
-
-    .order-btn {
-      display: inline-block;
-      margin-top: 10px;
-      padding: 10px 15px;
-      background: #ff6600;
-      color: white;
-      text-decoration: none;
-      border-radius: 5px;
+    .item {
+      background: #1c1c1c;
+      padding: 15px;
+      border-radius: 12px;
+      transition: 0.3s;
+      position: relative;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.5);
     }
-
-    /* Veg/Non-Veg dot */
-    .food-name {
+    .item img {
+      width: 100%;
+      border-radius: 8px;
+    }
+    .item h3 {
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 8px;
+      margin: 10px 0 5px;
     }
     .dot {
       width: 12px;
@@ -61,10 +97,32 @@
     .veg { background: green; }
     .nonveg { background: red; }
 
-    /* Dim non-matching items */
+    .item p {
+      margin: 5px 0;
+    }
+
+    .order-btn, .details-btn {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 10px 15px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+    .order-btn {
+      background: #ff6600;
+      color: #fff;
+    }
+    .order-btn:hover { opacity: 0.8; }
+    .details-btn {
+      background: #555;
+      color: #fff;
+    }
+    .details-btn:hover { opacity: 0.8; }
+
     .dim { opacity: 0.4; }
 
-    /* Details on hover */
     .details-box {
       display: none;
       position: absolute;
@@ -76,14 +134,19 @@
       font-size: 12px;
       border-radius: 4px;
     }
-    .item:hover .details-box {
-      display: block;
-    }
+    .item:hover .details-box { display: block; }
 
-    footer { background: #333; color: white; text-align: center; padding: 15px; margin-top: 30px; }
+    footer {
+      background: #333;
+      color: #fff;
+      text-align: center;
+      padding: 15px;
+      margin-top: 40px;
+    }
   </style>
 </head>
 <body>
+
   <header>
     <h1>Our Menu</h1>
   </header>
@@ -98,7 +161,6 @@
   <section class="menu">
     <h2>Delicious Meals</h2>
 
-    <!-- Search & Filter -->
     <div class="search-filter">
       <input type="text" id="searchInput" placeholder="Search food..." onkeyup="filterItems()">
       <select id="vegFilter" onchange="filterItems()">
@@ -109,47 +171,49 @@
     </div>
 
     <div class="menu-items" id="menuItems">
-
       <!-- Donne Biryani -->
       <div class="item" data-name="Donne Biryani" data-type="nonveg">
         <img src="https://raw.githubusercontent.com/dhanushkumarvc-bot/cloud_kitchen.github.io/main/Donne-Biriyani.jpg" alt="Donne Biryani">
-        <h3 class="food-name"><span class="dot nonveg"></span>Donne Biryani</h3>
+        <h3><span class="dot nonveg"></span>Donne Biryani</h3>
         <p>Authentic Bangalore-style biryani.</p>
         <p>₹100</p>
         <a class="order-btn" href="https://wa.me/918884537773?text=I%20want%20Donne%20Biryani">Order</a>
+        <a class="details-btn" href="#">Details</a>
         <div class="details-box">⏱ 30-40 mins / Serve 1</div>
       </div>
 
       <!-- Kebab -->
       <div class="item" data-name="Kebab" data-type="nonveg">
         <img src="https://raw.githubusercontent.com/dhanushkumarvc-bot/cloud_kitchen.github.io/main/chicken-kebab.jpg" alt="Kebab">
-        <h3 class="food-name"><span class="dot nonveg"></span>Kebab</h3>
+        <h3><span class="dot nonveg"></span>Kebab</h3>
         <p>Juicy marinated grilled kebabs.</p>
         <p>₹120</p>
         <a class="order-btn" href="https://wa.me/918884537773?text=I%20want%20Kebab">Order</a>
+        <a class="details-btn" href="#">Details</a>
         <div class="details-box">⏱ 15-20 mins / Serve 1</div>
       </div>
 
       <!-- Chilli Chicken -->
       <div class="item" data-name="Chilli Chicken" data-type="nonveg">
         <img src="https://raw.githubusercontent.com/dhanushkumarvc-bot/cloud_kitchen.github.io/main/chilli-chicken.jpg" alt="Chilli Chicken">
-        <h3 class="food-name"><span class="dot nonveg"></span>Chilli Chicken</h3>
+        <h3><span class="dot nonveg"></span>Chilli Chicken</h3>
         <p>Spicy Indo-Chinese chicken.</p>
         <p>₹120</p>
         <a class="order-btn" href="https://wa.me/918884537773?text=I%20want%20Chilli%20Chicken">Order</a>
+        <a class="details-btn" href="#">Details</a>
         <div class="details-box">⏱ 25-30 mins / Serve 1</div>
       </div>
 
       <!-- Pepper Chicken -->
       <div class="item" data-name="Pepper Chicken" data-type="nonveg">
         <img src="https://raw.githubusercontent.com/dhanushkumarvc-bot/cloud_kitchen.github.io/main/pepper-chicken.jpg" alt="Pepper Chicken">
-        <h3 class="food-name"><span class="dot nonveg"></span>Pepper Chicken</h3>
+        <h3><span class="dot nonveg"></span>Pepper Chicken</h3>
         <p>Fiery pepper-spiced chicken.</p>
         <p>₹120</p>
         <a class="order-btn" href="https://wa.me/918884537773?text=I%20want%20Pepper%20Chicken">Order</a>
+        <a class="details-btn" href="#">Details</a>
         <div class="details-box">⏱ 25-30 mins / Serve 1</div>
       </div>
-
     </div>
   </section>
 
@@ -170,7 +234,6 @@
         const matchesSearch = name.includes(searchValue);
         const matchesFilter = vegFilter === 'all' || vegFilter === type;
 
-        // Show all items but dim non-matching type
         if(matchesSearch) {
           item.style.display = 'block';
           item.classList.toggle('dim', !matchesFilter);
@@ -180,5 +243,6 @@
       });
     }
   </script>
+
 </body>
 </html>
