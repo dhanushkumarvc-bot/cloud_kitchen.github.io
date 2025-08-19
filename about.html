@@ -5,63 +5,87 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>About Us - The Hidden Ladle</title>
   <style>
-    body { 
-      font-family: Arial, sans-serif; 
-      margin: 0; 
-      padding: 0; 
-      background: url('47fc7dd8-44d2-49e0-b0b6-81053f5abf3b.png') no-repeat center center fixed; 
-      background-size: cover; 
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: url('47fc7dd8-44d2-49e0-b0b6-81053f5abf3b.png') no-repeat center center fixed;
+      background-size: cover;
       color: white;
     }
-    header { 
-      background: rgba(255, 102, 0, 0.85); 
-      color: white; 
-      padding: 20px; 
-      text-align: center; 
-    }
-    nav { 
-      background: rgba(0, 0, 0, 0.7); 
-      padding: 10px; 
-      text-align: center; 
-    }
-    nav a { 
-      color: white; 
-      margin: 0 15px; 
-      text-decoration: none; 
+
+    header {
+      text-align: center;
+      padding: 40px 20px 20px 20px;
+      font-size: 2.5em;
       font-weight: bold;
+      color: #ff6600;
+      text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
     }
-    nav a:hover { 
-      text-decoration: underline; 
+
+    nav {
+      display: flex;
+      justify-content: center;
+      background: rgba(0, 0, 0, 0.7);
+      padding: 15px 0;
+      margin-bottom: 40px;
     }
-    .about { 
-      padding: 40px; 
-      max-width: 800px; 
-      margin: 50px auto; 
-      text-align: center; 
-      background: rgba(0, 0, 0, 0.6); 
-      border-radius: 10px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.8);
+
+    nav a {
+      color: white;
+      margin: 0 25px;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1.1em;
     }
-    .about h2 { 
-      color: #ff6600; 
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    .about-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      max-width: 900px;
+      margin: 0 auto 60px auto;
+      gap: 30px;
+      padding: 0 20px;
+    }
+
+    .about-card {
+      background: rgba(0, 0, 0, 0.7);
+      border-radius: 15px;
+      padding: 30px 25px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.8);
+      text-align: center;
+      width: 100%;
+    }
+
+    .about-card h2 {
+      color: #ff6600;
+      font-size: 2em;
       margin-bottom: 20px;
     }
-    .about p {
+
+    .about-card p {
+      font-size: 1.1em;
       line-height: 1.6;
+      color: #f5f5f5;
     }
-    footer { 
-      background: rgba(0, 0, 0, 0.7); 
-      color: white; 
-      text-align: center; 
-      padding: 15px; 
-      margin-top: 30px; 
+
+    footer {
+      background: rgba(0,0,0,0.7);
+      text-align: center;
+      padding: 20px;
+      font-size: 1em;
+      margin-top: 50px;
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>About Us</h1>
-  </header>
+
+  <header>About Us</header>
 
   <nav>
     <a href="index.html">Home</a>
@@ -70,16 +94,19 @@
     <a href="contact.html">Contact</a>
   </nav>
 
-  <section class="about">
-    <h2>Our Story</h2>
-    <p>The Hidden Ladle is a Bangalore-based cloud kitchen founded with love for authentic homemade food. 
-       We aim to bring traditional recipes, fresh ingredients, and flavors directly to your doorstep. 
-       Every meal is cooked with care, keeping hygiene and taste at the highest standards.</p>
-    <p>Whether it’s biryani, kebabs, or Indo-Chinese, we make sure every bite feels like home.</p>
-  </section>
+  <div class="about-container">
+    <div class="about-card">
+      <h2>Our Story</h2>
+      <p>The Hidden Ladle is a Bangalore-based cloud kitchen founded with love for authentic homemade food. 
+         We aim to bring traditional recipes, fresh ingredients, and flavors directly to your doorstep. 
+         Every meal is cooked with care, keeping hygiene and taste at the highest standards.</p>
+      <p>Whether it’s biryani, kebabs, or Indo-Chinese, we make sure every bite feels like home.</p>
+    </div>
+  </div>
 
   <footer>
-    <p>&copy; 2025 The Hidden Ladle. All rights reserved.</p>
+    &copy; 2025 The Hidden Ladle. All rights reserved.
   </footer>
+
 </body>
 </html>
