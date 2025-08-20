@@ -77,9 +77,14 @@ function shareWhatsApp() {
   let phone = "918884537773"; // Your WhatsApp number
   let url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
   window.open(url, "_blank");
+
+  // ✅ Clear cart after sharing payment
+  localStorage.removeItem("cart");
+  localStorage.removeItem("cartTotal");
+  
+  // Optional: redirect to menu after sharing
+  window.location.href = "menu.html";
 }
 </script>
 </body>
 </html>
-
-
