@@ -7,117 +7,89 @@
   <style>
     body {
       margin: 0;
-      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-      background: #000; /* 🔴 Full black background */
+      font-family: "Segoe UI", sans-serif;
+      background: #000;
       color: #fff;
-    }
-
-    nav {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      background: rgba(255, 255, 255, 0.05);
-      padding: 12px 0;
-      text-align: center;
-      z-index: 10;
-      font-size: 16px;
-      backdrop-filter: blur(5px);
-    }
-
-    nav a {
-      color: #fff;
-      text-decoration: none;
-      margin: 0 18px;
-      font-weight: bold;
-      transition: 0.3s ease;
-    }
-
-    nav a:hover {
-      color: #e63946;
     }
 
     .payment-container {
       max-width: 500px;
       margin: 120px auto;
       background: rgba(20, 20, 20, 0.95);
-      color: #fff;
       padding: 40px;
       border-radius: 20px;
       text-align: center;
       box-shadow: 0px 8px 25px rgba(0,0,0,0.8);
     }
 
-    h1 {
-      font-size: 28px;
-      margin-bottom: 20px;
-      color: #e63946;
-    }
-
-    .amount {
-      font-size: 26px;
-      font-weight: bold;
-      margin-bottom: 30px;
-      color: #00ffae;
-    }
+    h1 { color: #e63946; }
+    .amount { font-size: 26px; color: #00ffae; margin-bottom: 30px; }
 
     .btn {
-      display: inline-block;
       background: #e63946;
       color: #fff;
       padding: 14px 28px;
-      margin: 12px;
-      border: none;
       border-radius: 12px;
       cursor: pointer;
       font-size: 17px;
-      transition: transform 0.3s, background 0.3s;
-      text-decoration: none;
+      border: none;
     }
+    .btn:hover { background: #c72e3c; }
 
-    .btn:hover {
-      background: #c72e3c;
-      transform: scale(1.05);
+    /* QR Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.8);
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+    }
+    .modal-content {
+      background: #111;
+      padding: 20px;
+      border-radius: 12px;
+      text-align: center;
+    }
+    .modal img { width: 250px; border-radius: 12px; }
+    .close {
+      margin-top: 12px;
+      background: #e63946;
+      padding: 8px 16px;
+      border-radius: 8px;
+      cursor: pointer;
     }
   </style>
 </head>
 <body>
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="menu.html">Menu</a>
-    <a href="contact.html">Contact</a>
-    <a href="about.html">About Us</a>
-  </nav>
-
   <div class="payment-container">
     <h1>Payment Page</h1>
     <div class="amount">Total Amount: ₹<span id="totalAmount">0</span></div>
-    <button class="btn" onclick="makePayment()">Pay with Google Pay</button>
-    <a href="menu.html" class="btn">Back to Menu</a>
+    <button class="btn" onclick="showQR()">Pay Now</button>
+  </div>
+
+  <!-- QR Modal -->
+  <div class="modal" id="qrModal">
+    <div class="modal-content">
+      <h2>Scan & Pay</h2>
+      <!-- ✅ Your QR Code from GitHub -->
+      <img src="https://raw.githubusercontent.com/dhanushkumarvc-bot/cloud_kitchen.github.io/refs/heads/main/scanner.jpeg" alt="UPI QR Code">
+      <div class="close" onclick="closeQR()">Close</div>
+    </div>
   </div>
 
   <script>
-    // Load cart total from localStorage
     window.onload = function() {
       let amount = localStorage.getItem("cartTotal");
-      if(amount) {
-        document.getElementById("totalAmount").innerText = amount;
-      } else {
-        document.getElementById("totalAmount").innerText = "0";
-      }
+      document.getElementById("totalAmount").innerText = amount || "0";
     }
 
-    function makePayment() {
-      let amount = localStorage.getItem("cartTotal") || "0";
-      let upiID = "dhanushkumarvc19@oksbi";   // 🔴 Replace with your UPI ID 
-      let name = "The Hidden Ladle";   // Merchant / shop name
-      let transactionNote = "Order Payment"; 
-
-      // Build UPI URL
-      let url = `upi://pay?pa=${upiID}&pn=${encodeURIComponent(name)}&am=${amount}&cu=INR&tn=${encodeURIComponent(transactionNote)}`;
-      
-      // Redirect to GPay or any UPI app
-      window.location.href = url;
+    function showQR() {
+      document.getElementById("qrModal").style.display = "flex";
+    }
+    function closeQR() {
+      document.getElementById("qrModal").style.display = "none";
     }
   </script>
 </body>
