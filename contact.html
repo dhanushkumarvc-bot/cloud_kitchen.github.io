@@ -219,7 +219,7 @@
       .then(response => response.json())
       .then(result => {
         if(result.status === 'success'){
-          alert('Thank you! Your message has been saved to Sheet2.');
+          alert('Thank you! Your message has been successfully submitted.');
           this.reset();
         } else {
           alert('Something went wrong!');
@@ -230,4 +230,5 @@
   </script>
 </body>
 </html>
+
 
