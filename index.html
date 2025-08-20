@@ -29,24 +29,69 @@ nav {
   top: 20px;
   right: 30px;
   z-index:10;
-}
-nav button {
-  background: #ff6600;
-  color: #fff;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 6px;
-  font-weight: bold;
-  cursor: pointer;
-  margin-left: 10px;
-  transition: 0.3s;
-  box-shadow: 0 0 15px rgba(255,102,0,0.7);
-}
-nav button:hover {
-  background: #e65c00;
-  box-shadow: 0 0 25px rgba(230,92,0,0.9);
+  display: flex;
+  align-items: center;
 }
 
+/* Profile circle */
+.profile-circle {
+  width: 50px; height: 50px;
+  border-radius: 50%;
+  background: #ff6600;
+  color: #fff;
+  font-weight: bold;
+  font-size: 22px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  box-shadow: 0 0 15px rgba(255,102,0,0.7);
+}
+
+/* Profile modal */
+#profileModal {
+  display: none;
+  position: fixed;
+  top:0; left:0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.85);
+  z-index: 20;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+#profileModal .modal-content {
+  background: #222;
+  padding: 40px 30px;
+  border-radius: 20px;
+  box-shadow: 0 0 40px rgba(255,102,0,0.7);
+  max-width: 400px;
+  width: 90%;
+}
+
+#profileModal h2 { color:#ff6600; font-family: 'Playfair Display', serif; font-size:28px; margin-bottom:20px; }
+#profileModal p { font-size:18px; margin:10px 0; }
+#profileModal button {
+  margin-top:15px;
+  padding: 12px 25px;
+  font-size:16px;
+  border:none;
+  border-radius:8px;
+  background:#ff6600;
+  color:#fff;
+  cursor:pointer;
+  font-weight:bold;
+  box-shadow:0 0 25px rgba(255,102,0,0.7);
+  transition:0.3s;
+  display:block;
+  width: 80%;
+  margin-left:auto;
+  margin-right:auto;
+}
+#profileModal button:hover { background:#e65c00; box-shadow:0 0 35px rgba(230,92,0,1); }
+
+/* Login container */
 #centerWrapper {
   display: flex;
   justify-content: center;
@@ -86,6 +131,7 @@ nav button:hover {
 }
 .login-container button:hover { background: #e65c00; box-shadow: 0 0 35px rgba(255,102,0,1); }
 
+/* Hero */
 .hero {
   display: none;
   flex-direction: column;
@@ -138,8 +184,7 @@ nav button:hover {
 <body>
 
 <nav>
-  <button id="loginBtn">Login</button>
-  <button id="logoutBtn" style="display:none;">Logout</button>
+  <div id="profileCircle" class="profile-circle" style="display:none;"></div>
 </nav>
 
 <div id="centerWrapper">
@@ -159,11 +204,23 @@ nav button:hover {
   <a href="menu.html">Explore Menu</a>
 </div>
 
+<!-- Profile modal -->
+<div id="profileModal">
+  <div class="modal-content">
+    <h2>Your Profile</h2>
+    <p id="modalName"></p>
+    <p id="modalPhone"></p>
+    <p id="modalEmail"></p>
+    <button onclick="closeProfile()">Cancel</button>
+    <button onclick="logout()">Logout</button>
+  </div>
+</div>
+
 <script>
-const loginBtn = document.getElementById('loginBtn');
-const logoutBtn = document.getElementById('logoutBtn');
 const loginForm = document.getElementById('loginForm');
 const mainContent = document.getElementById('mainContent');
+const profileCircle = document.getElementById('profileCircle');
+const profileModal = document.getElementById('profileModal');
 
 window.onload = function(){
   const name = localStorage.getItem('userName');
@@ -173,8 +230,6 @@ window.onload = function(){
     showMainPage(name, phone, email);
   }
 }
-
-loginBtn.addEventListener('click', ()=> loginForm.parentElement.style.display='flex');
 
 function login(){
   const name = document.getElementById('name').value.trim();
@@ -195,25 +250,37 @@ function login(){
 function showMainPage(name, phone, email){
   loginForm.parentElement.style.display='none';
   mainContent.style.display='flex';
-  loginBtn.style.display='none';
-  logoutBtn.style.display='inline-block';
+  
+  // Profile circle
+  profileCircle.style.display = 'flex';
+  profileCircle.innerText = name.charAt(0).toUpperCase();
 
-  // Premium welcoming message
   document.getElementById('heroGreeting').innerText = `Welcome to The Hidden Ladle, ${name}!`;
   document.getElementById('heroMessage').innerText = `Thank you for choosing us, we're delighted to have you.\nExplore our delicious menu and enjoy your culinary journey.`;
+
+  // Profile click
+  profileCircle.onclick = function(){
+    document.getElementById('modalName').innerText = `Name: ${name}`;
+    document.getElementById('modalPhone').innerText = `Phone: ${phone}`;
+    document.getElementById('modalEmail').innerText = `Email: ${email}`;
+    profileModal.style.display = 'flex';
+  }
 }
 
-logoutBtn.addEventListener('click', ()=>{
+function closeProfile(){
+  profileModal.style.display = 'none';
+}
+
+function logout(){
   localStorage.removeItem('userName');
   localStorage.removeItem('userPhone');
   localStorage.removeItem('userEmail');
-  mainContent.style.display='none';
+  profileModal.style.display = 'none';
+  mainContent.style.display = 'none';
   loginForm.parentElement.style.display='flex';
-  loginBtn.style.display='inline-block';
-  logoutBtn.style.display='none';
-});
+  profileCircle.style.display = 'none';
+}
 </script>
 
 </body>
 </html>
-
