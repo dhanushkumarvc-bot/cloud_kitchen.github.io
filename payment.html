@@ -1,112 +1,150 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Payment - The Hidden Ladle</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: "Segoe UI", sans-serif;
-      background: #000;
-      color: #fff;
-    }
-
-    .payment-container {
-      max-width: 500px;
-      margin: 120px auto;
-      background: rgba(20, 20, 20, 0.95);
-      padding: 40px;
-      border-radius: 20px;
-      text-align: center;
-      box-shadow: 0px 8px 25px rgba(0,0,0,0.8);
-    }
-
-    h1 { color: #e63946; }
-    .amount { font-size: 26px; color: #00ffae; margin-bottom: 30px; }
-
-    .btn {
-      background: #e63946;
-      color: #fff;
-      padding: 14px 28px;
-      border-radius: 12px;
-      cursor: pointer;
-      font-size: 17px;
-      border: none;
-      margin: 8px;
-    }
-    .btn:hover { background: #c72e3c; }
-
-    /* QR Modal */
-    .modal {
-      display: none;
-      position: fixed;
-      top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0,0,0,0.8);
-      justify-content: center;
-      align-items: center;
-      z-index: 999;
-    }
-    .modal-content {
-      background: #111;
-      padding: 20px;
-      border-radius: 12px;
-      text-align: center;
-      max-width: 350px;
-    }
-    .modal img { width: 250px; border-radius: 12px; }
-    .pay-amount {
-      margin-top: 12px;
-      font-size: 20px;
-      font-weight: bold;
-      color: #00ffae;
-    }
-    .close {
-      margin-top: 12px;
-      background: #e63946;
-      padding: 8px 16px;
-      border-radius: 8px;
-      cursor: pointer;
-      display: inline-block;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Payment - The Hidden Ladle</title>
+<style>
+  body {
+    margin: 0;
+    font-family: "Segoe UI", sans-serif;
+    background: #000;
+    color: #fff;
+  }
+  .payment-container {
+    max-width: 500px;
+    margin: 120px auto;
+    background: rgba(20,20,20,0.95);
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0px 8px 25px rgba(0,0,0,0.8);
+  }
+  h1 { color: #e63946; }
+  .amount { font-size: 26px; color: #00ffae; margin-bottom: 30px; }
+  .btn {
+    background: #e63946;
+    color: #fff;
+    padding: 14px 28px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 17px;
+    border: none;
+    margin: 8px;
+  }
+  .btn:hover { background: #c72e3c; }
+  .modal {
+    display: none;
+    position: fixed;
+    top:0; left:0; width:100%; height:100%;
+    background: rgba(0,0,0,0.8);
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+  }
+  .modal-content {
+    background: #111;
+    padding: 20px;
+    border-radius: 12px;
+    text-align: center;
+    max-width: 380px;
+  }
+  .modal img { width: 250px; border-radius: 12px; }
+  .pay-amount { margin-top: 12px; font-size: 20px; font-weight: bold; color: #00ffae; }
+  .close { margin-top: 12px; background: #e63946; padding: 8px 16px; border-radius: 8px; cursor: pointer; display: inline-block; }
+  .upload-section {
+    margin-top: 15px;
+    padding: 10px;
+    border: 1px solid #333;
+    border-radius: 10px;
+    background: #1a1a1a;
+  }
+  .upload-section input[type="file"] { margin: 10px 0; }
+  .preview { margin-top: 10px; max-width: 200px; border: 2px solid #444; border-radius: 10px; }
+</style>
 </head>
 <body>
-  <div class="payment-container">
-    <h1>Payment Page</h1>
-    <div class="amount">Total Amount: ₹<span id="totalAmount">0</span></div>
-    <button class="btn" onclick="showQR()">Pay Now</button>
-    <button class="btn" onclick="goBack()">⬅ Back to Menu</button>
-  </div>
+<div class="payment-container">
+  <h1>Payment Page</h1>
+  <div class="amount">Total Amount: ₹<span id="totalAmount">0</span></div>
+  <button class="btn" onclick="showQR()">Pay Now</button>
+  <button class="btn" onclick="goBack()">⬅ Back to Menu</button>
+</div>
 
-  <!-- QR Modal -->
-  <div class="modal" id="qrModal">
-    <div class="modal-content">
-      <h2>Scan & Pay</h2>
-      <!-- ✅ Your QR Code from GitHub -->
-      <img src="https://raw.githubusercontent.com/dhanushkumarvc-bot/cloud_kitchen.github.io/refs/heads/main/scanner.jpeg" alt="UPI QR Code">
-      <div class="pay-amount">Pay ₹<span id="qrAmount">0</span></div>
-      <div class="close" onclick="closeQR()">Close</div>
+<!-- QR Modal -->
+<div class="modal" id="qrModal">
+  <div class="modal-content">
+    <h2>Scan & Pay</h2>
+    <img src="https://raw.githubusercontent.com/dhanushkumarvc-bot/cloud_kitchen.github.io/refs/heads/main/scanner.jpeg" alt="UPI QR Code">
+    <div class="pay-amount">Pay ₹<span id="qrAmount">0</span></div>
+
+    <div class="upload-section">
+      <p>Upload Payment Screenshot:</p>
+      <input type="file" id="screenshot" accept="image/*" onchange="previewImage(event)">
+      <img id="preview" class="preview" style="display:none;">
+      <br>
+      <button class="btn" onclick="shareWhatsApp()">Share on WhatsApp</button>
     </div>
+
+    <div class="close" onclick="closeQR()">Close</div>
   </div>
+</div>
 
-  <script>
-    let amount = 0;
-    window.onload = function() {
-      amount = localStorage.getItem("cartTotal");
-      document.getElementById("totalAmount").innerText = amount || "0";
-    }
+<script>
+let amount = 0;
 
-    function showQR() {
-      document.getElementById("qrAmount").innerText = amount || "0";
-      document.getElementById("qrModal").style.display = "flex";
+window.onload = function() {
+  amount = localStorage.getItem("cartTotal");
+  document.getElementById("totalAmount").innerText = amount || "0";
+}
+
+function showQR() {
+  document.getElementById("qrAmount").innerText = amount || "0";
+  document.getElementById("qrModal").style.display = "flex";
+}
+function closeQR() { document.getElementById("qrModal").style.display = "none"; }
+function goBack() { window.location.href = "menu.html"; }
+
+function previewImage(event) {
+  let file = event.target.files[0];
+  if(file){
+    let reader = new FileReader();
+    reader.onload = function(e){
+      document.getElementById("preview").src = e.target.result;
+      document.getElementById("preview").style.display = "block";
     }
-    function closeQR() {
-      document.getElementById("qrModal").style.display = "none";
-    }
-    function goBack() {
-      window.location.href = "menu.html";
-    }
-  </script>
+    reader.readAsDataURL(file);
+  }
+}
+
+function shareWhatsApp() {
+  let file = document.getElementById("screenshot").files[0];
+  if(!file){
+    alert("Please upload the payment screenshot first!");
+    return;
+  }
+
+  // Get cart items from localStorage (example structure)
+  let cart = JSON.parse(localStorage.getItem("cartItems") || "[]");
+  if(cart.length === 0){
+    alert("Cart is empty!");
+    return;
+  }
+
+  let message = "Hello, I have completed my payment.\n\nOrder Details:\n";
+  let subtotal = 0;
+
+  cart.forEach(item => {
+    message += `- ${item.name}: ₹${item.price}\n`;
+    subtotal += Number(item.price);
+  });
+
+  message += `\nSubtotal: ₹${subtotal}\n\nScreenshot attached manually.`;
+
+  let phone = "YOUR_NUMBER_WITH_COUNTRY_CODE"; // e.g. 919876543210
+  let url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+  window.open(url, "_blank");
+}
+</script>
 </body>
 </html>
