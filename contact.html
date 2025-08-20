@@ -192,27 +192,27 @@
   </footer>
 
   <script>
-    // Auto-fill Name and Email from localStorage
     const nameField = document.getElementById('name');
     const emailField = document.getElementById('email');
+    const messageField = document.getElementById('message');
 
+    // Auto-fill Name and Email from localStorage
     const storedName = localStorage.getItem('userName');
     const storedEmail = localStorage.getItem('userEmail');
 
     if(storedName) nameField.value = storedName;
     if(storedEmail) emailField.value = storedEmail;
 
-    // Submit to Google Sheets (Sheet2)
     document.getElementById('contactForm').addEventListener('submit', function(e){
       e.preventDefault();
 
       const data = {
         name: nameField.value,
         email: emailField.value,
-        message: document.getElementById('message').value
+        message: messageField.value
       };
 
-      fetch("https://script.google.com/macros/s/AKfycbxkrQVD-k0XMZsvMc7CX9dCXUdWbm93Ot83r6wSBFoIDmC-_vxy0Eyl32-6g2jdlyc/exec", {  // <-- Replace with your Web App URL
+      fetch("https://script.google.com/macros/s/AKfycbxkrQVD-k0XMZsvMc7CX9dCXUdWbm93Ot83r6wSBFoIDmC-_vxy0Eyl32-6g2jdlyc/exec", {
         method: "POST",
         body: JSON.stringify(data)
       })
@@ -220,7 +220,10 @@
       .then(result => {
         if(result.status === 'success'){
           alert('Thank you! Your message has been saved.');
-          this.reset();
+          messageField.value = ''; // Clear only message
+          // Save Name and Email in localStorage
+          localStorage.setItem('userName', nameField.value);
+          localStorage.setItem('userEmail', emailField.value);
         } else {
           alert('Something went wrong!');
         }
