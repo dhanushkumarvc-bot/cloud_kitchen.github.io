@@ -71,7 +71,7 @@ nav {
 }
 
 #profileModal h2 { color:#ff6600; font-family: 'Playfair Display', serif; font-size:28px; margin-bottom:20px; }
-#profileModal p { font-size:18px; margin:10px 0; }
+#profileModal p { font-size:18px; margin:10px 0; display:flex; align-items:center; justify-content:center; }
 #profileModal button {
   margin-top:15px;
   padding: 12px 25px;
@@ -182,28 +182,6 @@ nav {
 
 .star { cursor:pointer; margin:0 5px; color:#ff6600; }
 
-/* Dark/Light mode */
-body.light-mode {
-  background: #f5f5f5 url('https://images.unsplash.com/photo-1600891964599-f61ba0e24092?auto=format&fit=crop&w=1600&q=80') no-repeat center center fixed;
-  color: #222;
-}
-body.light-mode .login-container,
-body.light-mode .hero,
-body.light-mode #profileModal .modal-content,
-body.light-mode #feedbackModal > div {
-  background: rgba(255,255,255,0.9);
-  color: #222;
-}
-body.light-mode .login-container input,
-body.light-mode #feedbackModal textarea {
-  background: #fff;
-  color: #222;
-  border:1px solid #ccc;
-}
-body.light-mode button {
-  background:#ff6600; color:#fff;
-}
-
 /* Responsive adjustments */
 @media(max-width:768px){
   .login-container { padding:30px 20px; }
@@ -264,9 +242,6 @@ body.light-mode button {
   <a href="menu.html">Explore Menu</a>
 </div>
 
-<!-- Dark/Light toggle button -->
-<button id="themeToggle" style="position:fixed; bottom:20px; right:20px; z-index:50; padding:10px 15px; border:none; border-radius:8px; background:#ff6600; color:#fff; cursor:pointer; font-weight:bold;">Toggle Theme</button>
-
 <div id="profileModal">
   <div class="modal-content">
     <span id="closeProfile" style="position:absolute; top:10px; right:15px; font-size:24px; cursor:pointer; color:#ff6600;">&times;</span>
@@ -274,7 +249,8 @@ body.light-mode button {
     <p id="modalName"></p>
     <p id="modalPhone"></p>
     <p id="modalEmail"></p>
-    <p id="modalLastLogin"></p>
+    <p><span style="margin-right:8px;">⏰</span>Last Login: <span id="modalLastLogin"></span></p>
+    <p><span style="margin-right:8px;">🖥️</span>Screen Time: <span id="modalScreenTime"></span></p>
     <button onclick="openFeedback()">Feedback</button>
     <button onclick="logout()">Logout</button>
   </div>
@@ -302,21 +278,19 @@ const mainContent = document.getElementById('mainContent');
 const profileCircle = document.getElementById('profileCircle');
 const profileModal = document.getElementById('profileModal');
 const feedbackModal = document.getElementById('feedbackModal');
-const themeToggle = document.getElementById('themeToggle');
+
+let loginTime = null;
+let screenTimeInterval = null;
 
 window.onload = function(){
   const name = localStorage.getItem('userName');
   const phone = localStorage.getItem('userPhone');
   const email = localStorage.getItem('userEmail');
   if(name && phone && email){
+    loginTime = new Date(); // new session start
     showMainPage(name, phone, email);
   }
 }
-
-// Theme toggle
-themeToggle.addEventListener('click', () => {
-  document.body.classList.toggle('light-mode');
-});
 
 function login(){
   const name = document.getElementById('name').value.trim();
@@ -332,6 +306,7 @@ function login(){
   localStorage.setItem('userEmail', email);
   localStorage.setItem('lastLogin', new Date().toLocaleString());
 
+  loginTime = new Date();
   showMainPage(name, phone, email);
 }
 
@@ -349,21 +324,33 @@ function showMainPage(name, phone, email){
     document.getElementById('modalName').innerText = `Name: ${name}`;
     document.getElementById('modalPhone').innerText = `Phone: ${phone}`;
     document.getElementById('modalEmail').innerText = `Email: ${email}`;
-    const lastLogin = localStorage.getItem('lastLogin');
-    document.getElementById('modalLastLogin').innerText = lastLogin ? `Last Login: ${lastLogin}` : '';
+    document.getElementById('modalLastLogin').innerText = localStorage.getItem('lastLogin') || '';
+    
+    if(screenTimeInterval) clearInterval(screenTimeInterval);
+
+    screenTimeInterval = setInterval(() => {
+      if(loginTime){
+        const now = new Date();
+        const diffMs = now - loginTime;
+        const diffMins = Math.floor(diffMs/60000);
+        const diffSecs = Math.floor((diffMs%60000)/1000);
+        document.getElementById('modalScreenTime').innerText = `${diffMins} min ${diffSecs} sec`;
+      }
+    }, 1000);
+
     profileModal.style.display = 'flex';
   }
 }
 
 document.getElementById('closeProfile').onclick = function() {
   profileModal.style.display = 'none';
+  if(screenTimeInterval) clearInterval(screenTimeInterval);
 }
 
 function logout(){
   localStorage.removeItem('userName');
   localStorage.removeItem('userPhone');
   localStorage.removeItem('userEmail');
-  localStorage.removeItem('lastLogin');
   profileModal.style.display = 'none';
   mainContent.style.display = 'none';
   loginForm.parentElement.style.display='flex';
@@ -400,4 +387,3 @@ function submitFeedback(){
 </script>
 </body>
 </html>
-
