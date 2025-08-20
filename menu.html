@@ -419,7 +419,6 @@
         <div id="cartContent">
             <span id="closeCart" onclick="closeCart()">✖</span>
             <h3>Your Cart</h3>
-            <button class="back-btn" onclick="backToFloatingCart()" style="display:none;margin-bottom:10px;">← Back</button>
             <table id="cartTable">
                 <tr>
                     <th>Item</th>
@@ -480,7 +479,6 @@
 
         function openCart() {
             document.getElementById('floatingCart').style.display = 'none';
-            document.querySelector('.back-btn').style.display = 'block';
             const table = document.getElementById('cartTable');
             table.innerHTML = "<tr><th>Item</th><th>Price</th><th>Qty</th><th>Total</th></tr>";
             let subtotal = 0;
@@ -518,15 +516,8 @@
             document.getElementById('totalPrice').innerText = `Subtotal (incl. delivery ₹${subtotal>0?deliveryCharges:0}): ₹${totalWithDelivery}`;
         }
 
-        function backToFloatingCart() {
-            document.getElementById('cartModal').style.display = 'none';
-            document.querySelector('.back-btn').style.display = 'none';
-            updateCartIndicator();
-        }
-
         function closeCart() {
             document.getElementById('cartModal').style.display='none';
-            document.querySelector('.back-btn').style.display = 'none';
             updateCartIndicator();
         }
 
@@ -598,3 +589,4 @@
     </script>
 </body>
 </html>
+
