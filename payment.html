@@ -64,16 +64,15 @@ function goBack() {
 }
 
 function shareWhatsApp() {
-  let cart = JSON.parse(localStorage.getItem("cartItems") || "[]");
+  let cart = JSON.parse(localStorage.getItem("cart") || "[]"); // use same key as menu page
+  let total = localStorage.getItem("cartTotal") || 0; // includes delivery
   let message = "Hello, I have completed my payment.\n\nOrder Details:\n";
-  let subtotal = 0;
 
   cart.forEach(item => {
-    message += `- ${item.name}: ₹${item.price}\n`;
-    subtotal += Number(item.price);
+    message += `- ${item.name} x ${item.quantity}: ₹${item.price * item.quantity}\n`;
   });
 
-  message += `\nSubtotal: ₹${subtotal}\n\nI have attached the payment confirmation for your review.`;
+  message += `\nTotal (including delivery): ₹${total}\n\nI have attached the payment confirmation for your review.`;
 
   let phone = "918884537773"; // Your WhatsApp number
   let url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
@@ -82,4 +81,5 @@ function shareWhatsApp() {
 </script>
 </body>
 </html>
+
 
