@@ -15,221 +15,162 @@ body {
   color: #fff;
   position: relative;
 }
-
 body::before {
   content:"";
-  position:absolute;
-  top:0; left:0; width:100%; height:100%;
-  background: rgba(0,0,0,0.6);
-  z-index:0;
+  position:absolute; top:0; left:0; width:100%; height:100%;
+  background: rgba(0,0,0,0.6); z-index:0;
 }
 
+/* Nav */
 nav {
-  position: absolute;
-  top: 20px;
-  right: 30px;
-  z-index:10;
+  position: absolute; top: 20px; right: 30px; z-index:10;
 }
-nav button {
-  background: #ff6600;
-  color: #fff;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 6px;
-  font-weight: bold;
-  cursor: pointer;
-  margin-left: 10px;
-  transition: 0.3s;
-  box-shadow: 0 0 15px rgba(255,102,0,0.7);
-  position: relative;
+nav button, #profileIcon {
+  background: #ff6600; color:#fff; border:none; cursor:pointer; font-weight:bold;
+  padding:10px 20px; border-radius:50px; box-shadow:0 0 15px rgba(255,102,0,0.7);
+  transition:0.3s; font-size:16px;
 }
-nav button:hover { background: #e65c00; box-shadow: 0 0 25px rgba(230,92,0,0.9); }
+nav button:hover, #profileIcon:hover { box-shadow:0 0 30px rgba(255,102,0,1); }
+#profileIcon { display:none; width:45px; height:45px; display:flex; align-items:center; justify-content:center; border-radius:50%; font-size:20px; font-weight:bold; }
 
-/* Profile dropdown */
-.profile-dropdown {
-  display: none;
-  position: absolute;
-  top: 45px;
-  right: 0;
-  background: rgba(20,20,20,0.95);
-  border-radius: 10px;
-  padding: 15px;
-  width: 220px;
-  box-shadow: 0 0 25px rgba(255,102,0,0.7);
-  text-align: left;
-  z-index: 100;
-}
-.profile-dropdown p {
-  margin: 10px 0;
-  font-size: 16px;
-}
-.profile-dropdown button {
-  width: 100%;
-  padding: 10px;
-  margin-top: 8px;
-  border: none;
-  background: #ff6600;
-  color: #fff;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: 0.3s;
-}
-.profile-dropdown button:hover { background: #e65c00; }
+/* Centered wrapper */
+#centerWrapper { display:flex; justify-content:center; align-items:center; height:100%; width:100%; position:absolute; top:0; left:0; z-index:5; }
 
-#centerWrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  width: 100%;
-  position: absolute;
-  top:0; left:0;
-  z-index:5;
-}
-
-.login-container {
-  background: rgba(20,20,20,0.85);
-  padding: 50px 40px;
-  border-radius: 20px;
-  width: 380px;
-  text-align: center;
-  box-shadow: 0 0 40px rgba(255,102,0,0.7);
-  animation: float 4s ease-in-out infinite;
+/* Login modal */
+.login-container, .profile-modal, .feedback-modal {
+  background: rgba(20,20,20,0.9); padding:40px 30px; border-radius:20px; width:380px;
+  text-align:center; box-shadow:0 0 40px rgba(255,102,0,0.7); animation: float 4s ease-in-out infinite; position:relative;
 }
 @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
 
-.login-container h2 {
-  font-family: 'Playfair Display', serif;
-  color: #ff6600; font-size: 36px; margin-bottom: 30px;
-  text-shadow: 0 0 20px rgba(255,102,0,0.8);
-}
-.login-container input {
-  width: 90%; padding: 12px; margin: 10px 0; border-radius: 8px; border: 1px solid #555;
-  background: #222; color: #fff; font-size: 16px;
-}
-.login-container input::placeholder { color: #aaa; }
-.login-container button {
-  width: 95%; margin-top: 20px; padding: 14px; font-size: 18px;
-  border: none; border-radius: 8px; background: #ff6600; color: #fff; cursor: pointer;
-  font-weight: bold; box-shadow: 0 0 25px rgba(255,102,0,0.7); transition: 0.3s;
-}
-.login-container button:hover { background: #e65c00; box-shadow: 0 0 35px rgba(255,102,0,1); }
-
-.hero {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  height: 100vh;
-  padding: 20px;
-  background: rgba(0,0,0,0.4);
-  z-index: 2;
-  animation: float 5s ease-in-out infinite;
+.login-container h2, .profile-modal h2, .feedback-modal h2 {
+  font-family:'Playfair Display', serif; color:#ff6600; font-size:32px; margin-bottom:20px;
+  text-shadow:0 0 20px rgba(255,102,0,0.8);
 }
 
-.hero h1 {
-  font-family: 'Playfair Display', serif;
-  font-size: 65px; color: #ff6600;
-  text-shadow: 0 0 30px rgba(255,102,0,0.8); margin-bottom: 20px;
-  animation: glow 2s ease-in-out infinite alternate;
+.login-container input, .feedback-modal input, .feedback-modal textarea {
+  width:90%; padding:12px; margin:10px 0; border-radius:8px; border:1px solid #555; background:#222; color:#fff; font-size:16px;
 }
+.login-container input::placeholder { color:#aaa; }
+.login-container button, .feedback-modal button {
+  width:95%; margin-top:20px; padding:14px; font-size:16px; border:none; border-radius:8px;
+  background:#ff6600; color:#fff; cursor:pointer; font-weight:bold; box-shadow:0 0 25px rgba(255,102,0,0.7); transition:0.3s;
+}
+.login-container button:hover, .feedback-modal button:hover { background:#e65c00; box-shadow:0 0 35px rgba(255,102,0,1); }
 
-.hero h2 {
-  font-size: 32px;
-  color: #fff;
-  margin-bottom: 15px;
-  text-shadow: 0 0 20px rgba(255,255,255,0.5);
-}
+/* Hero section */
+.hero { display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; height:100vh; padding:20px; background: rgba(0,0,0,0.4); z-index:2; }
+.hero h1 { font-family:'Playfair Display', serif; font-size:60px; color:#ff6600; text-shadow:0 0 30px rgba(255,102,0,0.8); margin-bottom:15px; animation: glow 2s ease-in-out infinite alternate; }
+.hero h2 { font-size:28px; color:#fff; margin-bottom:15px; text-shadow:0 0 20px rgba(255,255,255,0.5); }
+.hero p { font-size:18px; max-width:600px; margin-bottom:30px; line-height:1.5; text-shadow:0 0 15px rgba(255,255,255,0.5); }
+.hero a { background:#ff6600; color:#fff; text-decoration:none; padding:15px 35px; border-radius:8px; font-weight:bold; font-size:18px; transition:0.3s; box-shadow:0 0 25px rgba(255,102,0,0.7); }
+.hero a:hover { background:#e65c00; box-shadow:0 0 40px rgba(230,92,0,1); }
 
-.hero p {
-  font-size: 20px;
-  max-width: 600px;
-  margin-bottom: 30px;
-  line-height: 1.5;
-  text-shadow: 0 0 15px rgba(255,255,255,0.5);
-}
+@keyframes glow { 0% { text-shadow:0 0 20px rgba(255,102,0,0.8); } 50% { text-shadow:0 0 35px rgba(255,102,0,1); } 100% { text-shadow:0 0 20px rgba(255,102,0,0.8); } }
 
-.hero a {
-  background: #ff6600; color: #fff; text-decoration: none; padding: 15px 35px;
-  border-radius: 8px; font-weight: bold; font-size: 18px; transition:0.3s;
-  box-shadow: 0 0 25px rgba(255,102,0,0.7);
-}
-.hero a:hover { background: #e65c00; box-shadow: 0 0 40px rgba(230,92,0,1); }
+/* Profile modal */
+.profile-modal { display:none; flex-direction:column; justify-content:center; align-items:center; }
+.profile-modal p { font-size:16px; margin:5px 0; text-align:center; }
+.profile-modal button { width:90%; margin-top:10px; }
 
-@keyframes glow {
-  0% { text-shadow: 0 0 20px rgba(255,102,0,0.8); }
-  50% { text-shadow: 0 0 35px rgba(255,102,0,1); }
-  100% { text-shadow: 0 0 20px rgba(255,102,0,0.8); }
-}
+/* Feedback modal */
+.feedback-modal { display:none; flex-direction:column; justify-content:center; align-items:center; }
+.feedback-modal label { font-size:16px; margin:5px 0; }
+.feedback-modal .stars { display:flex; justify-content:center; margin:10px 0; }
+.feedback-modal .stars span { font-size:25px; cursor:pointer; margin:0 5px; color:#ccc; }
+.feedback-modal .stars span.selected { color:#ffcc00; }
+.feedback-modal textarea { resize:none; max-length:100px; height:60px; text-align:center; }
 </style>
 </head>
 <body>
 
 <nav>
   <button id="loginBtn">Login</button>
-  <button id="profileBtn" style="display:none;">Profile</button>
-  <div class="profile-dropdown" id="profileDropdown">
-    <p id="profileName"></p>
-    <p id="profilePhone"></p>
-    <p id="profileEmail"></p>
-    <button onclick="logout()">Logout</button>
-    <button onclick="feedback()">Feedback</button>
-  </div>
+  <div id="profileIcon"></div>
 </nav>
 
 <div id="centerWrapper">
+  <!-- Login Modal -->
   <div class="login-container" id="loginForm">
     <h2>Welcome to The Hidden Ladle</h2>
-    <input type="text" id="name" placeholder="Enter your Name" required>
-    <input type="tel" id="phone" placeholder="Enter your Phone Number" required>
-    <input type="email" id="email" placeholder="Enter your Email" required>
+    <input type="text" id="name" placeholder="Enter your Name">
+    <input type="tel" id="phone" placeholder="Enter your Phone Number">
+    <input type="email" id="email" placeholder="Enter your Email">
     <button onclick="login()">Login</button>
   </div>
 </div>
 
-<div class="hero" id="mainContent">
+<!-- Hero -->
+<div class="hero" id="mainContent" style="display:none;">
   <h1>The Hidden Ladle</h1>
   <h2 id="heroGreeting"></h2>
   <p id="heroMessage"></p>
   <a href="menu.html">Explore Menu</a>
 </div>
 
+<!-- Profile Modal -->
+<div class="profile-modal" id="profileModal">
+  <h2>Profile</h2>
+  <p id="profileName"></p>
+  <p id="profilePhone"></p>
+  <p id="profileEmail"></p>
+  <button onclick="logout()">Logout</button>
+  <button onclick="showFeedback()">Feedback</button>
+</div>
+
+<!-- Feedback Modal -->
+<div class="feedback-modal" id="feedbackModal">
+  <h2>Feedback</h2>
+  <div class="stars">
+    <span data-star="1">&#9733;</span>
+    <span data-star="2">&#9733;</span>
+    <span data-star="3">&#9733;</span>
+    <span data-star="4">&#9733;</span>
+    <span data-star="5">&#9733;</span>
+  </div>
+  <textarea id="feedbackText" maxlength="100" placeholder="Write your feedback (max 100 chars)"></textarea>
+  <button onclick="submitFeedback()">Submit</button>
+  <button onclick="closeFeedback()">Cancel</button>
+</div>
+
 <script>
 const loginBtn = document.getElementById('loginBtn');
-const profileBtn = document.getElementById('profileBtn');
+const profileIcon = document.getElementById('profileIcon');
 const loginForm = document.getElementById('loginForm');
 const mainContent = document.getElementById('mainContent');
-const profileDropdown = document.getElementById('profileDropdown');
+const profileModal = document.getElementById('profileModal');
+const feedbackModal = document.getElementById('feedbackModal');
+let rating = 0;
 
 window.onload = function(){
   const name = localStorage.getItem('userName');
   const phone = localStorage.getItem('userPhone');
   const email = localStorage.getItem('userEmail');
-  if(name && phone && email){
-    showMainPage(name, phone, email);
-  }
+  if(name && phone && email){ showMainPage(name, phone, email); }
 }
 
 loginBtn.addEventListener('click', ()=> loginForm.parentElement.style.display='flex');
-profileBtn.addEventListener('click', ()=> {
-  profileDropdown.style.display = profileDropdown.style.display==='block'?'none':'block';
+profileIcon.addEventListener('click', ()=> profileModal.style.display = profileModal.style.display==='flex'?'none':'flex');
+
+// Star rating
+document.querySelectorAll('.stars span').forEach(star=>{
+  star.addEventListener('click', ()=>{
+    rating = star.dataset.star;
+    document.querySelectorAll('.stars span').forEach(s=> s.classList.remove('selected'));
+    for(let i=1;i<=rating;i++){ document.querySelector(`.stars span[data-star="${i}"]`).classList.add('selected'); }
+  });
 });
 
 function login(){
   const name = document.getElementById('name').value.trim();
   const phone = document.getElementById('phone').value.trim();
   const email = document.getElementById('email').value.trim();
-
-  if(name==="" || phone==="" || email===""){ alert("Please enter all details."); return; }
-  if(!/^\d{10}$/.test(phone)){ alert("Enter valid 10-digit phone number."); return; }
-  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ alert("Enter valid email address."); return; }
-
+  if(!name||!phone||!email){ alert('Enter all details'); return; }
+  if(!/^\d{10}$/.test(phone)){ alert('Enter valid phone'); return; }
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ alert('Enter valid email'); return; }
   localStorage.setItem('userName', name);
   localStorage.setItem('userPhone', phone);
   localStorage.setItem('userEmail', email);
-
   showMainPage(name, phone, email);
 }
 
@@ -237,10 +178,11 @@ function showMainPage(name, phone, email){
   loginForm.parentElement.style.display='none';
   mainContent.style.display='flex';
   loginBtn.style.display='none';
-  profileBtn.style.display='inline-block';
+  profileIcon.style.display='flex';
+  profileIcon.innerText = name.charAt(0).toUpperCase();
 
   document.getElementById('heroGreeting').innerText = `Welcome to The Hidden Ladle, ${name}!`;
-  document.getElementById('heroMessage').innerText = `Thank you for choosing us, we're delighted to have you. Explore our delicious menu and enjoy your culinary journey.`;
+  document.getElementById('heroMessage').innerText = "Thank you for choosing us, We're delighted to have you. Explore our delicious menu and enjoy your culinary journey.";
 
   document.getElementById('profileName').innerText = `Name: ${name}`;
   document.getElementById('profilePhone').innerText = `Phone: ${phone}`;
@@ -248,20 +190,32 @@ function showMainPage(name, phone, email){
 }
 
 function logout(){
-  localStorage.removeItem('userName');
-  localStorage.removeItem('userPhone');
-  localStorage.removeItem('userEmail');
+  localStorage.clear();
   mainContent.style.display='none';
+  profileModal.style.display='none';
+  profileIcon.style.display='none';
   loginForm.parentElement.style.display='flex';
   loginBtn.style.display='inline-block';
-  profileBtn.style.display='none';
-  profileDropdown.style.display='none';
 }
 
-function feedback(){
-  alert('Thank you for your feedback! (This can be linked to a form or email)');
+function showFeedback(){
+  profileModal.style.display='none';
+  feedbackModal.style.display='flex';
+}
+
+function closeFeedback(){ feedbackModal.style.display='none'; profileModal.style.display='flex'; }
+
+function submitFeedback(){
+  const text = document.getElementById('feedbackText').value.trim();
+  if(rating===0){ alert('Please select star rating'); return; }
+  if(!text){ alert('Please write feedback'); return; }
+  alert(`Thank you for your feedback!\nRating: ${rating}\nComment: ${text}`);
+  document.getElementById('feedbackText').value='';
+  rating = 0; document.querySelectorAll('.stars span').forEach(s=>s.classList.remove('selected'));
+  closeFeedback();
 }
 </script>
 
 </body>
 </html>
+
