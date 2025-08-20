@@ -73,7 +73,7 @@ function shareWhatsApp() {
     subtotal += Number(item.price);
   });
 
-  message += `\nSubtotal: ₹${subtotal}\n\nScreenshot attached manually.`;
+  message += `\nSubtotal: ₹${subtotal}\n\nI have attached the payment confirmation for your review.`;
 
   let phone = "918884537773"; // Your WhatsApp number
   let url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
@@ -82,3 +82,4 @@ function shareWhatsApp() {
 </script>
 </body>
 </html>
+
