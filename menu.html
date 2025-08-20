@@ -27,73 +27,16 @@ nav a:hover { color:#ff6600; }
 #noItemsMessage { display:none; text-align:center; font-size:1.5rem; color:#ff6600; margin-top:20px; animation:bounce 0.5s ease; }
 @keyframes bounce { 0%{transform:scale(0.8);opacity:0;}50%{transform:scale(1.05);opacity:1;}100%{transform:scale(1);opacity:1;} }
 footer { background:#333; color:#fff; text-align:center; padding:15px; margin-top:40px; }
-
-/* Cart Modal */
-#cartModal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0, 0, 0, 0.85); justify-content:center; align-items:center; z-index:1000; }
-#cartContent { background:#1e1e1e; padding:30px; border-radius:15px; width:90%; max-width:500px; color:#fff; text-align:left; box-shadow:0 10px 25px rgba(0,0,0,0.6); position:relative; }
-#cartContent h3 { color:#ff6600; margin-top:0; text-align:center; }
-#cartContent table { width:100%; border-collapse:collapse; margin-bottom:15px; }
-#cartContent table th, #cartContent table td { padding:10px; text-align:center; border-bottom:1px solid #444; }
-#cartContent table th { color:#ff6600; }
-#cartContent button { background:#ff6600; color:#fff; border:none; padding:5px 10px; border-radius:8px; cursor:pointer; margin:0 3px; font-weight:bold; transition:0.3s; }
-#cartContent button:hover { background:#e55c00; }
-#closeCart { position:absolute; top:15px; right:20px; cursor:pointer; color:#ff6600; font-weight:bold; font-size:22px; transition:0.3s; }
-#closeCart:hover { color:#e55c00; }
-#totalPrice { font-size:1.2rem; text-align:right; margin-top:10px; color:#ffcc80; }
-#cartContent button.checkout-btn { width:100%; margin-top:10px; padding:12px; font-size:1rem; border-radius:10px; }
-
-/* Add Items button with no background */
-.add-items-btn { 
-  width:100%; 
-  margin-top:15px; 
-  padding:12px; 
-  font-size:1rem; 
-  border-radius:10px; 
-  background:none; 
-  color:#fff; 
-  border:none; 
-  cursor:pointer; 
-  transition:0.3s; 
-  text-decoration:underline; 
-} 
+.add-items-btn { width:100%; margin-top:15px; padding:12px; font-size:1rem; border-radius:10px; background:none; color:#fff; border:none; cursor:pointer; transition:0.3s; text-decoration:underline; } 
 .add-items-btn:hover { color:#ff6600; text-decoration:underline; }
-
-/* Order button press animation */
 @keyframes press { 0% { transform: scale(1); } 50% { transform: scale(0.9); } 100% { transform: scale(1); } }
 .order-press { animation: press 0.2s ease; }
-
-/* Floating Cart */
-#floatingCart {
-  position: fixed;
-  bottom: 30px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: #ff6600;
-  color: #fff;
-  padding: 12px 20px;
-  border-radius: 30px;
-  font-weight: bold;
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.5);
-  z-index: 1001;
-  cursor: pointer;
-  transition: 0.3s;
-}
+#floatingCart { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background: #ff6600; color: #fff; padding: 12px 20px; border-radius: 30px; font-weight: bold; display: flex; align-items: center; gap: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.5); z-index: 1001; cursor: pointer; transition: 0.3s; }
 #floatingCart:hover { opacity: 0.9; }
-
-.view-cart-btn {
-  background: #fff;
-  color: #ff6600;
-  border: none;
-  padding: 5px 12px;
-  border-radius: 15px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: 0.3s;
-}
+.view-cart-btn { background: #fff; color: #ff6600; border: none; padding: 5px 12px; border-radius: 15px; font-weight: bold; cursor: pointer; transition: 0.3s; }
 .view-cart-btn:hover { background:#ffe0b3; }
+@keyframes slideUp { 0% { transform: translateY(20px); opacity: 0; } 100% { transform: translateY(0); opacity: 1; } }
+.item.slide-up { animation: slideUp 0.3s ease forwards; }
 </style>
 </head>
 <body>
@@ -121,7 +64,6 @@ footer { background:#333; color:#fff; text-align:center; padding:15px; margin-to
   </div>
 
   <div class="menu-items" id="menuItems">
-    <!-- Menu items -->
     <div class="item" data-name="Donne Biryani" data-price="100" data-type="nonveg">
       <img src="https://raw.githubusercontent.com/dhanushkumarvc-bot/cloud_kitchen.github.io/main/Donne-Biriyani.jpg" alt="Donne Biryani">
       <h3><span class="dot nonveg"></span>Donne Biryani</h3>
@@ -203,19 +145,16 @@ footer { background:#333; color:#fff; text-align:center; padding:15px; margin-to
 let cart = [];
 const deliveryCharges = 20;
 
-// Load cart from localStorage on page load
 window.onload = function() {
   const savedCart = localStorage.getItem('cart');
   if(savedCart) cart = JSON.parse(savedCart);
   updateCartIndicator();
 };
 
-// Save cart to localStorage
 function updateCartStorage() {
   localStorage.setItem('cart', JSON.stringify(cart));
 }
 
-// Add item to cart
 function addToCart(btn) {
   const itemDiv = btn.parentElement;
   const name = itemDiv.dataset.name;
@@ -230,7 +169,6 @@ function addToCart(btn) {
   alert(name + " added to cart!");
 }
 
-// Update floating cart
 function updateCartIndicator() {
   const floatingCart = document.getElementById('floatingCart');
   const cartSummaryText = document.getElementById('cartSummaryText');
@@ -244,11 +182,9 @@ function updateCartIndicator() {
   }
 }
 
-// Open cart modal
 function openCart() {
   document.getElementById('floatingCart').style.display = 'none';
   document.querySelector('.back-btn').style.display = 'block';
-
   const table = document.getElementById('cartTable');
   table.innerHTML = "<tr><th>Item</th><th>Price</th><th>Qty</th><th>Total</th></tr>";
   let subtotal = 0;
@@ -269,14 +205,12 @@ function openCart() {
     const row = table.insertRow();
     row.insertCell(0).innerText = item.name;
     row.insertCell(1).innerText = "₹"+item.price;
-
     const qtyCell = row.insertCell(2);
     const minusBtn = document.createElement('button'); minusBtn.innerText='-';
     minusBtn.onclick = ()=>updateQuantity(index,-1);
     const qtySpan = document.createElement('span'); qtySpan.innerText=' '+item.quantity+' ';
     const plusBtn = document.createElement('button'); plusBtn.innerText='+'; plusBtn.onclick = ()=>updateQuantity(index,1);
     qtyCell.appendChild(minusBtn); qtyCell.appendChild(qtySpan); qtyCell.appendChild(plusBtn);
-
     const totalPerItem = item.price * item.quantity;
     row.insertCell(3).innerText = "₹"+totalPerItem;
     subtotal += totalPerItem;
@@ -286,43 +220,62 @@ function openCart() {
   document.getElementById('totalPrice').innerText = `Subtotal (incl. delivery ₹${subtotal>0?deliveryCharges:0}): ₹${totalWithDelivery}`;
 }
 
-// Back to floating cart
 function backToFloatingCart() {
   document.getElementById('cartModal').style.display = 'none';
   document.querySelector('.back-btn').style.display = 'none';
   updateCartIndicator();
 }
 
-// Close cart
 function closeCart() { 
   document.getElementById('cartModal').style.display='none'; 
   document.querySelector('.back-btn').style.display = 'none';
   updateCartIndicator(); 
 }
 
-// Checkout via WhatsApp
 function checkout() {
   if(cart.length===0){ alert("Cart is empty!"); return; }
+
+  const name = prompt("Enter your name:");
+  if(!name) return;
+  const contact = prompt("Enter your contact number:");
+  if(!contact) return;
+
   let message = "Hello, I want to place an order:%0A";
   let subtotal = 0;
-  cart.forEach(item => { message+=`${item.name} x${item.quantity} = ₹${item.price*item.quantity}%0A`; subtotal+=item.price*item.quantity; });
+
+  cart.forEach(item => {
+    message += `${item.name} x${item.quantity} = ₹${item.price*item.quantity}%0A`;
+    subtotal += item.price * item.quantity;
+  });
+
   const total = subtotal + deliveryCharges;
   message += `Delivery: ₹${deliveryCharges}%0ATotal: ₹${total}%0A`;
+
   const whatsappURL = `https://wa.me/918884537773?text=${message}`;
   window.open(whatsappURL,'_blank');
 
-  cart=[]; 
-  localStorage.removeItem('cart'); // clear cart from storage
+  const sheetURL = "https://script.google.com/macros/s/AKfycbzIlA06Mc86mNQh8P-D9OKucelhAsADISFjviUFAr8UtUzgEIwyBku3C_pz7hzRn5DmVQ/exec"; // replace with your Apps Script Web App URL
+  const orderData = { name, contact, cart, subtotal: total };
+
+  fetch(sheetURL, {
+    method: 'POST',
+    body: JSON.stringify(orderData),
+    headers: { 'Content-Type': 'application/json' }
+  })
+  .then(res => res.json())
+  .then(res => { console.log(res); alert("Order saved successfully!"); })
+  .catch(err => { console.error(err); alert("Failed to save order."); });
+
+  cart=[];
+  localStorage.removeItem('cart'); 
   updateCartIndicator(); 
   closeCart();
 }
 
-// Redirect to menu
 function redirectToMenu(){ 
   document.getElementById('cartModal').style.display = 'none'; 
 }
 
-// Update quantity
 function updateQuantity(index, change) {
   cart[index].quantity += change;
   if(cart[index].quantity <= 0) cart.splice(index,1);
@@ -331,16 +284,14 @@ function updateQuantity(index, change) {
   openCart();
 }
 
-// Search & filter items
 function filterItems() {
   const searchValue = document.getElementById('searchInput').value.trim().toLowerCase();
   const vegFilter = document.getElementById('vegFilter').value;
   const menuContainer = document.getElementById('menuItems');
-  const items = Array.from(menuContainer.querySelectorAll('.item')); // Convert NodeList to Array
+  const items = Array.from(menuContainer.querySelectorAll('.item'));
   const noItemsMessage = document.getElementById('noItemsMessage');
-  let anyVisible = false;
 
-  // Separate matched and unmatched items
+  let anyVisible = false;
   const matchedItems = [];
   const unmatchedItems = [];
 
@@ -352,6 +303,7 @@ function filterItems() {
 
     if (matchesSearch && matchesFilter) {
       item.classList.remove('hide');
+      item.classList.add('slide-up');
       matchedItems.push(item);
       anyVisible = true;
     } else {
@@ -360,16 +312,12 @@ function filterItems() {
     }
   });
 
-  // Re-append matched items first, then unmatched
   matchedItems.forEach(item => menuContainer.appendChild(item));
   unmatchedItems.forEach(item => menuContainer.appendChild(item));
 
   noItemsMessage.style.display = anyVisible ? 'none' : 'block';
 }
-
 </script>
 
 </body>
 </html>
-
-
