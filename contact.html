@@ -11,32 +11,25 @@
     nav { background:#222; padding:10px; text-align:center; }
     nav a { color:white; margin:0 15px; text-decoration:none; font-weight:bold; transition:color 0.3s; }
     nav a:hover { color:#ff6600; }
-    .contact { background:#1a1a1a; max-width:600px; margin:40px auto; padding:30px; border-radius:10px;
-      box-shadow:0 4px 20px rgba(0,0,0,0.5); text-align:center; opacity:0; transform:translateY(20px);
-      animation:fadeIn 1s forwards; }
+    .contact { background:#1a1a1a; max-width:600px; margin:40px auto; padding:30px; border-radius:10px; box-shadow:0 4px 20px rgba(0,0,0,0.5); text-align:center; opacity:0; transform:translateY(20px); animation:fadeIn 1s forwards; }
     @keyframes fadeIn { to { opacity:1; transform:translateY(0); } }
     .contact h2 { color:#ff6600; margin-bottom:20px; }
     .contact p { font-size:18px; margin:10px 0; }
-    .submit-btn { display:inline-block; margin-top:20px; padding:12px 25px; background:#ff6600; color:white;
-      text-decoration:none; border-radius:5px; font-weight:bold; transition: background 0.3s, transform 0.2s;
-      border:none; cursor:pointer; }
+    .submit-btn { display:inline-block; margin-top:20px; padding:12px 25px; background:#ff6600; color:white; border-radius:5px; font-weight:bold; border:none; cursor:pointer; transition:background 0.3s, transform 0.2s; }
     .submit-btn:hover { background:#e65c00; transform:scale(1.05); }
     .contact form { margin-top:20px; text-align:left; }
     .contact form label { display:block; margin-bottom:5px; font-weight:bold; }
-    .contact form input, .contact form textarea { width:100%; padding:10px; margin-bottom:15px;
-      border-radius:5px; border:1px solid #555; background:#222; color:#fff; font-size:16px; }
+    .contact form input, .contact form textarea { width:100%; padding:10px; margin-bottom:15px; border-radius:5px; border:1px solid #555; background:#222; color:#fff; font-size:16px; }
     .contact form input:focus, .contact form textarea:focus { outline:none; border-color:#ff6600; }
     footer { background:#222; color:white; text-align:center; padding:15px; margin-top:30px; }
-    footer a { color:#ff6600; margin:0 8px; text-decoration:none; font-weight:bold; transition: color 0.3s; }
+    footer a { color:#ff6600; margin:0 8px; text-decoration:none; font-weight:bold; transition:color 0.3s; }
     footer a:hover { color:#fff; }
-    @media (max-width:480px) { .contact { padding:20px; } .contact p { font-size:16px; }
-      nav a { display:block; margin:8px 0; } }
+    @media (max-width:480px) { .contact { padding:20px; } .contact p { font-size:16px; } nav a { display:block; margin:8px 0; } }
   </style>
 </head>
 <body>
-  <header>
-    <h1>Contact Us</h1>
-  </header>
+
+  <header><h1>Contact Us</h1></header>
 
   <nav>
     <a href="index.html">Home</a>
@@ -67,14 +60,13 @@
 
   <footer>
     <p>&copy; 2025 The Hidden Ladle. All rights reserved.</p>
-    <p>
-      <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
-    </p>
+    <p><a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i> Instagram</a></p>
   </footer>
 
   <script>
     const nameField = document.getElementById('name');
     const emailField = document.getElementById('email');
+
     const storedName = localStorage.getItem('userName');
     const storedEmail = localStorage.getItem('userEmail');
     if(storedName) nameField.value = storedName;
@@ -89,7 +81,7 @@
         message: document.getElementById('message').value
       };
 
-      fetch("https://script.google.com/macros/s/AKfycbx026NCc9SQKpltIqcttc1ycQl4L-_bok5SW_oPQFLmvt02rAMsAA3y66Qpp5iOJS2X/exec", {  // <-- Replace with your deployed Web App URL
+      fetch("https://script.google.com/macros/s/AKfycbzYuWoTJPDWgcV-KMUt0b8aID-OyavqRstlc9ooBIqunu8zscWbNy-2ew68uVvacULg/exec", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data)
@@ -106,5 +98,7 @@
       .catch(err => alert('An error occurred while sending your message: ' + err));
     });
   </script>
+
 </body>
 </html>
+
