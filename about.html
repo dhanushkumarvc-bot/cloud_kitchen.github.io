@@ -4,68 +4,89 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>About Us - The Hidden Ladle</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
   <style>
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'Roboto', Arial, sans-serif;
       margin: 0;
       padding: 0;
-      background: #0a0a0a; /* smoky black background */
+      background: #0a0a0a;
       color: #fff;
     }
 
     header {
       text-align: center;
-      padding: 40px 20px 20px;
-      font-size: 2.5rem;
-      color: #ff6600; /* orange header */
+      padding: 50px 20px 30px;
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      color: #ff6600;
+      letter-spacing: 1px;
+      text-shadow: 1px 1px 5px rgba(255,102,0,0.3);
     }
 
     nav {
-      background: #222; /* dark navbar */
-      padding: 10px 0;
+      background: #222;
+      padding: 12px 0;
       text-align: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.5);
     }
 
     nav a {
       color: #fff;
-      margin: 0 15px;
+      margin: 0 20px;
       text-decoration: none;
-      font-weight: bold;
-      font-size: 1rem;
+      font-weight: 500;
+      font-size: 1.1rem;
+      transition: all 0.3s ease;
+      padding: 5px 10px;
+      border-radius: 5px;
     }
 
     nav a:hover {
-      color: #ff6600; /* orange hover */
+      color: #ff6600;
+      background: rgba(255,102,0,0.1);
+      transform: scale(1.05);
     }
 
     .about-container {
-      background: #1a1a1a; /* dark card section */
-      max-width: 800px;
-      margin: 40px auto;
-      padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.7);
+      background: #1a1a1a;
+      max-width: 850px;
+      margin: 50px auto;
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.8);
       text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .about-container:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.9);
     }
 
     .about-container h2 {
       color: #ff6600;
-      margin-bottom: 20px;
-      font-size: 2rem;
+      margin-bottom: 25px;
+      font-size: 2.2rem;
+      letter-spacing: 0.5px;
     }
 
     .about-container p {
-      font-size: 18px;
-      margin: 10px 0;
-      line-height: 1.6;
+      font-size: 1.1rem;
+      margin: 15px 0;
+      line-height: 1.8;
+      color: #f5f5f5;
     }
 
     footer {
       background: #222;
       color: #fff;
       text-align: center;
-      padding: 15px;
-      margin-top: 30px;
+      padding: 20px;
+      margin-top: 40px;
+      font-size: 0.95rem;
+      letter-spacing: 0.5px;
+      box-shadow: 0 -4px 10px rgba(0,0,0,0.5);
     }
   </style>
 </head>
