@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Payment - The Hidden Ladle</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
   <style>
     body {
       margin: 0;
@@ -34,9 +33,7 @@
       cursor: pointer;
       font-size: 17px;
       border: none;
-      text-decoration: none;
-      display: inline-block;
-      margin: 10px;
+      margin: 8px;
     }
     .btn:hover { background: #c72e3c; }
 
@@ -55,8 +52,15 @@
       padding: 20px;
       border-radius: 12px;
       text-align: center;
+      max-width: 350px;
     }
-    #qrcode { margin: 20px auto; }
+    .modal img { width: 250px; border-radius: 12px; }
+    .pay-amount {
+      margin-top: 12px;
+      font-size: 20px;
+      font-weight: bold;
+      color: #00ffae;
+    }
     .close {
       margin-top: 12px;
       background: #e63946;
@@ -72,48 +76,36 @@
     <h1>Payment Page</h1>
     <div class="amount">Total Amount: ₹<span id="totalAmount">0</span></div>
     <button class="btn" onclick="showQR()">Pay Now</button>
+    <button class="btn" onclick="goBack()">⬅ Back to Menu</button>
   </div>
 
   <!-- QR Modal -->
   <div class="modal" id="qrModal">
     <div class="modal-content">
       <h2>Scan & Pay</h2>
-      <div id="qrcode"></div>
-      <div class="close" onclick="redirectMenu()">Done</div>
+      <!-- ✅ Your QR Code from GitHub -->
+      <img src="https://raw.githubusercontent.com/dhanushkumarvc-bot/cloud_kitchen.github.io/refs/heads/main/scanner.jpeg" alt="UPI QR Code">
+      <div class="pay-amount">Pay ₹<span id="qrAmount">0</span></div>
+      <div class="close" onclick="closeQR()">Close</div>
     </div>
   </div>
 
   <script>
-    // 🔑 Use your actual UPI ID (from your original QR)
-    let upiID = "dhanushkumarvc19@oksbi";  
-    let name = "The Hidden Ladle";
-
+    let amount = 0;
     window.onload = function() {
-      let amount = localStorage.getItem("cartTotal");
+      amount = localStorage.getItem("cartTotal");
       document.getElementById("totalAmount").innerText = amount || "0";
     }
 
     function showQR() {
-      let amount = localStorage.getItem("cartTotal") || "0";
-
-      // UPI Payment URL with dynamic amount
-      let upiURL = `upi://pay?pa=${upiID}&pn=${encodeURIComponent(name)}&am=${amount}&cu=INR&tn=Order%20Payment`;
-
-      // Clear previous QR
-      document.getElementById("qrcode").innerHTML = "";
-
-      // Generate new QR (dynamic, based on UPI ID)
-      new QRCode(document.getElementById("qrcode"), {
-        text: upiURL,
-        width: 250,
-        height: 250
-      });
-
+      document.getElementById("qrAmount").innerText = amount || "0";
       document.getElementById("qrModal").style.display = "flex";
     }
-
-    function redirectMenu() {
-      window.location.href = "menu.html"; // ✅ redirect after payment
+    function closeQR() {
+      document.getElementById("qrModal").style.display = "none";
+    }
+    function goBack() {
+      window.location.href = "menu.html";
     }
   </script>
 </body>
