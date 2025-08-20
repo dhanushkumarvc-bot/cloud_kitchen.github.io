@@ -3,28 +3,94 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login - The Hidden Ladle</title>
+  <title>The Hidden Ladle - Cloud Kitchen</title>
   <style>
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    * {
+      box-sizing: border-box;
       margin: 0;
       padding: 0;
-      background: url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1600&q=80') no-repeat center center fixed;
-      background-size: cover;
+    }
+    body, html {
+      width: 100%;
+      height: 100%;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #121212; /* smoky black background */
+      color: #fff;
+    }
+    header {
+      text-align: center;
+      padding: 20px 0;
+    }
+    header h1 {
+      color: #ff6600;
+      font-size: 36px;
+      margin-bottom: 10px;
+    }
+    header p {
+      font-size: 18px;
+      color: #ccc;
+    }
+    nav {
+      position: absolute;
+      top: 10px;
+      right: 20px;
+    }
+    nav button {
+      background: #ff6600;
+      color: #fff;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 5px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-left: 10px;
+    }
+    nav button:hover {
+      background: #e65c00;
+    }
+    .hero {
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
-      height: 100vh;
-      color: #333;
+      height: calc(100vh - 80px);
+      text-align: center;
+      padding: 20px;
     }
-    .login-container, .main-container {
-      background: rgba(255,255,255,0.9);
+    .hero h2 {
+      font-size: 32px;
+      color: #ff6600;
+      margin-bottom: 20px;
+    }
+    .hero p {
+      font-size: 20px;
+      color: #ddd;
+      margin-bottom: 30px;
+    }
+    .order-btn {
+      background: #ff6600;
+      color: #fff;
+      text-decoration: none;
+      padding: 12px 25px;
+      border-radius: 6px;
+      font-weight: bold;
+    }
+    .order-btn:hover {
+      background: #e65c00;
+    }
+    .login-container {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(20, 20, 20, 0.95);
       padding: 40px;
       border-radius: 12px;
       text-align: center;
       width: 300px;
+      display: none;
     }
-    .login-container h2, .main-container h2 {
+    .login-container h2 {
       color: #ff6600;
       margin-bottom: 20px;
     }
@@ -33,81 +99,35 @@
       padding: 10px;
       margin: 10px 0;
       border-radius: 6px;
-      border: 1px solid #ccc;
+      border: 1px solid #555;
+      background: #222;
+      color: #fff;
+    }
+    .login-container input::placeholder {
+      color: #888;
     }
     .login-container button {
-      padding: 12px 20px;
+      width: 95%;
+      padding: 12px;
       background: #ff6600;
-      color: white;
       border: none;
       border-radius: 6px;
       font-weight: bold;
+      color: #fff;
       cursor: pointer;
-      width: 95%;
     }
     .login-container button:hover {
       background: #e65c00;
     }
-    .hidden {
-      display: none;
-    }
-    nav {
-      background: #ff6600;
-      padding: 15px;
-      text-align: center;
-      position: relative;
-    }
-    nav a {
-      color: white;
-      margin: 0 20px;
-      font-weight: bold;
-      text-decoration: none;
-    }
-    nav a:hover {
-      text-decoration: underline;
-    }
-    #greeting {
-      position: absolute;
-      right: 10px;
-      top: 50%;
-      transform: translateY(-50%);
-      color: white;
-      font-weight: bold;
-    }
-    .hero {
-      text-align: center;
-      padding: 40px 20px;
-      background: rgba(255,255,255,0.8);
-      margin: 20px auto;
-      border-radius: 12px;
-    }
-    .hero h2 {
-      color: #ff6600;
-      font-size: 28px;
-    }
-    .order-btn {
-      display: inline-block;
-      margin-top: 15px;
-      padding: 12px 20px;
-      background: #ff6600;
-      color: white;
-      text-decoration: none;
-      border-radius: 6px;
-      font-weight: bold;
-    }
-    .order-btn:hover {
-      background: #e65c00;
-    }
-    footer {
-      background: rgba(0,0,0,0.85);
-      color: white;
-      text-align: center;
-      padding: 20px;
-      margin-top: 20px;
-    }
   </style>
 </head>
 <body>
+
+  <!-- Navigation buttons -->
+  <nav>
+    <button id="loginBtn">Login</button>
+    <button id="logoutBtn" style="display:none;">Logout</button>
+  </nav>
 
   <!-- Login Form -->
   <div class="login-container" id="loginForm">
@@ -117,40 +137,35 @@
     <button onclick="login()">Login</button>
   </div>
 
-  <!-- Main Page (Initially hidden) -->
-  <div id="mainPage" class="hidden main-container">
-    <header>
-      <h1 id="welcomeMessage">Welcome to The Hidden Ladle</h1>
-      <p>Cooked with Care, Served with Love</p>
-    </header>
-
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="about.html">About Us</a>
-      <a href="contact.html">Contact</a>
-      <a href="#" onclick="logout()">Logout</a>
-      <span id="greeting"></span>
-    </nav>
-
-    <section class="hero">
-      <h2 id="heroMessage">Delicious homemade meals, delivered fresh to your doorstep in Bangalore.</h2>
-      <a class="order-btn" href="menu.html">Explore Menu</a>
-    </section>
-
-    <footer>
-      <p>&copy; 2025 The Hidden Ladle Cloud Kitchen. All rights reserved.</p>
-    </footer>
+  <!-- Main Content -->
+  <div class="hero" id="mainContent" style="display:none;">
+    <h2 id="welcomeMessage">Welcome to The Hidden Ladle</h2>
+    <p id="heroMessage">Delicious homemade meals, delivered fresh to your doorstep in Bangalore.</p>
+    <a class="order-btn" href="menu.html">Explore Menu</a>
   </div>
 
   <script>
-    // Display personalized greeting if user is already logged in
+    const loginBtn = document.getElementById('loginBtn');
+    const logoutBtn = document.getElementById('logoutBtn');
+    const loginForm = document.getElementById('loginForm');
+    const mainContent = document.getElementById('mainContent');
+
+    // Check if user is logged in
     window.onload = function() {
       const loggedInUser = localStorage.getItem('userName');
       if(loggedInUser) {
         showMainPage(loggedInUser);
+      } else {
+        loginBtn.style.display = 'inline-block';
       }
     }
 
+    // Show login form
+    loginBtn.addEventListener('click', () => {
+      loginForm.style.display = 'block';
+    });
+
+    // Login function
     function login() {
       const name = document.getElementById('name').value.trim();
       const phone = document.getElementById('phone').value.trim();
@@ -166,28 +181,33 @@
         return;
       }
 
-      // Save user info in localStorage
       localStorage.setItem('userName', name);
       localStorage.setItem('userPhone', phone);
 
       showMainPage(name);
     }
 
+    // Show main page
     function showMainPage(name) {
-      document.getElementById('loginForm').classList.add('hidden');
-      document.getElementById('mainPage').classList.remove('hidden');
+      loginForm.style.display = 'none';
+      mainContent.style.display = 'flex';
+      loginBtn.style.display = 'none';
+      logoutBtn.style.display = 'inline-block';
       document.getElementById('welcomeMessage').innerText = `Welcome, ${name}, to The Hidden Ladle!`;
       document.getElementById('heroMessage').innerText = `Hi ${name}, explore our delicious menu!`;
-      document.getElementById('greeting').innerText = `Hello, ${name}!`;
     }
 
-    function logout() {
+    // Logout function
+    logoutBtn.addEventListener('click', () => {
       localStorage.removeItem('userName');
       localStorage.removeItem('userPhone');
-      document.getElementById('mainPage').classList.add('hidden');
-      document.getElementById('loginForm').classList.remove('hidden');
-    }
+      mainContent.style.display = 'none';
+      loginBtn.style.display = 'inline-block';
+      logoutBtn.style.display = 'none';
+      loginForm.style.display = 'none';
+    });
   </script>
 
 </body>
 </html>
+
