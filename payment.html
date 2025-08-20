@@ -68,21 +68,41 @@
       background: #e65c00;
       box-shadow: 0 0 35px rgba(255,102,0,1);
     }
+    .back-btn {
+      background: #444;
+      margin-top: 15px;
+      box-shadow: 0 0 20px rgba(255,255,255,0.3);
+    }
+    .back-btn:hover {
+      background: #666;
+      box-shadow: 0 0 30px rgba(255,255,255,0.5);
+    }
   </style>
 </head>
 <body>
 
   <div class="payment-container">
     <h2>Make Payment</h2>
-    <input type="number" id="amount" placeholder="Enter Amount (₹)" required>
+    <input type="number" id="amount" placeholder="Enter Amount (₹)" readonly>
     <button onclick="payNow()">Pay Now</button>
+    <button class="back-btn" onclick="goBack()">⬅ Back to Menu</button>
   </div>
 
   <script>
+    // Fetch total amount from localStorage (saved in cart page)
+    window.onload = function() {
+      let totalAmount = localStorage.getItem("cartTotal");
+      if(totalAmount){
+        document.getElementById("amount").value = totalAmount;
+      } else {
+        document.getElementById("amount").value = 0;
+      }
+    }
+
     function payNow(){
       const amount = document.getElementById("amount").value.trim();
       if(amount === "" || isNaN(amount) || parseInt(amount) <= 0){
-        alert("Please enter a valid amount.");
+        alert("Cart is empty. Please add items before paying.");
         return;
       }
 
@@ -90,11 +110,15 @@
       let upiID = "merchant@upi";
       let name = "The Hidden Ladle";
       
-      // Create UPI deep link (works with Google Pay, PhonePe, Paytm, BHIM, etc.)
+      // Create UPI deep link
       let upiLink = `upi://pay?pa=${upiID}&pn=${encodeURIComponent(name)}&am=${amount}&cu=INR`;
 
       // Redirect to payment app
       window.location.href = upiLink;
+    }
+
+    function goBack(){
+      window.location.href = "menu.html";
     }
   </script>
 
