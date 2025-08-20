@@ -64,6 +64,39 @@ footer { background:#333; color:#fff; text-align:center; padding:15px; margin-to
 /* Order button press animation */
 @keyframes press { 0% { transform: scale(1); } 50% { transform: scale(0.9); } 100% { transform: scale(1); } }
 .order-press { animation: press 0.2s ease; }
+
+/* Floating Cart */
+#floatingCart {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #ff6600;
+  color: #fff;
+  padding: 12px 20px;
+  border-radius: 30px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+  z-index: 1001;
+  cursor: pointer;
+  transition: 0.3s;
+}
+#floatingCart:hover { opacity: 0.9; }
+
+.view-cart-btn {
+  background: #fff;
+  color: #ff6600;
+  border: none;
+  padding: 5px 12px;
+  border-radius: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.view-cart-btn:hover { background:#ffe0b3; }
 </style>
 </head>
 <body>
@@ -77,7 +110,6 @@ footer { background:#333; color:#fff; text-align:center; padding:15px; margin-to
   <a href="menu.html">Menu</a>
   <a href="about.html">About Us</a>
   <a href="contact.html">Contact</a>
-  <a href="#" onclick="openCart()">Cart 🛒</a>
 </nav>
 
 <section class="menu">
@@ -132,6 +164,12 @@ footer { background:#333; color:#fff; text-align:center; padding:15px; margin-to
   <p>&copy; 2025 The Hidden Ladle. All rights reserved.</p>
 </footer>
 
+<!-- Floating Cart -->
+<div id="floatingCart" style="display:none;">
+  <span id="cartSummaryText"></span>
+  <button onclick="openCart()" class="view-cart-btn">View Cart ></button>
+</div>
+
 <!-- Cart Modal -->
 <div id="cartModal">
   <div id="cartContent">
@@ -164,10 +202,16 @@ function addToCart(btn) {
 }
 
 function updateCartIndicator() {
-  const cartLink = document.querySelector('nav a[href="#"]');
+  const floatingCart = document.getElementById('floatingCart');
+  const cartSummaryText = document.getElementById('cartSummaryText');
   const totalQty = cart.reduce((sum,i)=>sum+i.quantity,0);
-  cartLink.innerHTML = `Cart 🛒 ${totalQty ? '('+totalQty+')' : ''}`;
-  cartLink.classList.remove('cart-pop'); void cartLink.offsetWidth; cartLink.classList.add('cart-pop');
+
+  if(totalQty > 0){
+    cartSummaryText.innerText = `${totalQty} item${totalQty>1?'s':''} added`;
+    floatingCart.style.display = 'flex';
+  } else {
+    floatingCart.style.display = 'none';
+  }
 }
 
 function openCart() {
