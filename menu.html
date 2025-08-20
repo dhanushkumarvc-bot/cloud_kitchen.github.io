@@ -332,24 +332,44 @@ function updateQuantity(index, change) {
 }
 
 // Search & filter items
-function filterItems(){
-  const searchValue=document.getElementById('searchInput').value.trim().toLowerCase();
-  const vegFilter=document.getElementById('vegFilter').value;
-  const items=document.querySelectorAll('#menuItems .item');
-  const noItemsMessage=document.getElementById('noItemsMessage');
-  let anyVisible=false;
-  items.forEach(item=>{
-    const name=item.dataset.name.toLowerCase();
-    const type=item.dataset.type;
-    const matchesSearch=name.includes(searchValue);
-    const matchesFilter=vegFilter==='all'||vegFilter===type;
-    if(matchesSearch && matchesFilter){item.classList.remove('hide'); anyVisible=true;}
-    else item.classList.add('hide');
+function filterItems() {
+  const searchValue = document.getElementById('searchInput').value.trim().toLowerCase();
+  const vegFilter = document.getElementById('vegFilter').value;
+  const menuContainer = document.getElementById('menuItems');
+  const items = Array.from(menuContainer.querySelectorAll('.item')); // Convert NodeList to Array
+  const noItemsMessage = document.getElementById('noItemsMessage');
+  let anyVisible = false;
+
+  // Separate matched and unmatched items
+  const matchedItems = [];
+  const unmatchedItems = [];
+
+  items.forEach(item => {
+    const name = item.dataset.name.toLowerCase();
+    const type = item.dataset.type;
+    const matchesSearch = name.includes(searchValue);
+    const matchesFilter = vegFilter === 'all' || vegFilter === type;
+
+    if (matchesSearch && matchesFilter) {
+      item.classList.remove('hide');
+      matchedItems.push(item);
+      anyVisible = true;
+    } else {
+      item.classList.add('hide');
+      unmatchedItems.push(item);
+    }
   });
-  noItemsMessage.style.display = anyVisible?'none':'block';
+
+  // Re-append matched items first, then unmatched
+  matchedItems.forEach(item => menuContainer.appendChild(item));
+  unmatchedItems.forEach(item => menuContainer.appendChild(item));
+
+  noItemsMessage.style.display = anyVisible ? 'none' : 'block';
 }
+
 </script>
 
 </body>
 </html>
+
 
