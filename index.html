@@ -5,9 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The Hidden Ladle - Cloud Kitchen</title>
 <style>
-/* Basic reset */
 * { margin:0; padding:0; box-sizing:border-box; }
-html, body { height:100%; font-family: Arial, sans-serif; overflow:hidden; }
+html, body { height:100%; font-family: Arial, sans-serif; overflow-x:hidden; scroll-behavior: smooth; }
 
 /* Background smoke */
 body {
@@ -32,14 +31,11 @@ body::before {
 nav {
   position: absolute; top: 20px; right: 30px; z-index:10;
 }
-#loginBtn, #profileIcon {
-  background: #ff6600; color:#fff; border:none; cursor:pointer; font-weight:bold;
-  padding:10px 20px; transition:0.3s; font-size:16px; border-radius:8px;
-}
-#loginBtn:hover, #profileIcon:hover { box-shadow:0 0 20px rgba(255,102,0,0.8); }
 #profileIcon {
   display:none; width:45px; height:45px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:20px; font-weight:bold;
+  background:#ff6600; cursor:pointer; transition:0.3s;
 }
+#profileIcon:hover { box-shadow:0 0 20px rgba(255,102,0,0.8); }
 
 /* Center wrapper for login */
 #centerWrapper { display:flex; justify-content:center; align-items:center; height:100%; width:100%; position:absolute; top:0; left:0; z-index:5; }
@@ -71,20 +67,24 @@ nav {
 .profile-modal button:hover, .feedback-modal button:hover { background:#e65c00; box-shadow:0 0 25px rgba(255,102,0,0.8); }
 
 /* Close symbol */
-.profile-modal span.close { position:absolute; top:10px; right:15px; font-size:24px; cursor:pointer; }
+.profile-modal span.close, .feedback-modal span.close { position:absolute; top:10px; right:15px; font-size:24px; cursor:pointer; }
 
 /* Feedback */
 .feedback-modal .stars { display:flex; justify-content:center; margin:10px 0; }
 .feedback-modal .stars span { font-size:25px; cursor:pointer; margin:0 5px; color:#ccc; }
 .feedback-modal .stars span.selected { color:#ffcc00; }
 .feedback-modal textarea { width:90%; height:60px; resize:none; text-align:center; margin-top:10px; }
+
+/* Menu section */
+#menuSection { padding:50px 20px; background: rgba(0,0,0,0.5); color:#fff; }
+#menuSection h2 { font-size:32px; text-align:center; margin-bottom:30px; color:#ff6600; text-shadow:0 0 20px rgba(255,102,0,0.7); }
+.menu-item { padding:15px; margin:10px auto; width:80%; background: rgba(50,50,50,0.8); border-radius:12px; text-align:center; font-size:18px; }
 </style>
 </head>
 <body>
 <div class="smoke"></div>
 
 <nav>
-  <button id="loginBtn">Login</button>
   <div id="profileIcon"></div>
 </nav>
 
@@ -102,7 +102,7 @@ nav {
   <h1>The Hidden Ladle</h1>
   <h2 id="heroGreeting"></h2>
   <p id="heroMessage"></p>
-  <a href="menu.html">Explore Menu</a>
+  <a href="#menuSection">Explore Menu</a>
 </div>
 
 <div class="profile-modal" id="profileModal">
@@ -116,6 +116,7 @@ nav {
 </div>
 
 <div class="feedback-modal" id="feedbackModal">
+  <span class="close" onclick="closeFeedback()">×</span>
   <h2>Feedback</h2>
   <div class="stars">
     <span data-star="1">&#9733;</span>
@@ -126,19 +127,26 @@ nav {
   </div>
   <textarea id="feedbackText" maxlength="100" placeholder="Write your feedback (max 100 chars)"></textarea>
   <button onclick="submitFeedback()">Submit</button>
-  <button onclick="closeFeedback()">Cancel</button>
 </div>
 
+<section id="menuSection">
+  <h2>Our Menu</h2>
+  <div class="menu-item">Donne Biryani</div>
+  <div class="menu-item">Paneer Butter Masala</div>
+  <div class="menu-item">Chicken Curry</div>
+  <div class="menu-item">Veg Fried Rice</div>
+</section>
+
 <script>
-const loginBtn = document.getElementById('loginBtn');
 const profileIcon = document.getElementById('profileIcon');
 const loginForm = document.getElementById('loginForm');
+const centerWrapper = document.getElementById('centerWrapper');
 const mainContent = document.getElementById('mainContent');
 const profileModal = document.getElementById('profileModal');
 const feedbackModal = document.getElementById('feedbackModal');
 let rating = 0;
 
-// Load from localStorage
+// Load saved user
 window.onload = function(){
   const name = localStorage.getItem('userName');
   const phone = localStorage.getItem('userPhone');
@@ -146,9 +154,9 @@ window.onload = function(){
   if(name && phone && email){ showMainPage(name, phone, email); }
 }
 
-// Toggle profile modal
+// Profile circle click
 profileIcon.addEventListener('click', ()=> {
-  profileModal.style.display = (profileModal.style.display==='flex') ? 'none':'flex';
+  profileModal.style.display = 'flex';
 });
 
 // Star rating
@@ -166,7 +174,7 @@ function login(){
   const name = document.getElementById('name').value.trim();
   const phone = document.getElementById('phone').value.trim();
   const email = document.getElementById('email').value.trim();
-  if(!name||!phone||!email){ alert('Enter all details'); return; }
+  if(!name || !phone || !email){ alert('Enter all details'); return; }
   if(!/^\d{10}$/.test(phone)){ alert('Enter valid 10-digit phone'); return; }
   if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ alert('Enter valid email'); return; }
 
@@ -177,9 +185,8 @@ function login(){
 }
 
 function showMainPage(name, phone, email){
-  document.getElementById('centerWrapper').style.display='none';
+  centerWrapper.style.display='none';
   mainContent.style.display='flex';
-  loginBtn.style.display='none';
   profileIcon.style.display='flex';
   profileIcon.innerText = name.charAt(0).toUpperCase();
 
@@ -197,8 +204,7 @@ function logout(){
   profileModal.style.display='none';
   feedbackModal.style.display='none';
   profileIcon.style.display='none';
-  document.getElementById('centerWrapper').style.display='flex';
-  loginBtn.style.display='inline-block';
+  centerWrapper.style.display='flex';
 }
 
 function showFeedback(){
@@ -224,7 +230,6 @@ function submitFeedback(){
 
 function closeProfile(){
   profileModal.style.display='none';
-  mainContent.style.display='flex';
 }
 </script>
 </body>
