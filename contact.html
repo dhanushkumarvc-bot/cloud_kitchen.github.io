@@ -170,6 +170,18 @@
     <p><i class="fas fa-envelope" style="color: #FF9800;"></i> cloudkitchen@gmail.com</p>
     <p><i class="fas fa-map-marker-alt" style="color: #F44336;"></i> Bangalore, India</p>
 
+    <!-- Notification message -->
+    <div id="formMessage" style="
+        display:none; 
+        margin-bottom:15px; 
+        padding:12px; 
+        border-radius:5px; 
+        background:#4CAF50; 
+        color:#fff;
+        font-weight:bold;
+        text-align:center;
+    "></div>
+
     <form id="contactForm">
       <label for="name">Name</label>
       <input type="text" id="name" name="name" required placeholder="Your Name">
@@ -195,16 +207,22 @@
     const nameField = document.getElementById('name');
     const emailField = document.getElementById('email');
     const messageField = document.getElementById('message');
+    const formMessage = document.getElementById('formMessage');
+    const submitBtn = document.querySelector('.submit-btn');
 
     // Auto-fill Name and Email from localStorage
     const storedName = localStorage.getItem('userName');
     const storedEmail = localStorage.getItem('userEmail');
-
     if(storedName) nameField.value = storedName;
     if(storedEmail) emailField.value = storedEmail;
 
     document.getElementById('contactForm').addEventListener('submit', function(e){
       e.preventDefault();
+
+      // Immediate feedback
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Sending...';
+      formMessage.style.display = 'none';
 
       const data = {
         name: nameField.value,
@@ -218,17 +236,38 @@
       })
       .then(response => response.json())
       .then(result => {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Send Message';
+
         if(result.status === 'success'){
-          alert('Thank you! Your message has been saved.');
           messageField.value = ''; // Clear only message
-          // Save Name and Email in localStorage
           localStorage.setItem('userName', nameField.value);
           localStorage.setItem('userEmail', emailField.value);
+
+          formMessage.style.background = '#4CAF50';
+          formMessage.textContent = 'Thank you! Your message has been saved. We will get back to you shortly.';
+          formMessage.style.display = 'block';
         } else {
-          alert('Something went wrong!');
+          formMessage.style.background = '#f44336';
+          formMessage.textContent = 'Something went wrong! Please try again.';
+          formMessage.style.display = 'block';
         }
+
+        // Fade out after 5 seconds
+        setTimeout(() => {
+          formMessage.style.display = 'none';
+        }, 5000);
       })
-      .catch(err => alert('Error sending message: ' + err));
+      .catch(err => {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Send Message';
+        formMessage.style.background = '#f44336';
+        formMessage.textContent = 'Error sending message: ' + err;
+        formMessage.style.display = 'block';
+        setTimeout(() => {
+          formMessage.style.display = 'none';
+        }, 5000);
+      });
     });
   </script>
 </body>
