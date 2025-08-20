@@ -72,8 +72,6 @@
     <h1>Payment Page</h1>
     <div class="amount">Total Amount: ₹<span id="totalAmount">0</span></div>
     <button class="btn" onclick="showQR()">Pay Now</button>
-    <!-- ✅ Back to Menu Button -->
-    <a href="menu.html" class="btn">Back to Menu</a>
   </div>
 
   <!-- QR Modal -->
@@ -81,12 +79,13 @@
     <div class="modal-content">
       <h2>Scan & Pay</h2>
       <div id="qrcode"></div>
-      <div class="close" onclick="closeQR()">Close</div>
+      <div class="close" onclick="redirectMenu()">Done</div>
     </div>
   </div>
 
   <script>
-    let upiID = "dhanushkumarvc19@oksbi";  // your UPI ID
+    // 🔑 Use your actual UPI ID (from your original QR)
+    let upiID = "dhanushkumarvc19@oksbi";  
     let name = "The Hidden Ladle";
 
     window.onload = function() {
@@ -103,7 +102,7 @@
       // Clear previous QR
       document.getElementById("qrcode").innerHTML = "";
 
-      // Generate new QR
+      // Generate new QR (dynamic, based on UPI ID)
       new QRCode(document.getElementById("qrcode"), {
         text: upiURL,
         width: 250,
@@ -113,8 +112,8 @@
       document.getElementById("qrModal").style.display = "flex";
     }
 
-    function closeQR() {
-      document.getElementById("qrModal").style.display = "none";
+    function redirectMenu() {
+      window.location.href = "menu.html"; // ✅ redirect after payment
     }
   </script>
 </body>
