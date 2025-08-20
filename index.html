@@ -151,41 +151,53 @@ let mouse = { x: width/2, y: height/2 };
 window.addEventListener('resize', ()=>{ width=canvas.width=window.innerWidth; height=canvas.height=window.innerHeight; });
 window.addEventListener('mousemove', e=>{ mouse.x=e.clientX; mouse.y=e.clientY; });
 
-// White wispy smoke particle
-class SmokeParticle {
+// Slow, lingering white smoke particles
+class SlowSmokeParticle {
   constructor() { this.reset(); }
   reset() {
     this.x = Math.random() * width;
-    this.y = height + Math.random() * 200;
-    this.width = 8 + Math.random() * 12;
-    this.height = 30 + Math.random() * 60;
-    this.speed = 0.2 + Math.random() * 0.6;
+    this.y = height + Math.random() * 300;
+    this.width = 6 + Math.random() * 12;
+    this.height = 40 + Math.random() * 80;
+    this.speed = 0.05 + Math.random() * 0.15;
     this.angle = Math.random() * 2 * Math.PI;
-    this.opacity = 0.05 + Math.random() * 0.1;
+    this.opacity = 0.02 + Math.random() * 0.08;
+    this.scale = 0.5 + Math.random() * 0.5;
   }
   update() {
-    let dx = (mouse.x - this.x) * 0.0005;
-    this.x += dx + Math.sin(this.angle) * 0.3;
+    let dx = (mouse.x - this.x) * 0.0003;
+    this.x += dx + Math.sin(this.angle) * 0.2;
     this.y -= this.speed;
-    this.angle += 0.005;
-    if(this.y < -100) this.reset();
+    this.angle += 0.002;
+    this.opacity *= 0.995;
+    this.scale += 0.0005;
+    if(this.y < -150 || this.opacity < 0.01) this.reset();
   }
   draw() {
     ctx.save();
     ctx.translate(this.x, this.y);
-    ctx.rotate(Math.sin(this.angle) * 0.2);
+    ctx.rotate(Math.sin(this.angle) * 0.15);
     ctx.fillStyle = `rgba(255,255,255,${this.opacity})`;
-    ctx.fillRect(-this.width/2, -this.height/2, this.width, this.height);
+    ctx.fillRect(-this.width/2*this.scale, -this.height/2*this.scale, this.width*this.scale, this.height*this.scale);
     ctx.restore();
   }
 }
 
 const particles = [];
-for(let i=0; i<120; i++) particles.push(new SmokeParticle());
+for(let i=0;i<120;i++) particles.push(new SlowSmokeParticle());
 
 function animate() {
   ctx.clearRect(0,0,width,height);
-  particles.forEach(p => { p.update(); p.draw(); });
+
+  // Gradient fade for smoke
+  const gradient = ctx.createLinearGradient(0, 0, 0, height);
+  gradient.addColorStop(0, 'rgba(18,18,18,1)');   // opaque at top
+  gradient.addColorStop(0.3, 'rgba(18,18,18,0.3)');
+  gradient.addColorStop(1, 'rgba(18,18,18,0)');
+  ctx.fillStyle = gradient;
+  ctx.fillRect(0,0,width,height);
+
+  particles.forEach(p=>{ p.update(); p.draw(); });
   requestAnimationFrame(animate);
 }
 animate();
