@@ -140,24 +140,46 @@
             updateCartIndicator();
         };
 
-        function updateCartStorage(){ localStorage.setItem('cart', JSON.stringify(cart)); }
+        function updateCartStorage(){ 
+            localStorage.setItem('cart', JSON.stringify(cart)); 
+            updateCartTotal(); // ✅ save subtotal immediately
+        }
 
         function addToCart(btn){
             const itemDiv = btn.parentElement;
             const name = itemDiv.dataset.name;
             const price = parseInt(itemDiv.dataset.price);
             const existing = cart.find(i=>i.name===name);
-            if(existing) existing.quantity += 1; else cart.push({name,price,quantity:1});
-            btn.classList.remove('order-press'); void btn.offsetWidth; btn.classList.add('order-press');
-            updateCartIndicator(); updateCartStorage(); alert(name+" added to cart!");
+            if(existing) existing.quantity += 1; 
+            else cart.push({name,price,quantity:1});
+            
+            btn.classList.remove('order-press'); 
+            void btn.offsetWidth; 
+            btn.classList.add('order-press');
+            
+            updateCartIndicator(); 
+            updateCartStorage(); // ✅ subtotal saved as soon as Order is pressed
+            alert(name+" added to cart!");
+        }
+
+        // ✅ New function to calculate subtotal instantly
+        function updateCartTotal(){
+            let subtotal = cart.reduce((sum, item)=> sum + (item.price * item.quantity), 0);
+            const totalWithDelivery = subtotal + (subtotal > 0 ? deliveryCharges : 0);
+            localStorage.setItem("cartTotal", totalWithDelivery);
         }
 
         function updateCartIndicator(){
             const floatingCart=document.getElementById('floatingCart');
             const cartSummaryText=document.getElementById('cartSummaryText');
             const totalQty=cart.reduce((sum,i)=>sum+i.quantity,0);
-            if(totalQty>0){ cartSummaryText.innerText=`${totalQty} item${totalQty>1?'s':''} added`; floatingCart.style.display='flex'; }
-            else{ floatingCart.style.display='none'; }
+            if(totalQty>0){ 
+                cartSummaryText.innerText=`${totalQty} item${totalQty>1?'s':''} added`; 
+                floatingCart.style.display='flex'; 
+            }
+            else{ 
+                floatingCart.style.display='none'; 
+            }
         }
 
         function openCart(){
@@ -167,41 +189,73 @@
             let subtotal=0;
             const cartModal=document.getElementById('cartModal');
             cartModal.style.display='flex';
-            if(cart.length===0){ document.getElementById('totalPrice').innerText="Cart is empty"; document.querySelector('.checkout-btn').style.display='none'; document.querySelector('.add-items-btn').style.display='block'; localStorage.removeItem("cartTotal"); return; }
-            document.querySelector('.checkout-btn').style.display='block'; document.querySelector('.add-items-btn').style.display='block';
+            if(cart.length===0){ 
+                document.getElementById('totalPrice').innerText="Cart is empty"; 
+                document.querySelector('.checkout-btn').style.display='none'; 
+                document.querySelector('.add-items-btn').style.display='block'; 
+                localStorage.removeItem("cartTotal"); 
+                return; 
+            }
+            document.querySelector('.checkout-btn').style.display='block'; 
+            document.querySelector('.add-items-btn').style.display='block';
             cart.forEach((item,index)=>{
                 const row=table.insertRow();
                 row.insertCell(0).innerText=item.name;
                 row.insertCell(1).innerText="₹"+item.price;
                 const qtyCell=row.insertCell(2);
-                const minusBtn=document.createElement('button'); minusBtn.innerText='-'; minusBtn.onclick=()=>updateQuantity(index,-1);
-                const qtySpan=document.createElement('span'); qtySpan.innerText=' '+item.quantity+' ';
-                const plusBtn=document.createElement('button'); plusBtn.innerText='+'; plusBtn.onclick=()=>updateQuantity(index,1);
-                qtyCell.appendChild(minusBtn); qtyCell.appendChild(qtySpan); qtyCell.appendChild(plusBtn);
-                const totalPerItem=item.price*item.quantity; row.insertCell(3).innerText="₹"+totalPerItem;
+                const minusBtn=document.createElement('button'); 
+                minusBtn.innerText='-'; 
+                minusBtn.onclick=()=>updateQuantity(index,-1);
+                const qtySpan=document.createElement('span'); 
+                qtySpan.innerText=' '+item.quantity+' ';
+                const plusBtn=document.createElement('button'); 
+                plusBtn.innerText='+'; 
+                plusBtn.onclick=()=>updateQuantity(index,1);
+                qtyCell.appendChild(minusBtn); 
+                qtyCell.appendChild(qtySpan); 
+                qtyCell.appendChild(plusBtn);
+                const totalPerItem=item.price*item.quantity; 
+                row.insertCell(3).innerText="₹"+totalPerItem;
                 subtotal+=totalPerItem;
             });
             const totalWithDelivery=subtotal+(subtotal>0?deliveryCharges:0);
             document.getElementById('totalPrice').innerText=`Subtotal (incl. delivery ₹${subtotal>0?deliveryCharges:0}): ₹${totalWithDelivery}`;
-            localStorage.setItem("cartTotal", totalWithDelivery); // ✅ save subtotal for payment.html
+            localStorage.setItem("cartTotal", totalWithDelivery);
         }
 
         function closeCart(){ document.getElementById('cartModal').style.display='none'; updateCartIndicator(); }
         function checkout(){ window.location.href="payment.html"; }
         function redirectToMenu(){ document.getElementById('cartModal').style.display='none'; }
-        function updateQuantity(index,change){ cart[index].quantity+=change; if(cart[index].quantity<=0) cart.splice(index,1); updateCartStorage(); updateCartIndicator(); openCart(); }
+        function updateQuantity(index,change){ 
+            cart[index].quantity+=change; 
+            if(cart[index].quantity<=0) cart.splice(index,1); 
+            updateCartStorage(); 
+            updateCartIndicator(); 
+            openCart(); 
+        }
         function filterItems(){
             const searchValue=document.getElementById('searchInput').value.trim().toLowerCase();
             const vegFilter=document.getElementById('vegFilter').value;
             const menuContainer=document.getElementById('menuItems');
             const items=Array.from(menuContainer.querySelectorAll('.item'));
-            const noItemsMessage=document.getElementById('noItemsMessage'); let anyVisible=false;
-            const matchedItems=[]; const unmatchedItems=[];
+            const noItemsMessage=document.getElementById('noItemsMessage'); 
+            let anyVisible=false;
+            const matchedItems=[]; 
+            const unmatchedItems=[];
             items.forEach(item=>{
-                const name=item.dataset.name.toLowerCase(); const type=item.dataset.type;
-                const matchesSearch=name.includes(searchValue); const matchesFilter=vegFilter==='all'||vegFilter===type;
-                if(matchesSearch&&matchesFilter){ item.classList.remove('hide'); matchedItems.push(item); anyVisible=true; }
-                else{ item.classList.add('hide'); unmatchedItems.push(item); }
+                const name=item.dataset.name.toLowerCase(); 
+                const type=item.dataset.type;
+                const matchesSearch=name.includes(searchValue); 
+                const matchesFilter=vegFilter==='all'||vegFilter===type;
+                if(matchesSearch&&matchesFilter){ 
+                    item.classList.remove('hide'); 
+                    matchedItems.push(item); 
+                    anyVisible=true; 
+                }
+                else{ 
+                    item.classList.add('hide'); 
+                    unmatchedItems.push(item); 
+                }
             });
             matchedItems.forEach(item=>menuContainer.appendChild(item));
             unmatchedItems.forEach(item=>menuContainer.appendChild(item));
