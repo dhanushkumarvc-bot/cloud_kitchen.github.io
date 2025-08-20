@@ -7,62 +7,9 @@
   <style>
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
-      background: url('https://img.freepik.com/free-photo/flat-lay-food-frame-with-copy-space_23-2148723449.jpg') no-repeat center center fixed;
-      background-size: cover;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background: #000; /* 🔴 Full black background */
       color: #fff;
-    }
-
-    .overlay {
-      background: rgba(0, 0, 0, 0.7);
-      position: absolute;
-      top: 0;
-      left: 0;
-      height: 100%;
-      width: 100%;
-    }
-
-    .payment-container {
-      position: relative;
-      z-index: 2;
-      max-width: 500px;
-      margin: 80px auto;
-      background: rgba(255, 255, 255, 0.9);
-      color: #000;
-      padding: 30px;
-      border-radius: 15px;
-      text-align: center;
-    }
-
-    h1 {
-      margin-bottom: 20px;
-      font-size: 28px;
-      color: #333;
-    }
-
-    .amount {
-      font-size: 22px;
-      font-weight: bold;
-      margin-bottom: 30px;
-      color: #e63946;
-    }
-
-    .btn {
-      display: inline-block;
-      background: #e63946;
-      color: #fff;
-      padding: 12px 25px;
-      margin: 10px;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      font-size: 16px;
-      transition: 0.3s;
-      text-decoration: none;
-    }
-
-    .btn:hover {
-      background: #c72e3c;
     }
 
     nav {
@@ -70,28 +17,71 @@
       top: 0;
       left: 0;
       width: 100%;
-      background: rgba(0,0,0,0.8);
-      padding: 10px 0;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 12px 0;
       text-align: center;
       z-index: 10;
+      font-size: 16px;
+      backdrop-filter: blur(5px);
     }
 
     nav a {
       color: #fff;
       text-decoration: none;
-      margin: 0 15px;
+      margin: 0 18px;
       font-weight: bold;
-      transition: 0.3s;
+      transition: 0.3s ease;
     }
 
     nav a:hover {
       color: #e63946;
     }
+
+    .payment-container {
+      max-width: 500px;
+      margin: 120px auto;
+      background: rgba(20, 20, 20, 0.95);
+      color: #fff;
+      padding: 40px;
+      border-radius: 20px;
+      text-align: center;
+      box-shadow: 0px 8px 25px rgba(0,0,0,0.8);
+    }
+
+    h1 {
+      font-size: 28px;
+      margin-bottom: 20px;
+      color: #e63946;
+    }
+
+    .amount {
+      font-size: 26px;
+      font-weight: bold;
+      margin-bottom: 30px;
+      color: #00ffae;
+    }
+
+    .btn {
+      display: inline-block;
+      background: #e63946;
+      color: #fff;
+      padding: 14px 28px;
+      margin: 12px;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 17px;
+      transition: transform 0.3s, background 0.3s;
+      text-decoration: none;
+    }
+
+    .btn:hover {
+      background: #c72e3c;
+      transform: scale(1.05);
+    }
   </style>
 </head>
 <body>
-  <div class="overlay"></div>
-
   <nav>
     <a href="index.html">Home</a>
     <a href="menu.html">Menu</a>
@@ -102,12 +92,12 @@
   <div class="payment-container">
     <h1>Payment Page</h1>
     <div class="amount">Total Amount: ₹<span id="totalAmount">0</span></div>
-    <button class="btn" onclick="makePayment()">Pay Now</button>
+    <button class="btn" onclick="makePayment()">Pay with Google Pay</button>
     <a href="menu.html" class="btn">Back to Menu</a>
   </div>
 
   <script>
-    // Fetch subtotal from localStorage
+    // Load cart total from localStorage
     window.onload = function() {
       let amount = localStorage.getItem("cartTotal");
       if(amount) {
@@ -118,10 +108,16 @@
     }
 
     function makePayment() {
-      alert("Payment successful! Thank you for ordering from The Hidden Ladle.");
-      localStorage.removeItem("cart"); 
-      localStorage.removeItem("cartTotal");
-      window.location.href = "index.html"; 
+      let amount = localStorage.getItem("cartTotal") || "0";
+      let upiID = "dhanushkumarvc19@oksbi";   // 🔴 Replace with your UPI ID 
+      let name = "The Hidden Ladle";   // Merchant / shop name
+      let transactionNote = "Order Payment"; 
+
+      // Build UPI URL
+      let url = `upi://pay?pa=${upiID}&pn=${encodeURIComponent(name)}&am=${amount}&cu=INR&tn=${encodeURIComponent(transactionNote)}`;
+      
+      // Redirect to GPay or any UPI app
+      window.location.href = url;
     }
   </script>
 </body>
