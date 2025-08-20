@@ -33,13 +33,6 @@ nav {
   align-items: center;
 }
 
-nav div {
-  margin-right:10px;
-  cursor:pointer;
-  font-size:18px;
-  color:#ff6600;
-}
-
 .profile-circle {
   width: 50px; height: 50px;
   border-radius: 50%;
@@ -229,8 +222,6 @@ nav div {
 <body>
 
 <nav>
-  <div id="lastLoginBtn" title="Last Login ⏰">⏰</div>
-  <div id="screenTimeBtn" title="Screen Time 🖥️">🖥️</div>
   <div id="profileCircle" class="profile-circle" style="display:none;"></div>
 </nav>
 
@@ -285,18 +276,12 @@ const mainContent = document.getElementById('mainContent');
 const profileCircle = document.getElementById('profileCircle');
 const profileModal = document.getElementById('profileModal');
 const feedbackModal = document.getElementById('feedbackModal');
-const lastLoginBtn = document.getElementById('lastLoginBtn');
-const screenTimeBtn = document.getElementById('screenTimeBtn');
-
-let loginTime = null;
-let screenTimeInterval = null;
 
 window.onload = function(){
   const name = localStorage.getItem('userName');
   const phone = localStorage.getItem('userPhone');
   const email = localStorage.getItem('userEmail');
   if(name && phone && email){
-    loginTime = new Date();
     showMainPage(name, phone, email);
   }
 }
@@ -313,9 +298,7 @@ function login(){
   localStorage.setItem('userName', name);
   localStorage.setItem('userPhone', phone);
   localStorage.setItem('userEmail', email);
-  localStorage.setItem('lastLogin', new Date().toLocaleString());
 
-  loginTime = new Date();
   showMainPage(name, phone, email);
 }
 
@@ -329,28 +312,12 @@ function showMainPage(name, phone, email){
   document.getElementById('heroGreeting').innerText = `Welcome to The Hidden Ladle, ${name}!`;
   document.getElementById('heroMessage').innerText = `Thank you for choosing us, we're delighted to have you.\nExplore our delicious menu and enjoy your culinary journey.`;
 
-  // Profile modal toggle
   profileCircle.onclick = function(){
     document.getElementById('modalName').innerText = `Name: ${name}`;
     document.getElementById('modalPhone').innerText = `Phone: ${phone}`;
     document.getElementById('modalEmail').innerText = `Email: ${email}`;
     profileModal.style.display = 'flex';
   }
-
-  // Display last login in tooltip
-  lastLoginBtn.title = `Last Login: ${localStorage.getItem('lastLogin')}`;
-
-  // Update screen time dynamically
-  if(screenTimeInterval) clearInterval(screenTimeInterval);
-  screenTimeInterval = setInterval(() => {
-    if(loginTime){
-      const now = new Date();
-      const diffMs = now - loginTime;
-      const diffMins = Math.floor(diffMs/60000);
-      const diffSecs = Math.floor((diffMs%60000)/1000);
-      screenTimeBtn.title = `Screen Time: ${diffMins} min ${diffSecs} sec`;
-    }
-  }, 1000);
 }
 
 document.getElementById('closeProfile').onclick = function() {
@@ -365,7 +332,6 @@ function logout(){
   mainContent.style.display = 'none';
   loginForm.parentElement.style.display='flex';
   profileCircle.style.display = 'none';
-  if(screenTimeInterval) clearInterval(screenTimeInterval);
 }
 
 let selectedRating = 5;
