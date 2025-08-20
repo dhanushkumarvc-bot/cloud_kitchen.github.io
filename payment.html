@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Payment - The Hidden Ladle</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
   <style>
     body {
       margin: 0;
@@ -33,6 +34,9 @@
       cursor: pointer;
       font-size: 17px;
       border: none;
+      text-decoration: none;
+      display: inline-block;
+      margin: 10px;
     }
     .btn:hover { background: #c72e3c; }
 
@@ -52,13 +56,14 @@
       border-radius: 12px;
       text-align: center;
     }
-    .modal img { width: 250px; border-radius: 12px; }
+    #qrcode { margin: 20px auto; }
     .close {
       margin-top: 12px;
       background: #e63946;
       padding: 8px 16px;
       border-radius: 8px;
       cursor: pointer;
+      display: inline-block;
     }
   </style>
 </head>
@@ -67,27 +72,47 @@
     <h1>Payment Page</h1>
     <div class="amount">Total Amount: ₹<span id="totalAmount">0</span></div>
     <button class="btn" onclick="showQR()">Pay Now</button>
+    <!-- ✅ Back to Menu Button -->
+    <a href="menu.html" class="btn">Back to Menu</a>
   </div>
 
   <!-- QR Modal -->
   <div class="modal" id="qrModal">
     <div class="modal-content">
       <h2>Scan & Pay</h2>
-      <!-- ✅ Your QR Code from GitHub -->
-      <img src="https://raw.githubusercontent.com/dhanushkumarvc-bot/cloud_kitchen.github.io/refs/heads/main/scanner.jpeg" alt="UPI QR Code">
+      <div id="qrcode"></div>
       <div class="close" onclick="closeQR()">Close</div>
     </div>
   </div>
 
   <script>
+    let upiID = "dhanushkumarvc19@oksbi";  // your UPI ID
+    let name = "The Hidden Ladle";
+
     window.onload = function() {
       let amount = localStorage.getItem("cartTotal");
       document.getElementById("totalAmount").innerText = amount || "0";
     }
 
     function showQR() {
+      let amount = localStorage.getItem("cartTotal") || "0";
+
+      // UPI Payment URL with dynamic amount
+      let upiURL = `upi://pay?pa=${upiID}&pn=${encodeURIComponent(name)}&am=${amount}&cu=INR&tn=Order%20Payment`;
+
+      // Clear previous QR
+      document.getElementById("qrcode").innerHTML = "";
+
+      // Generate new QR
+      new QRCode(document.getElementById("qrcode"), {
+        text: upiURL,
+        width: 250,
+        height: 250
+      });
+
       document.getElementById("qrModal").style.display = "flex";
     }
+
     function closeQR() {
       document.getElementById("qrModal").style.display = "none";
     }
