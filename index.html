@@ -1,17 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Hidden Ladle - Cloud Kitchen</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+html, body { height:100%; font-family:'Roboto', sans-serif; overflow-x:hidden; }
+
+body {
+  background: url('https://images.unsplash.com/photo-1600891964599-f61ba0e24092?auto=format&fit=crop&w=1600&q=80') no-repeat center center fixed;
+  background-size: cover;
+  color: #fff;
+  position: relative;
+}
+
+body::before {
+  content:"";
+  position:absolute;
+  top:0; left:0; width:100%; height:100%;
+  background: rgba(0,0,0,0.6);
+  z-index:0;
+}
+
+nav {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index:10;
+  display: flex;
+  align-items: center;
+}
+
+.profile-circle {
+  width: 50px; height: 50px;
+  border-radius: 50%;
+  background: #ff6600;
+  color: #fff;
+  font-weight: bold;
+  font-size: 22px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  box-shadow: 0 0 15px rgba(255,102,0,0.7);
+}
+
+#profileModal {
+  display: none;
+  position: fixed;
+  top:0; left:0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.85);
+  z-index: 20;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 10px;
+}
+
+#profileModal .modal-content {
+  background: #222;
+  padding: 30px 20px;
+  border-radius: 20px;
+  box-shadow: 0 0 40px rgba(255,102,0,0.7);
+  max-width: 400px;
+  width: 100%;
+  position: relative;
+}
+
+#profileModal h2 { color:#ff6600; font-family: 'Playfair Display', serif; font-size:28px; margin-bottom:20px; }
+#profileModal p { font-size:18px; margin:10px 0; }
+#profileModal button {
+  margin-top:15px;
+  padding: 12px 25px;
+  font-size:16px;
+  border:none;
+  border-radius:8px;
+  background:#ff6600;
+  color:#fff;
+  cursor:pointer;
+  font-weight:bold;
+  box-shadow:0 0 25px rgba(255,102,0,0.7);
+  transition:0.3s;
+  display:block;
+  width: 80%;
+  margin-left:auto;
+  margin-right:auto;
+}
+#profileModal button:hover { background:#e65c00; box-shadow:0 0 35px rgba(230,92,0,1); }
+
+#centerWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top:0; left:0;
+  z-index:5;
+  padding: 10px;
+}
+
+.login-container {
+  background: rgba(20,20,20,0.85);
+  padding: 40px 30px;
+  border-radius: 20px;
+  width: 100%;
+  max-width: 380px;
+  text-align: center;
+  box-shadow: 0 0 40px rgba(255,102,0,0.7);
+  animation: float 4s ease-in-out infinite;
+}
+@keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+
+.login-container h2 {
+  font-family: 'Playfair Display', serif;
+  color: #ff6600; font-size: 32px; margin-bottom: 25px;
+  text-shadow: 0 0 20px rgba(255,102,0,0.8);
+}
+.login-container input {
+  width: 90%; padding: 12px; margin: 10px 0; border-radius: 8px; border: 1px solid #555;
+  background: #222; color: #fff; font-size: 16px;
+}
+.login-container input::placeholder { color: #aaa; }
+.login-container button {
+  width: 95%; margin-top: 20px; padding: 14px; font-size: 18px;
+  border: none; border-radius: 8px; background: #ff6600; color: #fff; cursor: pointer;
+  font-weight: bold; box-shadow: 0 0 25px rgba(255,102,0,0.7); transition: 0.3s;
+}
+.login-container button:hover { background: #e65c00; box-shadow: 0 0 35px rgba(255,102,0,1); }
+
+.hero {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: 100vh;
+  padding: 20px;
+  background: rgba(0,0,0,0.4);
+  z-index: 2;
+  animation: float 5s ease-in-out infinite;
+}
+
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 55px; color: #ff6600;
+  text-shadow: 0 0 30px rgba(255,102,0,0.8); margin-bottom: 15px;
+  animation: glow 2s ease-in-out infinite alternate;
+}
+
+.hero h2 {
+  font-size: 24px;
+  color: #fff;
+  margin-bottom: 12px;
+  text-shadow: 0 0 20px rgba(255,255,255,0.5);
+}
+
+.hero p {
+  font-size: 16px;
+  max-width: 90%;
+  margin-bottom: 25px;
+  line-height: 1.5;
+  text-shadow: 0 0 15px rgba(255,255,255,0.5);
+}
+
+.hero a {
+  background: #ff6600; color: #fff; text-decoration: none; padding: 12px 25px;
+  border-radius: 8px; font-weight: bold; font-size: 16px; transition:0.3s;
+  box-shadow: 0 0 25px rgba(255,102,0,0.7);
+}
+.hero a:hover { background: #e65c00; box-shadow: 0 0 40px rgba(230,92,0,1); }
+
+@keyframes glow {
+  0% { text-shadow: 0 0 20px rgba(255,102,0,0.8); }
+  50% { text-shadow: 0 0 35px rgba(255,102,0,1); }
+  100% { text-shadow: 0 0 20px rgba(255,102,0,0.8); }
+}
+
+.star { cursor:pointer; margin:0 5px; color:#ff6600; }
+
+/* Dark/Light mode */
+body.light-mode {
+  background: #f5f5f5 url('https://images.unsplash.com/photo-1600891964599-f61ba0e24092?auto=format&fit=crop&w=1600&q=80') no-repeat center center fixed;
+  color: #222;
+}
+body.light-mode .login-container,
+body.light-mode .hero,
+body.light-mode #profileModal .modal-content,
+body.light-mode #feedbackModal > div {
+  background: rgba(255,255,255,0.9);
+  color: #222;
+}
+body.light-mode .login-container input,
+body.light-mode #feedbackModal textarea {
+  background: #fff;
+  color: #222;
+  border:1px solid #ccc;
+}
+body.light-mode button {
+  background:#ff6600; color:#fff;
+}
+
+/* Responsive adjustments */
+@media(max-width:768px){
+  .login-container { padding:30px 20px; }
+  .login-container h2 { font-size:28px; }
+  .hero h1 { font-size:42px; }
+  .hero h2 { font-size:20px; }
+  .hero p { font-size:14px; }
+  .hero a { font-size:14px; padding:10px 20px; }
+  #profileModal .modal-content { padding:25px 15px; }
+  #feedbackModal > div { padding:25px 15px; }
+}
+
+@media(max-width:480px){
+  nav { top:15px; right:15px; }
+  .profile-circle { width:45px; height:45px; font-size:20px; }
+  .login-container { width:95%; padding:25px 15px; }
+  .login-container h2 { font-size:26px; }
+  .login-container input { font-size:14px; padding:10px; }
+  .login-container button { font-size:16px; padding:12px; }
+  .hero h1 { font-size:36px; }
+  .hero h2 { font-size:18px; }
+  .hero p { font-size:14px; }
+  .hero a { font-size:14px; padding:8px 18px; }
+  #profileModal .modal-content,
+  #feedbackModal > div { padding:20px 15px; width:95%; }
+}
+
+/* Scrollable for very small screens */
+@media(max-width:400px){
+  #centerWrapper, .hero {
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 15px;
+  }
+}
+</style>
+</head>
 <body>
 
 <nav>
   <div id="profileCircle" class="profile-circle" style="display:none;"></div>
 </nav>
-
-<!-- Floating Orbs for Premium Animation -->
-<div class="floating-orbs">
-  <span></span>
-  <span></span>
-  <span></span>
-  <span></span>
-  <span></span>
-</div>
 
 <div id="centerWrapper">
   <div class="login-container" id="loginForm">
@@ -23,13 +257,15 @@
   </div>
 </div>
 
-<!-- Premium Hero Section -->
 <div class="hero" id="mainContent">
   <h1>The Hidden Ladle</h1>
   <h2 id="heroGreeting"></h2>
   <p id="heroMessage"></p>
   <a href="menu.html">Explore Menu</a>
 </div>
+
+<!-- Dark/Light toggle button -->
+<button id="themeToggle" style="position:fixed; bottom:20px; right:20px; z-index:50; padding:10px 15px; border:none; border-radius:8px; background:#ff6600; color:#fff; cursor:pointer; font-weight:bold;">Toggle Theme</button>
 
 <div id="profileModal">
   <div class="modal-content">
@@ -38,6 +274,7 @@
     <p id="modalName"></p>
     <p id="modalPhone"></p>
     <p id="modalEmail"></p>
+    <p id="modalLastLogin"></p>
     <button onclick="openFeedback()">Feedback</button>
     <button onclick="logout()">Logout</button>
   </div>
@@ -60,12 +297,12 @@
 </div>
 
 <script>
-// Existing JS remains unchanged
 const loginForm = document.getElementById('loginForm');
 const mainContent = document.getElementById('mainContent');
 const profileCircle = document.getElementById('profileCircle');
 const profileModal = document.getElementById('profileModal');
 const feedbackModal = document.getElementById('feedbackModal');
+const themeToggle = document.getElementById('themeToggle');
 
 window.onload = function(){
   const name = localStorage.getItem('userName');
@@ -75,6 +312,11 @@ window.onload = function(){
     showMainPage(name, phone, email);
   }
 }
+
+// Theme toggle
+themeToggle.addEventListener('click', () => {
+  document.body.classList.toggle('light-mode');
+});
 
 function login(){
   const name = document.getElementById('name').value.trim();
@@ -88,6 +330,7 @@ function login(){
   localStorage.setItem('userName', name);
   localStorage.setItem('userPhone', phone);
   localStorage.setItem('userEmail', email);
+  localStorage.setItem('lastLogin', new Date().toLocaleString());
 
   showMainPage(name, phone, email);
 }
@@ -106,6 +349,8 @@ function showMainPage(name, phone, email){
     document.getElementById('modalName').innerText = `Name: ${name}`;
     document.getElementById('modalPhone').innerText = `Phone: ${phone}`;
     document.getElementById('modalEmail').innerText = `Email: ${email}`;
+    const lastLogin = localStorage.getItem('lastLogin');
+    document.getElementById('modalLastLogin').innerText = lastLogin ? `Last Login: ${lastLogin}` : '';
     profileModal.style.display = 'flex';
   }
 }
@@ -118,6 +363,7 @@ function logout(){
   localStorage.removeItem('userName');
   localStorage.removeItem('userPhone');
   localStorage.removeItem('userEmail');
+  localStorage.removeItem('lastLogin');
   profileModal.style.display = 'none';
   mainContent.style.display = 'none';
   loginForm.parentElement.style.display='flex';
@@ -153,3 +399,5 @@ function submitFeedback(){
 }
 </script>
 </body>
+</html>
+
