@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payment - The Hidden Ladle</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      font-family:'Roboto', sans-serif;
+      background: url('https://images.unsplash.com/photo-1600891964599-f61ba0e24092?auto=format&fit=crop&w=1600&q=80') no-repeat center center fixed;
+      background-size: cover;
+      color: #fff;
+      text-align: center;
+      position: relative;
+    }
+    body::before {
+      content:"";
+      position:absolute; top:0; left:0;
+      width:100%; height:100%;
+      background: rgba(0,0,0,0.6);
+      z-index:0;
+    }
+    .payment-container {
+      position: relative;
+      z-index: 5;
+      top: 50%;
+      transform: translateY(50%);
+      background: rgba(20,20,20,0.85);
+      padding: 40px 30px;
+      border-radius: 20px;
+      max-width: 400px;
+      margin: auto;
+      box-shadow: 0 0 40px rgba(255,102,0,0.7);
+    }
+    h2 {
+      font-family: 'Playfair Display', serif;
+      color: #ff6600;
+      font-size: 32px;
+      margin-bottom: 20px;
+    }
+    input {
+      width: 90%;
+      padding: 12px;
+      margin: 12px 0;
+      border-radius: 8px;
+      border: 1px solid #555;
+      background: #222;
+      color: #fff;
+      font-size: 16px;
+    }
+    button {
+      width: 95%;
+      margin-top: 20px;
+      padding: 14px;
+      font-size: 18px;
+      border: none;
+      border-radius: 8px;
+      background: #ff6600;
+      color: #fff;
+      cursor: pointer;
+      font-weight: bold;
+      box-shadow: 0 0 25px rgba(255,102,0,0.7);
+      transition: 0.3s;
+    }
+    button:hover {
+      background: #e65c00;
+      box-shadow: 0 0 35px rgba(255,102,0,1);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="payment-container">
+    <h2>Make Payment</h2>
+    <input type="number" id="amount" placeholder="Enter Amount (₹)" required>
+    <button onclick="payNow()">Pay Now</button>
+  </div>
+
+  <script>
+    function payNow(){
+      const amount = document.getElementById("amount").value.trim();
+      if(amount === "" || isNaN(amount) || parseInt(amount) <= 0){
+        alert("Please enter a valid amount.");
+        return;
+      }
+
+      // Replace with your real UPI ID
+      let upiID = "merchant@upi";
+      let name = "The Hidden Ladle";
+      
+      // Create UPI deep link (works with Google Pay, PhonePe, Paytm, BHIM, etc.)
+      let upiLink = `upi://pay?pa=${upiID}&pn=${encodeURIComponent(name)}&am=${amount}&cu=INR`;
+
+      // Redirect to payment app
+      window.location.href = upiLink;
+    }
+  </script>
+
+</body>
+</html>
