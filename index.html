@@ -33,6 +33,13 @@ nav {
   align-items: center;
 }
 
+nav div {
+  margin-right:10px;
+  cursor:pointer;
+  font-size:18px;
+  color:#ff6600;
+}
+
 .profile-circle {
   width: 50px; height: 50px;
   border-radius: 50%;
@@ -71,7 +78,7 @@ nav {
 }
 
 #profileModal h2 { color:#ff6600; font-family: 'Playfair Display', serif; font-size:28px; margin-bottom:20px; }
-#profileModal p { font-size:18px; margin:10px 0; display:flex; align-items:center; justify-content:center; }
+#profileModal p { font-size:18px; margin:10px 0; }
 #profileModal button {
   margin-top:15px;
   padding: 12px 25px;
@@ -222,6 +229,8 @@ nav {
 <body>
 
 <nav>
+  <div id="lastLoginBtn" title="Last Login ⏰">⏰</div>
+  <div id="screenTimeBtn" title="Screen Time 🖥️">🖥️</div>
   <div id="profileCircle" class="profile-circle" style="display:none;"></div>
 </nav>
 
@@ -249,8 +258,6 @@ nav {
     <p id="modalName"></p>
     <p id="modalPhone"></p>
     <p id="modalEmail"></p>
-    <p><span style="margin-right:8px;">⏰</span>Last Login: <span id="modalLastLogin"></span></p>
-    <p><span style="margin-right:8px;">🖥️</span>Screen Time: <span id="modalScreenTime"></span></p>
     <button onclick="openFeedback()">Feedback</button>
     <button onclick="logout()">Logout</button>
   </div>
@@ -278,6 +285,8 @@ const mainContent = document.getElementById('mainContent');
 const profileCircle = document.getElementById('profileCircle');
 const profileModal = document.getElementById('profileModal');
 const feedbackModal = document.getElementById('feedbackModal');
+const lastLoginBtn = document.getElementById('lastLoginBtn');
+const screenTimeBtn = document.getElementById('screenTimeBtn');
 
 let loginTime = null;
 let screenTimeInterval = null;
@@ -287,7 +296,7 @@ window.onload = function(){
   const phone = localStorage.getItem('userPhone');
   const email = localStorage.getItem('userEmail');
   if(name && phone && email){
-    loginTime = new Date(); // new session start
+    loginTime = new Date();
     showMainPage(name, phone, email);
   }
 }
@@ -320,31 +329,32 @@ function showMainPage(name, phone, email){
   document.getElementById('heroGreeting').innerText = `Welcome to The Hidden Ladle, ${name}!`;
   document.getElementById('heroMessage').innerText = `Thank you for choosing us, we're delighted to have you.\nExplore our delicious menu and enjoy your culinary journey.`;
 
+  // Profile modal toggle
   profileCircle.onclick = function(){
     document.getElementById('modalName').innerText = `Name: ${name}`;
     document.getElementById('modalPhone').innerText = `Phone: ${phone}`;
     document.getElementById('modalEmail').innerText = `Email: ${email}`;
-    document.getElementById('modalLastLogin').innerText = localStorage.getItem('lastLogin') || '';
-    
-    if(screenTimeInterval) clearInterval(screenTimeInterval);
-
-    screenTimeInterval = setInterval(() => {
-      if(loginTime){
-        const now = new Date();
-        const diffMs = now - loginTime;
-        const diffMins = Math.floor(diffMs/60000);
-        const diffSecs = Math.floor((diffMs%60000)/1000);
-        document.getElementById('modalScreenTime').innerText = `${diffMins} min ${diffSecs} sec`;
-      }
-    }, 1000);
-
     profileModal.style.display = 'flex';
   }
+
+  // Display last login in tooltip
+  lastLoginBtn.title = `Last Login: ${localStorage.getItem('lastLogin')}`;
+
+  // Update screen time dynamically
+  if(screenTimeInterval) clearInterval(screenTimeInterval);
+  screenTimeInterval = setInterval(() => {
+    if(loginTime){
+      const now = new Date();
+      const diffMs = now - loginTime;
+      const diffMins = Math.floor(diffMs/60000);
+      const diffSecs = Math.floor((diffMs%60000)/1000);
+      screenTimeBtn.title = `Screen Time: ${diffMins} min ${diffSecs} sec`;
+    }
+  }, 1000);
 }
 
 document.getElementById('closeProfile').onclick = function() {
   profileModal.style.display = 'none';
-  if(screenTimeInterval) clearInterval(screenTimeInterval);
 }
 
 function logout(){
@@ -355,6 +365,7 @@ function logout(){
   mainContent.style.display = 'none';
   loginForm.parentElement.style.display='flex';
   profileCircle.style.display = 'none';
+  if(screenTimeInterval) clearInterval(screenTimeInterval);
 }
 
 let selectedRating = 5;
@@ -387,3 +398,4 @@ function submitFeedback(){
 </script>
 </body>
 </html>
+
