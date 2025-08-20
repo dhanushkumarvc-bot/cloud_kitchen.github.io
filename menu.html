@@ -121,6 +121,7 @@ footer { background:#333; color:#fff; text-align:center; padding:15px; margin-to
   </div>
 
   <div class="menu-items" id="menuItems">
+    <!-- Menu items -->
     <div class="item" data-name="Donne Biryani" data-price="100" data-type="nonveg">
       <img src="https://raw.githubusercontent.com/dhanushkumarvc-bot/cloud_kitchen.github.io/main/Donne-Biriyani.jpg" alt="Donne Biryani">
       <h3><span class="dot nonveg"></span>Donne Biryani</h3>
@@ -186,6 +187,19 @@ footer { background:#333; color:#fff; text-align:center; padding:15px; margin-to
 let cart = [];
 const deliveryCharges = 20;
 
+// Load cart from localStorage on page load
+window.onload = function() {
+  const savedCart = localStorage.getItem('cart');
+  if(savedCart) cart = JSON.parse(savedCart);
+  updateCartIndicator();
+};
+
+// Save cart to localStorage
+function updateCartStorage() {
+  localStorage.setItem('cart', JSON.stringify(cart));
+}
+
+// Add item to cart
 function addToCart(btn) {
   const itemDiv = btn.parentElement;
   const name = itemDiv.dataset.name;
@@ -196,9 +210,11 @@ function addToCart(btn) {
 
   btn.classList.remove('order-press'); void btn.offsetWidth; btn.classList.add('order-press');
   updateCartIndicator();
+  updateCartStorage();
   alert(name + " added to cart!");
 }
 
+// Update floating cart
 function updateCartIndicator() {
   const floatingCart = document.getElementById('floatingCart');
   const cartSummaryText = document.getElementById('cartSummaryText');
@@ -212,6 +228,7 @@ function updateCartIndicator() {
   }
 }
 
+// Open cart modal
 function openCart() {
   document.getElementById('floatingCart').style.display = 'none';
   document.querySelector('.back-btn').style.display = 'block';
@@ -253,14 +270,21 @@ function openCart() {
   document.getElementById('totalPrice').innerText = `Subtotal (incl. delivery ₹${subtotal>0?deliveryCharges:0}): ₹${totalWithDelivery}`;
 }
 
+// Back to floating cart
 function backToFloatingCart() {
   document.getElementById('cartModal').style.display = 'none';
   document.querySelector('.back-btn').style.display = 'none';
   updateCartIndicator();
 }
 
-function closeCart() { document.getElementById('cartModal').style.display='none'; backToFloatingCart(); }
+// Close cart
+function closeCart() { 
+  document.getElementById('cartModal').style.display='none'; 
+  document.querySelector('.back-btn').style.display = 'none';
+  updateCartIndicator(); 
+}
 
+// Checkout via WhatsApp
 function checkout() {
   if(cart.length===0){ alert("Cart is empty!"); return; }
   let message = "Hello, I want to place an order:%0A";
@@ -270,22 +294,30 @@ function checkout() {
   message += `Delivery: ₹${deliveryCharges}%0ATotal: ₹${total}%0A`;
   const whatsappURL = `https://wa.me/918884537773?text=${message}`;
   window.open(whatsappURL,'_blank');
-  cart=[]; updateCartIndicator(); closeCart();
+
+  cart=[]; 
+  localStorage.removeItem('cart'); // clear cart from storage
+  updateCartIndicator(); 
+  closeCart();
 }
 
+// Redirect to menu
 function redirectToMenu(){ 
   document.getElementById('cartModal').style.display = 'none'; 
 }
 
+// Update quantity
 function updateQuantity(index, change) {
   cart[index].quantity += change;
   if(cart[index].quantity <= 0) cart.splice(index,1);
+  updateCartStorage();
   updateCartIndicator();
   openCart();
 }
 
+// Search & filter items
 function filterItems(){
-  const searchValue=document.getElementById('searchInput').value.toLowerCase();
+  const searchValue=document.getElementById('searchInput').value.trim().toLowerCase();
   const vegFilter=document.getElementById('vegFilter').value;
   const items=document.querySelectorAll('#menuItems .item');
   const noItemsMessage=document.getElementById('noItemsMessage');
