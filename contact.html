@@ -202,13 +202,31 @@
     if(storedName) nameField.value = storedName;
     if(storedEmail) emailField.value = storedEmail;
 
-    // Simple form submit alert
+    // Submit to Google Sheets (Sheet2)
     document.getElementById('contactForm').addEventListener('submit', function(e){
       e.preventDefault();
-      alert('Thank you for your message!');
-      this.reset();
+
+      const data = {
+        name: nameField.value,
+        email: emailField.value,
+        message: document.getElementById('message').value
+      };
+
+      fetch("https://script.google.com/macros/s/AKfycbxcpRsUhLESx0dLrkw7gzOt32oGLcSZcBMkROfobyaJoZP4EcMiIm0gDaq5IP-C16UC/exec", {  // <-- Replace with your Web App URL
+        method: "POST",
+        body: JSON.stringify(data)
+      })
+      .then(response => response.json())
+      .then(result => {
+        if(result.status === 'success'){
+          alert('Thank you! Your message has been saved to Sheet2.');
+          this.reset();
+        } else {
+          alert('Something went wrong!');
+        }
+      })
+      .catch(err => alert('Error sending message: ' + err));
     });
   </script>
 </body>
 </html>
-
