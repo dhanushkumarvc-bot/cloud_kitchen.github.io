@@ -24,7 +24,7 @@ body::before {
 /* Smoke effect */
 .smoke {
   position:absolute; top:0; left:0; width:100%; height:100%; z-index:1; pointer-events:none;
-  background: url('https://i.ibb.co/ZYW3VTp/smoke.png') repeat; /* use a smoke PNG */
+  background: url('https://i.ibb.co/ZYW3VTp/smoke.png') repeat; 
   opacity:0.2; animation: smokeflow 20s linear infinite;
 }
 @keyframes smokeflow { 0%{background-position:0 0;} 100%{background-position:0 -500px;} }
@@ -86,7 +86,7 @@ nav button:hover, #profileIcon:hover { box-shadow:0 0 25px rgba(255,102,0,0.8); 
 .feedback-modal .stars { display:flex; justify-content:center; margin:10px 0; }
 .feedback-modal .stars span { font-size:25px; cursor:pointer; margin:0 5px; color:#ccc; }
 .feedback-modal .stars span.selected { color:#ffcc00; }
-.feedback-modal textarea { resize:none; max-length:100px; height:60px; text-align:center; }
+.feedback-modal textarea { resize:none; max-length:100; height:60px; text-align:center; }
 </style>
 </head>
 <body>
@@ -158,8 +158,11 @@ window.onload = function(){
   if(name && phone && email){ showMainPage(name, phone, email); }
 }
 
-loginBtn.addEventListener('click', ()=> loginForm.parentElement.style.display='flex');
-profileIcon.addEventListener('click', ()=> profileModal.style.display = profileModal.style.display==='flex'?'none':'flex');
+// Toggle profile modal
+profileIcon.addEventListener('click', ()=> {
+  if(profileModal.style.display==='flex'){ profileModal.style.display='none'; }
+  else { profileModal.style.display='flex'; }
+});
 
 // Star rating
 document.querySelectorAll('.stars span').forEach(star=>{
@@ -184,7 +187,7 @@ function login(){
 }
 
 function showMainPage(name, phone, email){
-  loginForm.parentElement.style.display='none';
+  loginForm.parentElement.style.display='none'; // hide login wrapper
   mainContent.style.display='flex';
   loginBtn.style.display='none';
   profileIcon.style.display='flex';
