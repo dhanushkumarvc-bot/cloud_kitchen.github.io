@@ -203,6 +203,16 @@
   </footer>
 
   <script>
+    // Auto-fill Name and Email from localStorage
+    const nameField = document.getElementById('name');
+    const emailField = document.getElementById('email');
+
+    const storedName = localStorage.getItem('userName');
+    const storedEmail = localStorage.getItem('userEmail');
+
+    if(storedName) nameField.value = storedName;
+    if(storedEmail) emailField.value = storedEmail;
+
     // Simple form submit alert
     document.getElementById('contactForm').addEventListener('submit', function(e){
       e.preventDefault();
