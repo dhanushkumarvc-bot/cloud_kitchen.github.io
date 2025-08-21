@@ -23,8 +23,12 @@ nav a:hover { color: #ff6600; }
 .veg { background: green; }
 .nonveg { background: red; }
 .item p { margin: 5px 0; color: #fff; }
-.order-btn { display: inline-block; margin-top: 10px; padding: 10px 15px; border-radius: 6px; text-decoration: none; font-weight: bold; background: #ff6600; color: #fff; transition: 0.3s; cursor: pointer; }
-.order-btn:hover { opacity: 0.8; }
+.add-btn { display: flex; flex-direction: column; align-items: center; justify-content: center; margin-top: 10px; padding: 8px; border-radius: 6px; background: #ff6600; color: #fff; font-weight: bold; cursor: pointer; transition: 0.3s; width: 100px; }
+.add-btn:hover { opacity: 0.8; }
+.add-btn span.plus-icon { font-size: 1.2rem; margin-bottom: 2px; }
+.quantity-control { display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 10px; }
+.quantity-control button { background: #ff6600; color: #fff; border: none; padding: 5px 10px; border-radius: 6px; cursor: pointer; font-weight: bold; transition: 0.3s; }
+.quantity-control button:hover { background: #e55c00; }
 #noItemsMessage { display: none; text-align: center; font-size: 1.5rem; color: #ff6600; margin-top: 20px; animation: bounce 0.5s ease; }
 @keyframes bounce { 0%{transform:scale(0.8);opacity:0;}50%{transform:scale(1.05);opacity:1;}100%{transform:scale(1);opacity:1;} }
 footer { background: #333; color: #fff; text-align: center; padding: 15px; margin-top: 40px; }
@@ -48,9 +52,6 @@ footer { background: #333; color: #fff; text-align: center; padding: 15px; margi
 #floatingCart:hover { opacity: 0.9; }
 .view-cart-btn { background: #fff; color: #ff6600; border: none; padding: 5px 12px; border-radius: 15px; font-weight: bold; cursor: pointer; transition: 0.3s; }
 .view-cart-btn:hover { background: #ffe0b3; }
-.qty-controls-btn { padding: 5px 10px; border-radius: 6px; border: none; background: #ff6600; color: #fff; font-weight: bold; cursor: pointer; }
-.qty-controls-btn:hover { background: #e55c00; }
-.plus-icon { font-weight: bold; float: right; }
 </style>
 </head>
 <body>
@@ -75,47 +76,65 @@ footer { background: #333; color: #fff; text-align: center; padding: 15px; margi
 </div>
 
 <div class="menu-items" id="menuItems">
-<!-- Menu Items -->
+<!-- Example Item -->
 <div class="item" data-name="Donne Biryani" data-price="100" data-type="nonveg">
 <img src="https://raw.githubusercontent.com/dhanushkumarvc-bot/cloud_kitchen.github.io/main/Donne-Biriyani.jpg">
 <h3><span class="dot nonveg"></span>Donne Biryani</h3>
 <p>Authentic Bangalore-style biryani.</p><p>₹100</p>
-<a class="order-btn" onclick="addToCart(this)">Add <span class="plus-icon">+</span></a>
+<div class="add-btn" onclick="handleAddClick(this)">
+<span class="plus-icon">+</span>
+<span>Add</span>
+</div>
 </div>
 
 <div class="item" data-name="Chicken Kebab" data-price="120" data-type="nonveg">
 <img src="https://raw.githubusercontent.com/dhanushkumarvc-bot/cloud_kitchen.github.io/main/chicken-kebab.jpg">
 <h3><span class="dot nonveg"></span>Chicken Kebab</h3>
 <p>Spicy and juicy grilled chicken.</p><p>₹120</p>
-<a class="order-btn" onclick="addToCart(this)">Add <span class="plus-icon">+</span></a>
+<div class="add-btn" onclick="handleAddClick(this)">
+<span class="plus-icon">+</span>
+<span>Add</span>
+</div>
 </div>
 
 <div class="item" data-name="Chilli Chicken" data-price="120" data-type="nonveg">
 <img src="https://raw.githubusercontent.com/dhanushkumarvc-bot/cloud_kitchen.github.io/main/chilli-chicken.jpg">
 <h3><span class="dot nonveg"></span>Chilli Chicken</h3>
 <p>Spicy Indo-Chinese chicken with chili sauce.</p><p>₹120</p>
-<a class="order-btn" onclick="addToCart(this)">Add <span class="plus-icon">+</span></a>
+<div class="add-btn" onclick="handleAddClick(this)">
+<span class="plus-icon">+</span>
+<span>Add</span>
+</div>
 </div>
 
 <div class="item" data-name="Pepper Chicken" data-price="120" data-type="nonveg">
 <img src="https://raw.githubusercontent.com/dhanushkumarvc-bot/cloud_kitchen.github.io/main/pepper-chicken.jpg">
 <h3><span class="dot nonveg"></span>Pepper Chicken</h3>
 <p>Spicy black pepper flavored chicken.</p><p>₹120</p>
-<a class="order-btn" onclick="addToCart(this)">Add <span class="plus-icon">+</span></a>
+<div class="add-btn" onclick="handleAddClick(this)">
+<span class="plus-icon">+</span>
+<span>Add</span>
+</div>
 </div>
 
 <div class="item" data-name="Mushroom Kebab" data-price="80" data-type="veg">
 <img src="https://raw.githubusercontent.com/dhanushkumarvc-bot/cloud_kitchen.github.io/main/mushroom-kebab.jpg">
 <h3><span class="dot veg"></span>Mushroom Kebab</h3>
 <p>Crispy mushroom kebabs.</p><p>₹80</p>
-<a class="order-btn" onclick="addToCart(this)">Add <span class="plus-icon">+</span></a>
+<div class="add-btn" onclick="handleAddClick(this)">
+<span class="plus-icon">+</span>
+<span>Add</span>
+</div>
 </div>
 
 <div class="item" data-name="Veg Fried Rice" data-price="100" data-type="veg">
 <img src="https://raw.githubusercontent.com/dhanushkumarvc-bot/cloud_kitchen.github.io/main/Veg-Fried-Rice.jpg">
 <h3><span class="dot veg"></span>Veg Fried Rice</h3>
 <p>Classic fried rice with vegetables.</p><p>₹100</p>
-<a class="order-btn" onclick="addToCart(this)">Add <span class="plus-icon">+</span></a>
+<div class="add-btn" onclick="handleAddClick(this)">
+<span class="plus-icon">+</span>
+<span>Add</span>
+</div>
 </div>
 </div>
 
@@ -147,7 +166,6 @@ const deliveryCharges = 20;
 window.onload = function() {
 const savedCart = localStorage.getItem('cart');
 if(savedCart) cart = JSON.parse(savedCart);
-cart.forEach(i=>updateQtyButtons(i.name));
 updateCartIndicator();
 };
 
@@ -156,19 +174,66 @@ localStorage.setItem('cart', JSON.stringify(cart));
 updateCartTotal();
 }
 
-function addToCart(btn){
-const itemDiv = btn.parentElement;
-const name = itemDiv.dataset.name;
-const price = parseInt(itemDiv.dataset.price);
+function addToCart(name, price){
 const existing = cart.find(i=>i.name===name);
 if(existing) existing.quantity += 1; 
 else cart.push({name,price,quantity:1});
-btn.classList.remove('order-press'); 
-void btn.offsetWidth; 
-btn.classList.add('order-press');
 updateCartIndicator(); 
-updateCartStorage();
-updateQtyButtons(name);
+updateCartStorage(); 
+}
+
+function handleAddClick(btn){
+const itemDiv = btn.parentElement;
+const name = itemDiv.dataset.name;
+const price = parseInt(itemDiv.dataset.price);
+addToCart(name, price);
+
+// Replace Add button with quantity controls
+btn.outerHTML = `
+<div class="quantity-control">
+<button onclick="changeQuantity('${name}',-1)">-</button>
+<span>${1}</span>
+<button onclick="changeQuantity('${name}',1)">+</button>
+</div>
+`;
+}
+
+function changeQuantity(name, change){
+const index = cart.findIndex(i=>i.name===name);
+if(index===-1) return;
+cart[index].quantity += change;
+if(cart[index].quantity <=0){
+cart.splice(index,1);
+revertAddButton(name);
+}
+updateCartStorage(); 
+updateCartIndicator();
+openCart();
+updateQuantityButtons(name);
+}
+
+function revertAddButton(name){
+const items = document.querySelectorAll('.item');
+items.forEach(item=>{
+if(item.dataset.name === name){
+item.querySelector('.quantity-control')?.remove();
+const addBtn=document.createElement('div');
+addBtn.className='add-btn';
+addBtn.innerHTML=`<span class="plus-icon">+</span><span>Add</span>`;
+addBtn.setAttribute('onclick','handleAddClick(this)');
+item.appendChild(addBtn);
+}
+});
+}
+
+function updateQuantityButtons(name){
+const itemDiv=document.querySelector(`.item[data-name="${name}"]`);
+if(!itemDiv) return;
+const qtyControl=itemDiv.querySelector('.quantity-control');
+if(!qtyControl) return;
+const index = cart.findIndex(i=>i.name===name);
+if(index===-1) return;
+qtyControl.querySelector('span').innerText = cart[index].quantity;
 }
 
 function updateCartTotal(){
@@ -213,12 +278,12 @@ row.insertCell(1).innerText="₹"+item.price;
 const qtyCell=row.insertCell(2);
 const minusBtn=document.createElement('button'); 
 minusBtn.innerText='-'; 
-minusBtn.onclick=()=>updateQuantity(index,-1);
+minusBtn.onclick=()=>changeQuantity(item.name,-1);
 const qtySpan=document.createElement('span'); 
 qtySpan.innerText=' '+item.quantity+' ';
 const plusBtn=document.createElement('button'); 
 plusBtn.innerText='+'; 
-plusBtn.onclick=()=>updateQuantity(index,1);
+plusBtn.onclick=()=>changeQuantity(item.name,1);
 qtyCell.appendChild(minusBtn); 
 qtyCell.appendChild(qtySpan); 
 qtyCell.appendChild(plusBtn);
@@ -234,13 +299,6 @@ localStorage.setItem("cartTotal", totalWithDelivery);
 function closeCart(){ document.getElementById('cartModal').style.display='none'; updateCartIndicator(); }
 function checkout(){ window.location.href="payment.html"; }
 function redirectToMenu(){ document.getElementById('cartModal').style.display='none'; }
-function updateQuantity(index,change){ 
-cart[index].quantity+=change; 
-if(cart[index].quantity<=0) cart.splice(index,1); 
-updateCartStorage(); 
-updateCartIndicator(); 
-openCart(); 
-}
 
 function filterItems(){
 const searchValue=document.getElementById('searchInput').value.trim().toLowerCase();
@@ -250,7 +308,7 @@ const items=Array.from(menuContainer.querySelectorAll('.item'));
 const noItemsMessage=document.getElementById('noItemsMessage'); 
 let anyVisible=false;
 const matchedItems=[]; 
-const unmatchedItems=[]; 
+const unmatchedItems=[];
 items.forEach(item=>{
 const name=item.dataset.name.toLowerCase(); 
 const type=item.dataset.type;
@@ -269,53 +327,6 @@ unmatchedItems.push(item);
 matchedItems.forEach(item=>menuContainer.appendChild(item));
 unmatchedItems.forEach(item=>menuContainer.appendChild(item));
 noItemsMessage.style.display=anyVisible?'none':'block';
-}
-
-// --- NEW FIXED ADD / - FUNCTIONALITY ---
-function updateQtyButtons(name){
-    const itemDiv = document.querySelector(`.item[data-name="${name}"]`);
-    if(!itemDiv) return;
-    const btn = itemDiv.querySelector('a');
-
-    const cartItem = cart.find(i=>i.name===name);
-    btn.innerHTML = ''; // clear button content
-
-    if(cartItem){
-        const minusBtn = document.createElement('button');
-        minusBtn.innerText = '-';
-        minusBtn.onclick = ()=>changeQty(name, -1);
-        minusBtn.className = 'qty-controls-btn';
-
-        const qtySpan = document.createElement('span');
-        qtySpan.innerText = cartItem.quantity;
-        qtySpan.style.margin = '0 5px';
-
-        const plusBtn = document.createElement('button');
-        plusBtn.innerText = '+';
-        plusBtn.onclick = ()=>changeQty(name, 1);
-        plusBtn.className = 'qty-controls-btn';
-
-        btn.appendChild(minusBtn);
-        btn.appendChild(qtySpan);
-        btn.appendChild(plusBtn);
-    } else {
-        btn.innerHTML = `Add <span class="plus-icon">+</span>`;
-    }
-}
-
-function changeQty(name, delta){
-    const item = cart.find(i=>i.name===name);
-    if(!item) return;
-
-    item.quantity += delta;
-
-    if(item.quantity <= 0){
-        cart = cart.filter(i=>i.name !== name);
-    }
-
-    updateCartStorage();
-    updateCartIndicator();
-    updateQtyButtons(name);
 }
 </script>
 </body>
