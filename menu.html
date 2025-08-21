@@ -15,55 +15,26 @@ nav a:hover { color: #ff6600; }
 .menu h2 { color: #ff6600; font-size: 2rem; margin-bottom: 20px; }
 .search-filter input, .search-filter select { padding: 10px 15px; margin: 5px; border-radius: 8px; border: none; font-size: 1rem; }
 .menu-items { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 25px; margin-top: 20px; position: relative; }
-.item { background: #222; padding: 15px; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.7); transition: all 0.5s ease; opacity: 1; transform: scale(1); position: relative; }
-.item.hide { opacity: 0; transform: scale(0.95); pointer-events: none; }
+.item { background: #222; padding: 15px; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.7); transition: all 0.5s ease; position: relative; }
 .item img { width: 100%; height: 200px; object-fit: cover; border-radius: 8px; }
 .item h3 { display: flex; align-items: center; justify-content: center; gap: 8px; margin: 10px 0 5px; color: #ff6600; }
 .dot { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
 .veg { background: green; }
 .nonveg { background: red; }
-.item p { margin: 5px 0; color: #fff; }
-/* Top-right Add + / quantity buttons */
-.quantity-container {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-.quantity-container button {
-  background: #ff6600;
-  color: #fff;
-  border: none;
-  border-radius: 6px;
-  padding: 5px 10px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: 0.3s;
-}
-.quantity-container button:hover { opacity: 0.8; }
-.quantity-container span {
-  color: #fff;
-  min-width: 20px;
-  text-align: center;
-  font-weight: bold;
-}
-/* Price at bottom-left */
-.price-tag {
-  position: absolute;
-  bottom: 10px;
-  left: 10px;
-  background: rgba(0,0,0,0.6);
-  color: #ffcc80;
-  padding: 4px 8px;
-  border-radius: 6px;
-  font-weight: bold;
-  font-size: 16px;
-}
-#noItemsMessage { display: none; text-align: center; font-size: 1.5rem; color: #ff6600; margin-top: 20px; animation: bounce 0.5s ease; }
-@keyframes bounce { 0%{transform:scale(0.8);opacity:0;}50%{transform:scale(1.05);opacity:1;}100%{transform:scale(1);opacity:1;} }
-footer { background: #333; color: #fff; text-align: center; padding: 15px; margin-top: 40px; }
+.item p.description { margin: 5px 0; color: #fff; }
+.item .price { position: absolute; bottom: 15px; left: 15px; font-weight: bold; color: #ffcc80; font-size: 1.1rem; }
+.add-btn { position: absolute; top: 15px; right: 15px; background: #ff6600; color: #fff; border: none; border-radius: 25px; width: 40px; height: 40px; font-size: 1.2rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.3s; }
+.add-btn:hover { opacity: 0.9; }
+.quantity-controls { display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 10px; }
+.quantity-controls button { width: 30px; height: 30px; border: none; border-radius: 6px; background: #ff6600; color: #fff; font-weight: bold; cursor: pointer; transition: 0.3s; }
+.quantity-controls span { min-width: 20px; display: inline-block; text-align: center; }
+
+/* Floating Cart & Modal */
+#floatingCart { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background: #ff6600; color: #fff; padding: 12px 20px; border-radius: 30px; font-weight: bold; display: flex; align-items: center; gap: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.5); z-index: 1001; cursor: pointer; transition: 0.3s; }
+#floatingCart:hover { opacity: 0.9; }
+.view-cart-btn { background: #fff; color: #ff6600; border: none; padding: 5px 12px; border-radius: 15px; font-weight: bold; cursor: pointer; transition: 0.3s; }
+.view-cart-btn:hover { background: #ffe0b3; }
+
 #cartModal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); justify-content: center; align-items: center; z-index: 1000; }
 #cartContent { background: #1e1e1e; padding: 30px; border-radius: 15px; width: 90%; max-width: 500px; color: #fff; text-align: left; box-shadow: 0 10px 25px rgba(0,0,0,0.6); position: relative; }
 #cartContent h3 { color: #ff6600; margin-top: 0; text-align: center; }
@@ -76,14 +47,11 @@ footer { background: #333; color: #fff; text-align: center; padding: 15px; margi
 #closeCart:hover { color: #e55c00; }
 #totalPrice { font-size: 1.2rem; text-align: right; margin-top: 10px; color: #ffcc80; }
 #cartContent button.checkout-btn { width: 100%; margin-top: 10px; padding: 12px; font-size: 1rem; border-radius: 10px; }
-.add-items-btn { width: 100%; margin-top: 15px; padding: 12px; font-size: 1rem; border-radius: 10px; background: none; color: #fff; border: none; cursor: pointer; transition: 0.3s; text-decoration: underline; }
-.add-items-btn:hover { color: #ff6600; text-decoration: underline; }
-@keyframes press { 0%{transform:scale(1);}50%{transform:scale(0.9);}100%{transform:scale(1);} }
-.order-press { animation: press 0.2s ease; }
-#floatingCart { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background: #ff6600; color: #fff; padding: 12px 20px; border-radius: 30px; font-weight: bold; display: flex; align-items: center; gap: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.5); z-index: 1001; cursor: pointer; transition: 0.3s; }
-#floatingCart:hover { opacity: 0.9; }
-.view-cart-btn { background: #fff; color: #ff6600; border: none; padding: 5px 12px; border-radius: 15px; font-weight: bold; cursor: pointer; transition: 0.3s; }
-.view-cart-btn:hover { background: #ffe0b3; }
+#cartContent button.add-items-btn { width: 100%; margin-top: 15px; padding: 12px; font-size: 1rem; border-radius: 10px; background: none; color: #fff; border: none; cursor: pointer; transition: 0.3s; text-decoration: underline; }
+#cartContent button.add-items-btn:hover { color: #ff6600; text-decoration: underline; }
+#noItemsMessage { display: none; text-align: center; font-size: 1.5rem; color: #ff6600; margin-top: 20px; animation: bounce 0.5s ease; }
+@keyframes bounce { 0%{transform:scale(0.8);opacity:0;}50%{transform:scale(1.05);opacity:1;}100%{transform:scale(1);opacity:1;} }
+footer { background: #333; color: #fff; text-align: center; padding: 15px; margin-top: 40px; }
 </style>
 </head>
 <body>
@@ -109,89 +77,55 @@ footer { background: #333; color: #fff; text-align: center; padding: 15px; margi
 
 <div class="menu-items" id="menuItems">
 
-<!-- Item 1 -->
+<!-- ALL ITEMS START -->
 <div class="item" data-name="Donne Biryani" data-price="100" data-type="nonveg">
-  <div class="quantity-container">
-    <button class="add-btn" onclick="changeQuantity(this,1)">Add +</button>
-    <button class="minus-btn" onclick="changeQuantity(this,-1)" style="display:none">-</button>
-    <span class="qty-display" style="display:none">1</span>
-    <button class="plus-btn" onclick="changeQuantity(this,1)" style="display:none">+</button>
-  </div>
-  <img src="https://raw.githubusercontent.com/dhanushkumarvc-bot/cloud_kitchen.github.io/main/Donne-Biriyani.jpg">
-  <h3><span class="dot nonveg"></span>Donne Biryani</h3>
-  <p>Authentic Bangalore-style biryani.</p>
-  <div class="price-tag">₹100</div>
+<img src="https://raw.githubusercontent.com/dhanushkumarvc-bot/cloud_kitchen.github.io/main/Donne-Biriyani.jpg">
+<h3><span class="dot nonveg"></span>Donne Biryani</h3>
+<p class="description">Authentic Bangalore-style biryani.</p>
+<div class="price">₹100</div>
+<button class="add-btn" onclick="addItem(this)">+</button>
 </div>
 
-<!-- Item 2 -->
 <div class="item" data-name="Chicken Kebab" data-price="120" data-type="nonveg">
-  <div class="quantity-container">
-    <button class="add-btn" onclick="changeQuantity(this,1)">Add +</button>
-    <button class="minus-btn" onclick="changeQuantity(this,-1)" style="display:none">-</button>
-    <span class="qty-display" style="display:none">1</span>
-    <button class="plus-btn" onclick="changeQuantity(this,1)" style="display:none">+</button>
-  </div>
-  <img src="https://raw.githubusercontent.com/dhanushkumarvc-bot/cloud_kitchen.github.io/main/chicken-kebab.jpg">
-  <h3><span class="dot nonveg"></span>Chicken Kebab</h3>
-  <p>Spicy and juicy grilled chicken.</p>
-  <div class="price-tag">₹120</div>
+<img src="https://raw.githubusercontent.com/dhanushkumarvc-bot/cloud_kitchen.github.io/main/chicken-kebab.jpg">
+<h3><span class="dot nonveg"></span>Chicken Kebab</h3>
+<p class="description">Spicy and juicy grilled chicken.</p>
+<div class="price">₹120</div>
+<button class="add-btn" onclick="addItem(this)">+</button>
 </div>
 
-<!-- Item 3 -->
 <div class="item" data-name="Chilli Chicken" data-price="120" data-type="nonveg">
-  <div class="quantity-container">
-    <button class="add-btn" onclick="changeQuantity(this,1)">Add +</button>
-    <button class="minus-btn" onclick="changeQuantity(this,-1)" style="display:none">-</button>
-    <span class="qty-display" style="display:none">1</span>
-    <button class="plus-btn" onclick="changeQuantity(this,1)" style="display:none">+</button>
-  </div>
-  <img src="https://raw.githubusercontent.com/dhanushkumarvc-bot/cloud_kitchen.github.io/main/chilli-chicken.jpg">
-  <h3><span class="dot nonveg"></span>Chilli Chicken</h3>
-  <p>Spicy Indo-Chinese chicken with chili sauce.</p>
-  <div class="price-tag">₹120</div>
+<img src="https://raw.githubusercontent.com/dhanushkumarvc-bot/cloud_kitchen.github.io/main/chilli-chicken.jpg">
+<h3><span class="dot nonveg"></span>Chilli Chicken</h3>
+<p class="description">Spicy Indo-Chinese chicken with chili sauce.</p>
+<div class="price">₹120</div>
+<button class="add-btn" onclick="addItem(this)">+</button>
 </div>
 
-<!-- Item 4 -->
 <div class="item" data-name="Pepper Chicken" data-price="120" data-type="nonveg">
-  <div class="quantity-container">
-    <button class="add-btn" onclick="changeQuantity(this,1)">Add +</button>
-    <button class="minus-btn" onclick="changeQuantity(this,-1)" style="display:none">-</button>
-    <span class="qty-display" style="display:none">1</span>
-    <button class="plus-btn" onclick="changeQuantity(this,1)" style="display:none">+</button>
-  </div>
-  <img src="https://raw.githubusercontent.com/dhanushkumarvc-bot/cloud_kitchen.github.io/main/pepper-chicken.jpg">
-  <h3><span class="dot nonveg"></span>Pepper Chicken</h3>
-  <p>Spicy black pepper flavored chicken.</p>
-  <div class="price-tag">₹120</div>
+<img src="https://raw.githubusercontent.com/dhanushkumarvc-bot/cloud_kitchen.github.io/main/pepper-chicken.jpg">
+<h3><span class="dot nonveg"></span>Pepper Chicken</h3>
+<p class="description">Spicy black pepper flavored chicken.</p>
+<div class="price">₹120</div>
+<button class="add-btn" onclick="addItem(this)">+</button>
 </div>
 
-<!-- Item 5 -->
 <div class="item" data-name="Mushroom Kebab" data-price="80" data-type="veg">
-  <div class="quantity-container">
-    <button class="add-btn" onclick="changeQuantity(this,1)">Add +</button>
-    <button class="minus-btn" onclick="changeQuantity(this,-1)" style="display:none">-</button>
-    <span class="qty-display" style="display:none">1</span>
-    <button class="plus-btn" onclick="changeQuantity(this,1)" style="display:none">+</button>
-  </div>
-  <img src="https://raw.githubusercontent.com/dhanushkumarvc-bot/cloud_kitchen.github.io/main/mushroom-kebab.jpg">
-  <h3><span class="dot veg"></span>Mushroom Kebab</h3>
-  <p>Crispy mushroom kebabs.</p>
-  <div class="price-tag">₹80</div>
+<img src="https://raw.githubusercontent.com/dhanushkumarvc-bot/cloud_kitchen.github.io/main/mushroom-kebab.jpg">
+<h3><span class="dot veg"></span>Mushroom Kebab</h3>
+<p class="description">Crispy mushroom kebabs.</p>
+<div class="price">₹80</div>
+<button class="add-btn" onclick="addItem(this)">+</button>
 </div>
 
-<!-- Item 6 -->
 <div class="item" data-name="Veg Fried Rice" data-price="100" data-type="veg">
-  <div class="quantity-container">
-    <button class="add-btn" onclick="changeQuantity(this,1)">Add +</button>
-    <button class="minus-btn" onclick="changeQuantity(this,-1)" style="display:none">-</button>
-    <span class="qty-display" style="display:none">1</span>
-    <button class="plus-btn" onclick="changeQuantity(this,1)" style="display:none">+</button>
-  </div>
-  <img src="https://raw.githubusercontent.com/dhanushkumarvc-bot/cloud_kitchen.github.io/main/Veg-Fried-Rice.jpg">
-  <h3><span class="dot veg"></span>Veg Fried Rice</h3>
-  <p>Classic fried rice with vegetables.</p>
-  <div class="price-tag">₹100</div>
+<img src="https://raw.githubusercontent.com/dhanushkumarvc-bot/cloud_kitchen.github.io/main/Veg-Fried-Rice.jpg">
+<h3><span class="dot veg"></span>Veg Fried Rice</h3>
+<p class="description">Classic fried rice with vegetables.</p>
+<div class="price">₹100</div>
+<button class="add-btn" onclick="addItem(this)">+</button>
 </div>
+<!-- ALL ITEMS END -->
 
 </div>
 <div id="noItemsMessage">😔 No items found!</div>
@@ -220,164 +154,140 @@ let cart = [];
 const deliveryCharges = 20;
 
 window.onload = function() {
-const savedCart = localStorage.getItem('cart');
-if(savedCart) cart = JSON.parse(savedCart);
-updateCartIndicator();
+    const savedCart = localStorage.getItem('cart');
+    if(savedCart) cart = JSON.parse(savedCart);
+    cart.forEach(item => {
+        const itemDiv = document.querySelector(`.item[data-name='${item.name}']`);
+        if(itemDiv){
+            itemDiv.querySelector('.add-btn').style.display='none';
+            const controls = document.createElement('div');
+            controls.className = 'quantity-controls';
+            controls.innerHTML = `<button onclick="changeQty('${item.name}',-1)">-</button>
+                                  <span id="qty-${item.name}">${item.quantity}</span>
+                                  <button onclick="changeQty('${item.name}',1)">+</button>`;
+            itemDiv.appendChild(controls);
+        }
+    });
+    updateCartIndicator();
+    updateCartTotal();
 };
 
-function updateCartStorage(){ 
-localStorage.setItem('cart', JSON.stringify(cart)); 
-updateCartTotal();
+function addItem(btn){
+    const itemDiv = btn.parentElement;
+    const name = itemDiv.dataset.name;
+    const price = parseInt(itemDiv.dataset.price);
+    let cartItem = cart.find(i => i.name === name);
+    
+    if(!cartItem){
+        cart.push({name, price, quantity:1});
+        const controls = document.createElement('div');
+        controls.className = 'quantity-controls';
+        controls.innerHTML = `<button onclick="changeQty('${name}',-1)">-</button>
+                              <span id="qty-${name}">1</span>
+                              <button onclick="changeQty('${name}',1)">+</button>`;
+        btn.style.display = 'none';
+        itemDiv.appendChild(controls);
+    } else {
+        changeQty(name,1);
+    }
+    updateCartIndicator();
+    updateCartTotal();
+    localStorage.setItem('cart', JSON.stringify(cart));
 }
 
-function addToCart(btn){
-const itemDiv = btn.parentElement;
-const name = itemDiv.dataset.name;
-const price = parseInt(itemDiv.dataset.price);
-const existing = cart.find(i=>i.name===name);
-if(existing) existing.quantity += 1; 
-else cart.push({name,price,quantity:1});
-updateCartIndicator(); 
-updateCartStorage(); 
+function changeQty(name, delta){
+    let item = cart.find(i => i.name === name);
+    if(!item) return;
+    item.quantity += delta;
+    if(item.quantity <= 0){
+        cart = cart.filter(i => i.name !== name);
+        const itemDiv = document.querySelector(`.item[data-name='${name}']`);
+        if(itemDiv.querySelector('.quantity-controls')) itemDiv.querySelector('.quantity-controls').remove();
+        itemDiv.querySelector('.add-btn').style.display='flex';
+    } else {
+        document.getElementById(`qty-${name}`).innerText = item.quantity;
+    }
+    updateCartIndicator();
+    updateCartTotal();
+    localStorage.setItem('cart', JSON.stringify(cart));
 }
 
 function updateCartTotal(){
-let subtotal = cart.reduce((sum, item)=> sum + (item.price * item.quantity), 0);
-const totalWithDelivery = subtotal + (subtotal > 0 ? deliveryCharges : 0);
-localStorage.setItem("cartTotal", totalWithDelivery);
+    let subtotal = cart.reduce((sum,item)=>sum + item.price*item.quantity,0);
+    const totalWithDelivery = subtotal + (subtotal>0?deliveryCharges:0);
+    localStorage.setItem("cartTotal", totalWithDelivery);
 }
 
 function updateCartIndicator(){
-const floatingCart=document.getElementById('floatingCart');
-const cartSummaryText=document.getElementById('cartSummaryText');
-const totalQty=cart.reduce((sum,i)=>sum+i.quantity,0);
-if(totalQty>0){ 
-cartSummaryText.innerText=`${totalQty} item${totalQty>1?'s':''} added`; 
-floatingCart.style.display='flex'; 
-}
-else{ 
-floatingCart.style.display='none'; 
-}
+    const floatingCart=document.getElementById('floatingCart');
+    const cartSummaryText=document.getElementById('cartSummaryText');
+    const totalQty=cart.reduce((sum,i)=>sum+i.quantity,0);
+    if(totalQty>0){
+        cartSummaryText.innerText=`${totalQty} item${totalQty>1?'s':''} added`;
+        floatingCart.style.display='flex';
+    } else{
+        floatingCart.style.display='none';
+    }
 }
 
 function openCart(){
-document.getElementById('floatingCart').style.display='none';
-const table=document.getElementById('cartTable');
-table.innerHTML="<tr><th>Item</th><th>Price</th><th>Qty</th><th>Total</th></tr>";
-let subtotal=0;
-const cartModal=document.getElementById('cartModal');
-cartModal.style.display='flex';
-if(cart.length===0){ 
-document.getElementById('totalPrice').innerText="Cart is empty"; 
-document.querySelector('.checkout-btn').style.display='none'; 
-document.querySelector('.add-items-btn').style.display='block'; 
-localStorage.removeItem("cartTotal"); 
-return; 
-}
-document.querySelector('.checkout-btn').style.display='block'; 
-document.querySelector('.add-items-btn').style.display='block';
-cart.forEach((item,index)=>{
-const row=table.insertRow();
-row.insertCell(0).innerText=item.name;
-row.insertCell(1).innerText="₹"+item.price;
-const qtyCell=row.insertCell(2);
-const minusBtn=document.createElement('button'); 
-minusBtn.innerText='-'; 
-minusBtn.onclick=()=>updateQuantity(index,-1);
-const qtySpan=document.createElement('span'); 
-qtySpan.innerText=' '+item.quantity+' ';
-const plusBtn=document.createElement('button'); 
-plusBtn.innerText='+'; 
-plusBtn.onclick=()=>updateQuantity(index,1);
-qtyCell.appendChild(minusBtn); 
-qtyCell.appendChild(qtySpan); 
-qtyCell.appendChild(plusBtn);
-const totalPerItem=item.price*item.quantity; 
-row.insertCell(3).innerText="₹"+totalPerItem;
-subtotal+=totalPerItem;
-});
-const totalWithDelivery=subtotal+(subtotal>0?deliveryCharges:0);
-document.getElementById('totalPrice').innerText=`Subtotal (incl. delivery ₹${subtotal>0?deliveryCharges:0}): ₹${totalWithDelivery}`;
-localStorage.setItem("cartTotal", totalWithDelivery);
+    document.getElementById('floatingCart').style.display='none';
+    const table=document.getElementById('cartTable');
+    table.innerHTML="<tr><th>Item</th><th>Price</th><th>Qty</th><th>Total</th></tr>";
+    let subtotal=0;
+    const cartModal=document.getElementById('cartModal');
+    cartModal.style.display='flex';
+    if(cart.length===0){
+        document.getElementById('totalPrice').innerText="Cart is empty";
+        document.querySelector('.checkout-btn').style.display='none';
+        document.querySelector('.add-items-btn').style.display='block';
+        localStorage.removeItem("cartTotal");
+        return;
+    }
+    document.querySelector('.checkout-btn').style.display='block';
+    document.querySelector('.add-items-btn').style.display='block';
+    cart.forEach((item)=>{
+        const row=table.insertRow();
+        row.insertCell(0).innerText=item.name;
+        row.insertCell(1).innerText="₹"+item.price;
+        const qtyCell=row.insertCell(2);
+        qtyCell.innerText=item.quantity;
+        row.insertCell(3).innerText="₹"+(item.price*item.quantity);
+        subtotal += item.price*item.quantity;
+    });
+    const totalWithDelivery=subtotal+(subtotal>0?deliveryCharges:0);
+    document.getElementById('totalPrice').innerText=`Subtotal (incl. delivery ₹${subtotal>0?deliveryCharges:0}): ₹${totalWithDelivery}`;
+    localStorage.setItem("cartTotal", totalWithDelivery);
 }
 
 function closeCart(){ document.getElementById('cartModal').style.display='none'; updateCartIndicator(); }
 function checkout(){ window.location.href="payment.html"; }
 function redirectToMenu(){ document.getElementById('cartModal').style.display='none'; }
-function updateQuantity(index,change){ 
-cart[index].quantity+=change; 
-if(cart[index].quantity<=0) cart.splice(index,1); 
-updateCartStorage(); 
-updateCartIndicator(); 
-openCart(); 
-}
 
 function filterItems(){
-const searchValue=document.getElementById('searchInput').value.trim().toLowerCase();
-const vegFilter=document.getElementById('vegFilter').value;
-const menuContainer=document.getElementById('menuItems');
-const items=Array.from(menuContainer.querySelectorAll('.item'));
-const noItemsMessage=document.getElementById('noItemsMessage'); 
-let anyVisible=false;
-const matchedItems=[]; 
-const unmatchedItems=[];
-items.forEach(item=>{
-const name=item.dataset.name.toLowerCase(); 
-const type=item.dataset.type;
-const matchesSearch=name.includes(searchValue); 
-const matchesFilter=vegFilter==='all'||vegFilter===type;
-if(matchesSearch&&matchesFilter){ 
-item.classList.remove('hide'); 
-matchedItems.push(item); 
-anyVisible=true; 
-}
-else{ 
-item.classList.add('hide'); 
-unmatchedItems.push(item); 
-}
-});
-matchedItems.forEach(item=>menuContainer.appendChild(item));
-unmatchedItems.forEach(item=>menuContainer.appendChild(item));
-noItemsMessage.style.display=anyVisible?'none':'block';
-}
-
-/* Top-right Add + / - + logic */
-function changeQuantity(btn, change){
-  const itemDiv = btn.closest('.item');
-  const name = itemDiv.dataset.name;
-  const price = parseInt(itemDiv.dataset.price);
-  let cartItem = cart.find(i => i.name === name);
-  if(!cartItem && change > 0){
-    cartItem = {name, price, quantity: 1};
-    cart.push(cartItem);
-  } else if(cartItem){
-    cartItem.quantity += change;
-    if(cartItem.quantity <= 0){
-      cart = cart.filter(i => i.name !== name);
-      resetButtons(itemDiv);
-      updateCartIndicator();
-      updateCartStorage();
-      return;
-    }
-  }
-  updateButtons(itemDiv, cartItem.quantity);
-  updateCartIndicator();
-  updateCartStorage();
-}
-
-function resetButtons(itemDiv){
-  itemDiv.querySelector('.add-btn').style.display = 'inline-block';
-  itemDiv.querySelector('.minus-btn').style.display = 'none';
-  itemDiv.querySelector('.qty-display').style.display = 'none';
-  itemDiv.querySelector('.plus-btn').style.display = 'none';
-}
-
-function updateButtons(itemDiv, quantity){
-  itemDiv.querySelector('.add-btn').style.display = 'none';
-  itemDiv.querySelector('.minus-btn').style.display = 'inline-block';
-  itemDiv.querySelector('.qty-display').style.display = 'inline-block';
-  itemDiv.querySelector('.plus-btn').style.display = 'inline-block';
-  itemDiv.querySelector('.qty-display').innerText = quantity;
+    const searchValue=document.getElementById('searchInput').value.trim().toLowerCase();
+    const vegFilter=document.getElementById('vegFilter').value;
+    const menuContainer=document.getElementById('menuItems');
+    const items=Array.from(menuContainer.querySelectorAll('.item'));
+    const noItemsMessage=document.getElementById('noItemsMessage'); 
+    let anyVisible=false;
+    const matchedItems=[]; 
+    const unmatchedItems=[];
+    items.forEach(item=>{
+        const name=item.dataset.name.toLowerCase(); 
+        const type=item.dataset.type;
+        const matchesSearch=name.includes(searchValue); 
+        const matchesFilter=vegFilter==='all'||vegFilter===type;
+        if(matchesSearch&&matchesFilter){ 
+            item.style.display='block';
+            matchedItems.push(item); 
+            anyVisible=true; 
+        } else{ 
+            item.style.display='none';
+            unmatchedItems.push(item); 
+        }
+    });
+    noItemsMessage.style.display=anyVisible?'none':'block';
 }
 </script>
 </body>
