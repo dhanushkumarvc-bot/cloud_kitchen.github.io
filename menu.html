@@ -162,8 +162,6 @@ window.onload = function() {
   updateCartIndicator();
 };
 
-// --- Your existing functions for cart, menu, quantity, filter --- (same as before)
-
 function updateCartStorage(){ 
   localStorage.setItem('cart', JSON.stringify(cart)); 
   updateCartTotal();
@@ -315,17 +313,34 @@ function updateQuantity(index,change){
   });
 }
 
+// --- UPDATED FILTER FUNCTION ---
 function filterItems(){
   const searchValue=document.getElementById('searchInput').value.trim().toLowerCase();
   const typeValue=document.getElementById('vegFilter').value;
-  const items=document.querySelectorAll('.menu-items .item');
+  const menuContainer=document.getElementById('menuItems');
+  const items=Array.from(menuContainer.querySelectorAll('.item'));
   let visibleCount=0;
+
+  const matched = [];
+  const unmatched = [];
+
   items.forEach(item=>{
     const name=item.dataset.name.toLowerCase();
     const type=item.dataset.type;
-    if((name.includes(searchValue) && (typeValue==='all' || type===typeValue))){ item.classList.remove('hide'); visibleCount++; }
-    else item.classList.add('hide');
+    if(name.includes(searchValue) && (typeValue==='all' || type===typeValue)){
+      matched.push(item);
+      item.classList.remove('hide');
+      visibleCount++;
+    } else {
+      unmatched.push(item);
+      item.classList.add('hide');
+    }
   });
+
+  // Bring matched items to top
+  matched.forEach(item=>menuContainer.appendChild(item));
+  unmatched.forEach(item=>menuContainer.appendChild(item));
+
   document.getElementById('noItemsMessage').style.display=(visibleCount===0)?'block':'none';
 }
 
@@ -336,4 +351,3 @@ navLinks.forEach(link=>{ if(link.getAttribute('href')===currentPage) link.classL
 </script>
 </body>
 </html>
-
