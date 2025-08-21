@@ -176,15 +176,25 @@ updateCartStorage(); updateCartIndicator();
 }
 
 // Quantity change function
-function changeQty(name, delta){
-const item = cart.find(i=>i.name===name);
-if(item){
-item.quantity += delta;
-if(item.quantity<=0) cart = cart.filter(i=>i.name!==name);
-updateCartStorage(); updateCartIndicator();
-updateQtyButtons(name);
+function updateQtyButtons(name){
+    const items = document.querySelectorAll('.item');
+    items.forEach(itemDiv => {
+        if(itemDiv.dataset.name === name){
+            const cartItem = cart.find(i => i.name === name);
+            const btn = itemDiv.querySelector('button');
+            if(cartItem){
+                btn.innerHTML = `<div class="qty-controls">
+                    <button onclick="changeQty('${name}', -1)">-</button>
+                    <span>${cartItem.quantity}</span>
+                    <button onclick="changeQty('${name}', 1)">+</button>
+                </div>`;
+            } else {
+                btn.innerHTML = `Add <span class="plus-icon">+</span>`; // reset button
+            }
+        }
+    });
 }
-}
+
 
 // Update button view
 function updateQtyButtons(name){
@@ -309,3 +319,4 @@ noItemsMessage.style.display=anyVisible?'none':'block';
 </script>
 </body>
 </html>
+
