@@ -159,20 +159,37 @@ updateCartTotal();
 }
 
 // Add button toggle to quantity
-function toggleAdd(btn){
-const itemDiv = btn.parentElement;
-const name = itemDiv.dataset.name;
-const price = parseInt(itemDiv.dataset.price);
-const existing = cart.find(i=>i.name===name);
-if(!existing){
-cart.push({name, price, quantity:1});
-btn.innerHTML = `<div class="qty-controls">
-<button onclick="changeQty('${name}', -1)">-</button>
-<span>1</span>
-<button onclick="changeQty('${name}', 1)">+</button>
-</div>`;
-updateCartStorage(); updateCartIndicator();
-}
+function updateQtyButtons(name){
+    const items = document.querySelectorAll('.item');
+    items.forEach(itemDiv => {
+        if(itemDiv.dataset.name === name){
+            const cartItem = cart.find(i => i.name === name);
+            const btn = itemDiv.querySelector('button');
+            if(cartItem){
+                btn.innerHTML = '';
+                const minusBtn = document.createElement('button');
+                minusBtn.innerText = '-';
+                minusBtn.addEventListener('click', () => changeQty(name, -1));
+
+                const qtySpan = document.createElement('span');
+                qtySpan.innerText = cartItem.quantity;
+
+                const plusBtn = document.createElement('button');
+                plusBtn.innerText = '+';
+                plusBtn.addEventListener('click', () => changeQty(name, 1));
+
+                const container = document.createElement('div');
+                container.className = 'qty-controls';
+                container.appendChild(minusBtn);
+                container.appendChild(qtySpan);
+                container.appendChild(plusBtn);
+
+                btn.appendChild(container);
+            } else {
+                btn.innerHTML = `Add <span class="plus-icon">+</span>`;
+            }
+        }
+    });
 }
 
 // Quantity change function
@@ -319,4 +336,5 @@ noItemsMessage.style.display=anyVisible?'none':'block';
 </script>
 </body>
 </html>
+
 
