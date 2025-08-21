@@ -38,6 +38,12 @@
       color: #ff6600; 
     }
 
+    nav a.active {
+      color: #ff6600;
+      border-bottom: 2px solid #ff6600;
+      font-weight: bold;
+    }
+
     .contact {
       background: #1a1a1a;
       max-width: 600px;
@@ -204,6 +210,7 @@
   </footer>
 
   <script>
+    // --- Contact form submission ---
     const nameField = document.getElementById('name');
     const emailField = document.getElementById('email');
     const messageField = document.getElementById('message');
@@ -218,8 +225,6 @@
 
     document.getElementById('contactForm').addEventListener('submit', function(e){
       e.preventDefault();
-
-      // Immediate feedback
       submitBtn.disabled = true;
       submitBtn.textContent = 'Sending...';
       formMessage.style.display = 'none';
@@ -240,7 +245,7 @@
         submitBtn.textContent = 'Send Message';
 
         if(result.status === 'success'){
-          messageField.value = ''; // Clear only message
+          messageField.value = '';
           localStorage.setItem('userName', nameField.value);
           localStorage.setItem('userEmail', emailField.value);
 
@@ -253,10 +258,7 @@
           formMessage.style.display = 'block';
         }
 
-        // Fade out after 5 seconds
-        setTimeout(() => {
-          formMessage.style.display = 'none';
-        }, 5000);
+        setTimeout(() => { formMessage.style.display = 'none'; }, 5000);
       })
       .catch(err => {
         submitBtn.disabled = false;
@@ -264,10 +266,20 @@
         formMessage.style.background = '#f44336';
         formMessage.textContent = 'Error sending message: ' + err;
         formMessage.style.display = 'block';
-        setTimeout(() => {
-          formMessage.style.display = 'none';
-        }, 5000);
+        setTimeout(() => { formMessage.style.display = 'none'; }, 5000);
       });
+    });
+
+    // --- Nav highlighting ---
+    const navLinks = document.querySelectorAll('nav a');
+    const currentPage = window.location.pathname.split('/').pop();
+
+    navLinks.forEach(link => {
+      link.classList.remove('active');
+      if(link.getAttribute('href') === currentPage || 
+         (link.getAttribute('href') === 'index.html' && currentPage === '')) {
+        link.classList.add('active');
+      }
     });
   </script>
 </body>
