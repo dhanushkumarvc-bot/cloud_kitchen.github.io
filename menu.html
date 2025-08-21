@@ -15,20 +15,7 @@ nav a:hover { color: #ff6600; }
 .menu h2 { color: #ff6600; font-size: 2rem; margin-bottom: 20px; }
 .search-filter input, .search-filter select { padding: 10px 15px; margin: 5px; border-radius: 8px; border: none; font-size: 1rem; }
 .menu-items { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 25px; margin-top: 20px; position: relative; }
-.item { 
-  background: #222; 
-  padding: 15px; 
-  border-radius: 12px; 
-  box-shadow: 0 5px 15px rgba(0,0,0,0.7); 
-  transition: all 0.5s ease; 
-  opacity: 1; 
-  transform: scale(1); 
-  display: flex; 
-  flex-direction: column; 
-  justify-content: space-between; 
-  min-height: 300px; 
-  position: relative; 
-}
+.item { background: #222; padding: 15px; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.7); transition: all 0.5s ease; opacity: 1; transform: scale(1); display: flex; flex-direction: column; justify-content: space-between; }
 .item.hide { opacity: 0; transform: scale(0.95); pointer-events: none; }
 .item img { width: 100%; height: 200px; object-fit: cover; border-radius: 8px; }
 .item h3 { display: flex; align-items: center; gap: 8px; margin: 10px 0 5px; color: #ff6600; }
@@ -36,18 +23,9 @@ nav a:hover { color: #ff6600; }
 .veg { background: green; }
 .nonveg { background: red; }
 .item p { margin: 5px 0; color: #fff; }
-.item p.price-tag { 
-  position: absolute; 
-  bottom: 12px; 
-  left: 12px; 
-  font-weight: bold; 
-  color: #ffcc80; 
-  margin: 0; 
-}
+
+/* Centered button */
 .order-btn { 
-  position: absolute; 
-  bottom: 10px; 
-  right: 10px; 
   display: flex; 
   justify-content: center; 
   align-items: center; 
@@ -58,6 +36,8 @@ nav a:hover { color: #ff6600; }
   font-weight: bold; 
   cursor: pointer; 
   transition: 0.3s; 
+  position: relative; 
+  margin-top: auto; 
 }
 .order-btn .plus-btn, .order-btn .minus-btn { 
   background: #fff; 
@@ -69,7 +49,11 @@ nav a:hover { color: #ff6600; }
   cursor: pointer; 
   font-weight: bold; 
 }
-.order-btn .qty-span { margin: 0 8px; font-weight: bold; }
+.order-btn .qty-span { 
+  margin: 0 8px; 
+  font-weight: bold; 
+}
+
 #noItemsMessage { display: none; text-align: center; font-size: 1.5rem; color: #ff6600; margin-top: 20px; animation: bounce 0.5s ease; }
 @keyframes bounce { 0%{transform:scale(0.8);opacity:0;}50%{transform:scale(1.05);opacity:1;}100%{transform:scale(1);opacity:1;} }
 footer { background: #333; color: #fff; text-align: center; padding: 15px; margin-top: 40px; }
@@ -100,8 +84,8 @@ footer { background: #333; color: #fff; text-align: center; padding: 15px; margi
 <nav>
 <a href="index.html">Home</a>
 <a href="menu.html">Menu</a>
-<a href="about.html">About Us</a>
 <a href="contact.html">Contact</a>
+<a href="about.html">About Us</a>
 <a href="payment.html">Payment</a>
 </nav>
 
@@ -120,48 +104,42 @@ footer { background: #333; color: #fff; text-align: center; padding: 15px; margi
 <div class="item" data-name="Donne Biryani" data-price="100" data-type="nonveg">
 <img src="https://raw.githubusercontent.com/dhanushkumarvc-bot/cloud_kitchen.github.io/main/Donne-Biriyani.jpg">
 <h3><span class="dot nonveg"></span>Donne Biryani</h3>
-<p>Authentic Bangalore-style biryani.</p>
-<p class="price-tag">₹100</p>
+<p>Authentic Bangalore-style biryani.</p><p>₹100</p>
 <button class="order-btn" onclick="addToCart(this)">Add +</button>
 </div>
 
 <div class="item" data-name="Chicken Kebab" data-price="120" data-type="nonveg">
 <img src="https://raw.githubusercontent.com/dhanushkumarvc-bot/cloud_kitchen.github.io/main/chicken-kebab.jpg">
 <h3><span class="dot nonveg"></span>Chicken Kebab</h3>
-<p>Spicy and juicy grilled chicken.</p>
-<p class="price-tag">₹120</p>
+<p>Spicy and juicy grilled chicken.</p><p>₹120</p>
 <button class="order-btn" onclick="addToCart(this)">Add +</button>
 </div>
 
 <div class="item" data-name="Chilli Chicken" data-price="120" data-type="nonveg">
 <img src="https://raw.githubusercontent.com/dhanushkumarvc-bot/cloud_kitchen.github.io/main/chilli-chicken.jpg">
 <h3><span class="dot nonveg"></span>Chilli Chicken</h3>
-<p>Spicy Indo-Chinese chicken with chili sauce.</p>
-<p class="price-tag">₹120</p>
+<p>Spicy Indo-Chinese chicken with chili sauce.</p><p>₹120</p>
 <button class="order-btn" onclick="addToCart(this)">Add +</button>
 </div>
 
 <div class="item" data-name="Pepper Chicken" data-price="120" data-type="nonveg">
 <img src="https://raw.githubusercontent.com/dhanushkumarvc-bot/cloud_kitchen.github.io/main/pepper-chicken.jpg">
 <h3><span class="dot nonveg"></span>Pepper Chicken</h3>
-<p>Spicy black pepper flavored chicken.</p>
-<p class="price-tag">₹120</p>
+<p>Spicy black pepper flavored chicken.</p><p>₹120</p>
 <button class="order-btn" onclick="addToCart(this)">Add +</button>
 </div>
 
 <div class="item" data-name="Mushroom Kebab" data-price="80" data-type="veg">
 <img src="https://raw.githubusercontent.com/dhanushkumarvc-bot/cloud_kitchen.github.io/main/mushroom-kebab.jpg">
 <h3><span class="dot veg"></span>Mushroom Kebab</h3>
-<p>Crispy mushroom kebabs.</p>
-<p class="price-tag">₹80</p>
+<p>Crispy mushroom kebabs.</p><p>₹80</p>
 <button class="order-btn" onclick="addToCart(this)">Add +</button>
 </div>
 
 <div class="item" data-name="Veg Fried Rice" data-price="100" data-type="veg">
 <img src="https://raw.githubusercontent.com/dhanushkumarvc-bot/cloud_kitchen.github.io/main/Veg-Fried-Rice.jpg">
 <h3><span class="dot veg"></span>Veg Fried Rice</h3>
-<p>Classic fried rice with vegetables.</p>
-<p class="price-tag">₹100</p>
+<p>Classic fried rice with vegetables.</p><p>₹100</p>
 <button class="order-btn" onclick="addToCart(this)">Add +</button>
 </div>
 </div>
@@ -188,8 +166,199 @@ footer { background: #333; color: #fff; text-align: center; padding: 15px; margi
 </div>
 
 <script>
-// JavaScript remains exactly same as in your original code
-// Handles cart, quantity, restore, filter, floating cart
+let cart = [];
+const deliveryCharges = 20;
+
+window.onload = function() {
+  const savedCart = localStorage.getItem('cart');
+  if(savedCart) cart = JSON.parse(savedCart);
+  restoreMenuButtons();
+  updateCartIndicator();
+};
+
+function updateCartStorage(){ 
+  localStorage.setItem('cart', JSON.stringify(cart)); 
+  updateCartTotal();
+}
+
+function addToCart(btn){
+  const itemDiv = btn.parentElement;
+  const name = itemDiv.dataset.name;
+  const price = parseInt(itemDiv.dataset.price);
+  let cartItem = cart.find(i=>i.name===name);
+
+  if(!cartItem) {
+    cartItem = {name, price, quantity:1};
+    cart.push(cartItem);
+  } else {
+    cartItem.quantity +=1;
+  }
+
+  renderQuantityButton(btn, cartItem);
+  updateCartStorage();
+  updateCartIndicator();
+}
+
+// Render the [- quantity +] button
+function renderQuantityButton(btn, cartItem){
+  btn.innerHTML = ''; // clear previous content
+
+  const minusBtn = document.createElement('button');
+  minusBtn.innerText = '-';
+  minusBtn.className = 'minus-btn';
+  minusBtn.onclick = (e) => {
+    e.stopPropagation();
+    cartItem.quantity -=1;
+    if(cartItem.quantity <=0){
+      cart = cart.filter(i=>i.name!==cartItem.name);
+      btn.innerHTML = 'Add +';
+    } else {
+      renderQuantityButton(btn, cartItem);
+    }
+    updateCartStorage();
+    updateCartIndicator();
+  }
+
+  const qtySpan = document.createElement('span');
+  qtySpan.className = 'qty-span';
+  qtySpan.innerText = cartItem.quantity;
+
+  const plusBtn = document.createElement('button');
+  plusBtn.innerText = '+';
+  plusBtn.className = 'plus-btn';
+  plusBtn.onclick = (e) => {
+    e.stopPropagation();
+    cartItem.quantity +=1;
+    renderQuantityButton(btn, cartItem);
+    updateCartStorage();
+    updateCartIndicator();
+  }
+
+  btn.appendChild(minusBtn);
+  btn.appendChild(qtySpan);
+  btn.appendChild(plusBtn);
+}
+
+// Restore menu buttons if cart already has items on reload
+function restoreMenuButtons(){
+  const menuButtons = document.querySelectorAll('.item .order-btn');
+  menuButtons.forEach(btn=>{
+    const itemDiv = btn.parentElement;
+    const name = itemDiv.dataset.name;
+    const cartItem = cart.find(i=>i.name===name);
+    if(cartItem) renderQuantityButton(btn, cartItem);
+  });
+}
+
+function updateCartTotal(){
+  let subtotal = cart.reduce((sum, item)=> sum + (item.price * item.quantity), 0);
+  const totalWithDelivery = subtotal + (subtotal > 0 ? deliveryCharges : 0);
+  localStorage.setItem("cartTotal", totalWithDelivery);
+}
+
+function updateCartIndicator(){
+  const floatingCart=document.getElementById('floatingCart');
+  const cartSummaryText=document.getElementById('cartSummaryText');
+  const totalQty=cart.reduce((sum,i)=>sum+i.quantity,0);
+  if(totalQty>0){ 
+    cartSummaryText.innerText=`${totalQty} item${totalQty>1?'s':''} added`; 
+    floatingCart.style.display='flex'; 
+  } else { 
+    floatingCart.style.display='none'; 
+  }
+}
+
+function openCart(){
+  const table=document.getElementById('cartTable');
+  table.innerHTML="<tr><th>Item</th><th>Price</th><th>Qty</th><th>Total</th></tr>";
+  let subtotal=0;
+  const cartModal=document.getElementById('cartModal');
+  cartModal.style.display='flex';
+  if(cart.length===0){ 
+    document.getElementById('totalPrice').innerText="Cart is empty"; 
+    document.querySelector('.checkout-btn').style.display='none'; 
+    document.querySelector('.add-items-btn').style.display='block'; 
+    localStorage.removeItem("cartTotal"); 
+    return; 
+  }
+  document.querySelector('.checkout-btn').style.display='block'; 
+  document.querySelector('.add-items-btn').style.display='block';
+  cart.forEach((item,index)=>{
+    const row=table.insertRow();
+    row.insertCell(0).innerText=item.name;
+    row.insertCell(1).innerText="₹"+item.price;
+    const qtyCell=row.insertCell(2);
+    const minusBtn=document.createElement('button'); 
+    minusBtn.innerText='-'; 
+    minusBtn.onclick=()=>updateQuantity(index,-1);
+    const qtySpan=document.createElement('span'); 
+    qtySpan.innerText=' '+item.quantity+' ';
+    const plusBtn=document.createElement('button'); 
+    plusBtn.innerText='+'; 
+    plusBtn.onclick=()=>updateQuantity(index,1);
+    qtyCell.appendChild(minusBtn); 
+    qtyCell.appendChild(qtySpan); 
+    qtyCell.appendChild(plusBtn);
+    const totalPerItem=item.price*item.quantity; 
+    row.insertCell(3).innerText="₹"+totalPerItem;
+    subtotal+=totalPerItem;
+  });
+  const totalWithDelivery=subtotal+(subtotal>0?deliveryCharges:0);
+  document.getElementById('totalPrice').innerText=`Subtotal (incl. delivery ₹${subtotal>0?deliveryCharges:0}): ₹${totalWithDelivery}`;
+  localStorage.setItem("cartTotal", totalWithDelivery);
+}
+
+function closeCart(){ document.getElementById('cartModal').style.display='none'; updateCartIndicator(); }
+function checkout(){ window.location.href="payment.html"; }
+function redirectToMenu(){ document.getElementById('cartModal').style.display='none'; }
+
+function updateQuantity(index,change){ 
+  const item = cart[index];
+  item.quantity += change; 
+  if(item.quantity<=0) cart.splice(index,1); 
+  updateCartStorage(); 
+  updateCartIndicator(); 
+  openCart(); 
+  // Update menu button quantity as well
+  const menuButtons = document.querySelectorAll('.item .order-btn');
+  menuButtons.forEach(btn=>{
+    const itemDiv = btn.parentElement;
+    if(itemDiv.dataset.name === item.name){
+      const cartItem = cart.find(i=>i.name===item.name);
+      if(cartItem) renderQuantityButton(btn, cartItem);
+      else btn.innerHTML = 'Add +';
+    }
+  });
+}
+
+function filterItems(){
+  const searchValue=document.getElementById('searchInput').value.trim().toLowerCase();
+  const vegFilter=document.getElementById('vegFilter').value;
+  const menuContainer=document.getElementById('menuItems');
+  const items=Array.from(menuContainer.querySelectorAll('.item'));
+  const noItemsMessage=document.getElementById('noItemsMessage'); 
+  let anyVisible=false;
+  const matchedItems=[]; 
+  const unmatchedItems=[];
+  items.forEach(item=>{
+    const name=item.dataset.name.toLowerCase(); 
+    const type=item.dataset.type;
+    const matchesSearch=name.includes(searchValue); 
+    const matchesFilter=vegFilter==='all'||vegFilter===type;
+    if(matchesSearch&&matchesFilter){ 
+      item.classList.remove('hide'); 
+      matchedItems.push(item); 
+      anyVisible=true; 
+    }
+    else{ 
+      item.classList.add('hide'); 
+      unmatchedItems.push(item); 
+    }
+  });
+  matchedItems.forEach(item=>menuContainer.appendChild(item));
+  unmatchedItems.forEach(item=>menuContainer.appendChild(item));
+  noItemsMessage.style.display=anyVisible?'none':'block';
+}
 </script>
 </body>
 </html>
