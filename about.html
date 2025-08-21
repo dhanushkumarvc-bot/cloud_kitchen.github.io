@@ -48,6 +48,12 @@
       transform: scale(1.05);
     }
 
+    nav a.active {
+      color: #ff6600;
+      border-bottom: 2px solid #ff6600;
+      font-weight: bold;
+    }
+
     .about-container {
       background: #1a1a1a;
       max-width: 850px;
@@ -112,6 +118,20 @@
   <footer>
     &copy; 2025 The Hidden Ladle. All rights reserved.
   </footer>
+
+  <script>
+    // --- Nav highlighting ---
+    const navLinks = document.querySelectorAll('nav a');
+    const currentPage = window.location.pathname.split('/').pop();
+
+    navLinks.forEach(link => {
+      link.classList.remove('active');
+      if(link.getAttribute('href') === currentPage || 
+         (link.getAttribute('href') === 'index.html' && currentPage === '')) {
+        link.classList.add('active');
+      }
+    });
+  </script>
 
 </body>
 </html>
