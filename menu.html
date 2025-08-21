@@ -23,9 +23,8 @@ nav a:hover { color: #ff6600; }
 .veg { background: green; }
 .nonveg { background: red; }
 .item p { margin: 5px 0; color: #fff; }
-.order-btn, .add-btn { display: inline-block; margin-top: 10px; padding: 10px 15px; border-radius: 6px; font-weight: bold; background: #ff6600; color: #fff; cursor: pointer; position: relative; transition: 0.3s; }
-.add-btn span.plus { position: absolute; top: 5px; right: 8px; font-size: 1.2rem; }
-.order-btn:hover, .add-btn:hover { opacity: 0.8; }
+.order-btn { display: inline-block; margin-top: 10px; padding: 10px 15px; border-radius: 6px; text-decoration: none; font-weight: bold; background: #ff6600; color: #fff; transition: 0.3s; cursor: pointer; }
+.order-btn:hover { opacity: 0.8; }
 #noItemsMessage { display: none; text-align: center; font-size: 1.5rem; color: #ff6600; margin-top: 20px; animation: bounce 0.5s ease; }
 @keyframes bounce { 0%{transform:scale(0.8);opacity:0;}50%{transform:scale(1.05);opacity:1;}100%{transform:scale(1);opacity:1;} }
 footer { background: #333; color: #fff; text-align: center; padding: 15px; margin-top: 40px; }
@@ -43,6 +42,8 @@ footer { background: #333; color: #fff; text-align: center; padding: 15px; margi
 #cartContent button.checkout-btn { width: 100%; margin-top: 10px; padding: 12px; font-size: 1rem; border-radius: 10px; }
 .add-items-btn { width: 100%; margin-top: 15px; padding: 12px; font-size: 1rem; border-radius: 10px; background: none; color: #fff; border: none; cursor: pointer; transition: 0.3s; text-decoration: underline; }
 .add-items-btn:hover { color: #ff6600; text-decoration: underline; }
+@keyframes press { 0%{transform:scale(1);}50%{transform:scale(0.9);}100%{transform:scale(1);} }
+.order-press { animation: press 0.2s ease; }
 #floatingCart { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background: #ff6600; color: #fff; padding: 12px 20px; border-radius: 30px; font-weight: bold; display: flex; align-items: center; gap: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.5); z-index: 1001; cursor: pointer; transition: 0.3s; }
 #floatingCart:hover { opacity: 0.9; }
 .view-cart-btn { background: #fff; color: #ff6600; border: none; padding: 5px 12px; border-radius: 15px; font-weight: bold; cursor: pointer; transition: 0.3s; }
@@ -75,42 +76,42 @@ footer { background: #333; color: #fff; text-align: center; padding: 15px; margi
 <img src="https://raw.githubusercontent.com/dhanushkumarvc-bot/cloud_kitchen.github.io/main/Donne-Biriyani.jpg">
 <h3><span class="dot nonveg"></span>Donne Biryani</h3>
 <p>Authentic Bangalore-style biryani.</p><p>₹100</p>
-<button class="add-btn" onclick="toggleCartItem(this)">Add <span class="plus">+</span></button>
+<a class="order-btn" onclick="addToCart(this)">Order</a>
 </div>
 
 <div class="item" data-name="Chicken Kebab" data-price="120" data-type="nonveg">
 <img src="https://raw.githubusercontent.com/dhanushkumarvc-bot/cloud_kitchen.github.io/main/chicken-kebab.jpg">
 <h3><span class="dot nonveg"></span>Chicken Kebab</h3>
 <p>Spicy and juicy grilled chicken.</p><p>₹120</p>
-<button class="add-btn" onclick="toggleCartItem(this)">Add <span class="plus">+</span></button>
+<a class="order-btn" onclick="addToCart(this)">Order</a>
 </div>
 
 <div class="item" data-name="Chilli Chicken" data-price="120" data-type="nonveg">
 <img src="https://raw.githubusercontent.com/dhanushkumarvc-bot/cloud_kitchen.github.io/main/chilli-chicken.jpg">
 <h3><span class="dot nonveg"></span>Chilli Chicken</h3>
 <p>Spicy Indo-Chinese chicken with chili sauce.</p><p>₹120</p>
-<button class="add-btn" onclick="toggleCartItem(this)">Add <span class="plus">+</span></button>
+<a class="order-btn" onclick="addToCart(this)">Order</a>
 </div>
 
 <div class="item" data-name="Pepper Chicken" data-price="120" data-type="nonveg">
 <img src="https://raw.githubusercontent.com/dhanushkumarvc-bot/cloud_kitchen.github.io/main/pepper-chicken.jpg">
 <h3><span class="dot nonveg"></span>Pepper Chicken</h3>
 <p>Spicy black pepper flavored chicken.</p><p>₹120</p>
-<button class="add-btn" onclick="toggleCartItem(this)">Add <span class="plus">+</span></button>
+<a class="order-btn" onclick="addToCart(this)">Order</a>
 </div>
 
 <div class="item" data-name="Mushroom Kebab" data-price="80" data-type="veg">
 <img src="https://raw.githubusercontent.com/dhanushkumarvc-bot/cloud_kitchen.github.io/main/mushroom-kebab.jpg">
 <h3><span class="dot veg"></span>Mushroom Kebab</h3>
 <p>Crispy mushroom kebabs.</p><p>₹80</p>
-<button class="add-btn" onclick="toggleCartItem(this)">Add <span class="plus">+</span></button>
+<a class="order-btn" onclick="addToCart(this)">Order</a>
 </div>
 
 <div class="item" data-name="Veg Fried Rice" data-price="100" data-type="veg">
 <img src="https://raw.githubusercontent.com/dhanushkumarvc-bot/cloud_kitchen.github.io/main/Veg-Fried-Rice.jpg">
 <h3><span class="dot veg"></span>Veg Fried Rice</h3>
 <p>Classic fried rice with vegetables.</p><p>₹100</p>
-<button class="add-btn" onclick="toggleCartItem(this)">Add <span class="plus">+</span></button>
+<a class="order-btn" onclick="addToCart(this)">Order</a>
 </div>
 </div>
 
@@ -143,11 +144,6 @@ window.onload = function() {
 const savedCart = localStorage.getItem('cart');
 if(savedCart) cart = JSON.parse(savedCart);
 updateCartIndicator();
-document.querySelectorAll('.item').forEach(item=>{
-const name=item.dataset.name;
-const exists=cart.find(i=>i.name===name);
-if(exists) switchToQty(item.querySelector('button'), exists.quantity);
-});
 };
 
 function updateCartStorage(){ 
@@ -155,52 +151,18 @@ localStorage.setItem('cart', JSON.stringify(cart));
 updateCartTotal();
 }
 
-function toggleCartItem(btn){
+function addToCart(btn){
 const itemDiv = btn.parentElement;
 const name = itemDiv.dataset.name;
 const price = parseInt(itemDiv.dataset.price);
 const existing = cart.find(i=>i.name===name);
-if(existing){
-switchToQty(btn, ++existing.quantity);
-}else{
-cart.push({name,price,quantity:1});
-switchToQty(btn,1);
-}
-updateCartStorage();
-updateCartIndicator();
-}
-
-function switchToQty(btn, qty){
-btn.innerHTML='';
-const minus=document.createElement('button'); minus.innerText='-'; minus.onclick=()=>decreaseQty(btn);
-const span=document.createElement('span'); span.innerText=' '+qty+' ';
-const plus=document.createElement('button'); plus.innerText='+'; plus.onclick=()=>increaseQty(btn);
-btn.appendChild(minus); btn.appendChild(span); btn.appendChild(plus);
-}
-
-function increaseQty(btn){
-const itemDiv = btn.parentElement.parentElement;
-const name = itemDiv.dataset.name;
-const item = cart.find(i=>i.name===name);
-item.quantity++;
-switchToQty(btn,item.quantity);
-updateCartStorage();
-updateCartIndicator();
-}
-
-function decreaseQty(btn){
-const itemDiv = btn.parentElement.parentElement;
-const name = itemDiv.dataset.name;
-const itemIndex = cart.findIndex(i=>i.name===name);
-if(cart[itemIndex].quantity >1){
-cart[itemIndex].quantity--;
-switchToQty(btn,cart[itemIndex].quantity);
-}else{
-cart.splice(itemIndex,1);
-btn.innerHTML='Add <span class="plus">+</span>';
-}
-updateCartStorage();
-updateCartIndicator();
+if(existing) existing.quantity += 1; 
+else cart.push({name,price,quantity:1});
+btn.classList.remove('order-press'); 
+void btn.offsetWidth; 
+btn.classList.add('order-press');
+updateCartIndicator(); 
+updateCartStorage(); 
 }
 
 function updateCartTotal(){
@@ -305,3 +267,5 @@ noItemsMessage.style.display=anyVisible?'none':'block';
 </script>
 </body>
 </html>
+
+
